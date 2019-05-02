@@ -62,3 +62,8 @@ typings/
 
 # idea
 .idea
+.idea/
+package.json
+
+# typescript output
+lib
