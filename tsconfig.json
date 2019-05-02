@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib",
+    // ------「normal」------ //
+    // 编译过程中需要引入的库文件的列表
+    "lib": [
+      "ES5",
+      "ES2015.Promise",
+      "ES2015.Collection"
+    ],
+    // 启用所有严格类型检查选项
+    "strict": true,
+    // ECMAScript 目标版本
+    "target": "es5",
+    // 生成哪个模块系统代码
+    "module": "ESNext",
+    // 生成相应的 .map文件
+    "sourceMap": true,
+    // 生成相应的 .d.ts文件
+    "declaration": true,
+    // 从 tslib 导入辅助工具函数
+    "importHelpers": true,
+    // 若有未使用的局部变量则抛错
+    "noUnusedLocals": true,
+    // 决定如何处理模块
+    "moduleResolution": "node",
+    // 不是函数的所有返回路径都有返回值时报错
+    "noImplicitReturns": true,
+    // 若有未使用的参数则抛错
+    "noUnusedParameters": true,
+    // 启用实验性的ES装饰器
+    "experimentalDecorators": true,
+    // 报告 switch 的case 语句贯穿错误
+    "noFallthroughCasesInSwitch": true,
+    // 禁止对同一个文件的不一致的引用
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
