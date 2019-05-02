@@ -19,6 +19,14 @@
     "node",
     "nodejs"
   ],
-  "author": "",
-  "license": "Apache License 2.0"
+  "author": "CaMnter",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "7.0.0-beta.50",
+    "@babel/types": "7.0.0-beta.50",
+    "@babel/preset-es2016": "7.0.0-beta.53"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
 }
