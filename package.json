@@ -1,0 +1,24 @@
+{
+  "name": "applets-conversion-tool",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wechat-applet",
+    "alipay-applet",
+    "alipay",
+    "wechat",
+    "alipay-applets-conversion",
+    "wechat-applets-conversion",
+    "alipay-applets-conversion-tool",
+    "wechat-applets-conversion-tool",
+    "typescript",
+    "node",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "Apache License 2.0"
+}
