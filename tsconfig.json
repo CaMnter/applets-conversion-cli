@@ -21,8 +21,6 @@
     "declaration": true,
     // 从 tslib 导入辅助工具函数
     "importHelpers": true,
-    // 若有未使用的局部变量则抛错
-    "noUnusedLocals": true,
     // 决定如何处理模块
     "moduleResolution": "node",
     // 不是函数的所有返回路径都有返回值时报错
