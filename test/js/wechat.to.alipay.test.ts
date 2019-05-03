@@ -2,10 +2,12 @@
  * Created by：CaMnter
  */
 
-const assert = require('assert');
-const { jsTransForm } = require('../../lib/js/js-transform');
-const { getBabelPluginWechatToAlipay } = require('../../lib/plugin/provider');
-const { getBabelPluginAlipayToWechat } = require('../../lib/plugin/provider');
+// @ts-ignore
+const { _require } = require;
+
+const assert = _require('assert');
+const { jsTransForm } = _require('../../lib/js/js-transform');
+const { getBabelPluginWechatToAlipay } = _require('../../lib/plugin/provider');
 
 describe('「wechat to alipay」', function () {
 
@@ -45,41 +47,4 @@ describe('「wechat to alipay」', function () {
     assert.equal(jsTransForm(code, getBabelPluginWechatToAlipay()), expect);
   });
 
-  // alipay to wechat
-
-  it('my.httpRequest => wx.request', () => {
-    const code = 'my.httpRequest;';
-    const expect = 'wx.request;';
-    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
-  });
-
-  it('my.navigateTo => wx.navigateTo', () => {
-    const code = 'my.navigateTo;';
-    const expect = 'wx.navigateTo;';
-    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
-  });
-
-  it('my.httpRequest() => wx.request()', () => {
-    const code = 'my.httpRequest();';
-    const expect = 'wx.request();';
-    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
-  });
-
-  it('my.navigateTo() => wx.navigateTo()', () => {
-    const code = 'my.navigateTo();';
-    const expect = 'wx.navigateTo();';
-    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
-  });
-
-  it('my[\"httpRequest\"]() => wx[\"request\"]()', () => {
-    const code = 'my[\"httpRequest\"]();';
-    const expect = 'wx[\"request\"]();';
-    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
-  });
-
-  it('my[\"navigateTo\"]() => wx[\"navigateTo\"]()', () => {
-    const code = 'my[\"navigateTo\"]();';
-    const expect = 'wx[\"navigateTo\"]();';
-    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
-  });
-})
+});
