@@ -2,7 +2,6 @@
  * Created by：CaMnter
  */
 
-
 // @ts-ignore
 const assert = require('assert');
 // @ts-ignore
