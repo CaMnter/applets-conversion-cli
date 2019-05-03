@@ -2,12 +2,13 @@
  * Created by：CaMnter
  */
 
-// @ts-ignore
-const { _require } = require;
 
-const assert = _require('assert');
-const { jsTransForm } = _require('../../lib/js/js-transform');
-const { getBabelPluginWechatToAlipay } = _require('../../lib/plugin/provider');
+// @ts-ignore
+const assert = require('assert');
+// @ts-ignore
+const { jsTransForm } = require('../../lib/js/js-transform');
+// @ts-ignore
+const { getBabelPluginWechatToAlipay } = require('../../lib/plugin/provider');
 
 describe('「wechat to alipay」', function () {
 

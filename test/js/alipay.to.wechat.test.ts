@@ -3,11 +3,11 @@
  */
 
 // @ts-ignore
-const { _require } = require;
-
-const assert = _require('assert');
-const { jsTransForm } = _require('../../lib/js/js-transform');
-const { getBabelPluginAlipayToWechat } = _require('../../lib/plugin/provider');
+const assert = require('assert');
+// @ts-ignore
+const { jsTransForm } = require('../../lib/js/js-transform');
+// @ts-ignore
+const { getBabelPluginAlipayToWechat } = require('../../lib/plugin/provider');
 
 describe('「alipay to wechat」', function () {
 
