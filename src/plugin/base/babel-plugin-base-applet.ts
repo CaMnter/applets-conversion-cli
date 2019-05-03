@@ -6,7 +6,6 @@ import { BabelPluginIApplet } from "./babel-plugin-i-applet";
 import { wechatToAlipayMap } from "../map/wechat-to-alipay-map";
 import { alipayToWechatMap } from "../map/alipay-to-wechat-map";
 
-declare const require: any;
 export const types = require('@babel/types');
 
 export enum AppletType {
