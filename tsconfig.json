@@ -5,7 +5,7 @@
     // ------「normal」------ //
     // 编译过程中需要引入的库文件的列表
     "lib": [
-      "ES5",
+      "ES2015",
       "ES2015.Promise",
       "ES2015.Collection"
     ],
@@ -14,7 +14,7 @@
     // ECMAScript 目标版本
     "target": "es5",
     // 生成哪个模块系统代码
-    "module": "ESNext",
+    "module": "commonjs",
     // 生成相应的 .map文件
     "sourceMap": true,
     // 生成相应的 .d.ts文件
@@ -38,6 +38,8 @@
     "src"
   ],
   "exclude": [
+    "lib",
+    "test",
     "node_modules"
   ]
 }

@@ -6,7 +6,7 @@ import { AppletType, BabelPluginBaseApplet } from "./base/babel-plugin-base-appl
 
 export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
 
-  createPlugin(): Function {
+  public createPlugin(): Function {
     const _memberExpressionHook = this.memberExpressionHook.bind(this);
     return function (): object {
       return {
