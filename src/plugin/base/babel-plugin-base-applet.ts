@@ -6,7 +6,7 @@ import { BabelPluginIApplet } from "./babel-plugin-i-applet";
 import { wechatToAlipayMap } from "../map/wechat-to-alipay-map";
 import { alipayToWechatMap } from "../map/alipay-to-wechat-map";
 
-export const types = require('@babel/types');
+export const babelTypes = require('@babel/types');
 
 export enum AppletType {
   wx = 'wx',
@@ -73,6 +73,15 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
   }
 
   /**
+   * name「value」
+   *
+   * @param path { get?: Function }
+   */
+  public getNameValue(path: { get?: Function }): string {
+    return this.getAstValue(path, 'name');
+  }
+
+  /**
    * property
    *
    * @param path { get?: Function }
@@ -97,17 +106,53 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
     if (property && property.replaceWith && 'function' === typeof property.replaceWith) {
       switch (type) {
         case BabelType.id:
-          property.replaceWith(types.Identifier(name));
+          property.replaceWith(babelTypes.Identifier(name));
           break;
         case BabelType.string:
-          property.replaceWith(types.StringLiteral(name));
+          property.replaceWith(babelTypes.StringLiteral(name));
           break;
       }
     }
   }
 
   /**
-   * memberExpression hook
+   * Identifier hook
+   *
+   * wx
+   *
+   * @param path path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }
+   * @param appletType AppletType
+   */
+  identifierHook(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }, appletType: AppletType) {
+    const name: string = this.getNameValue(path);
+
+    let operationType: string | undefined = undefined;
+    let expectAppletType: string | undefined = undefined;
+    switch (appletType) {
+      case AppletType.wx:
+        operationType = AppletType.wx;
+        expectAppletType = AppletType.my;
+        break;
+      case AppletType.my:
+        operationType = AppletType.my;
+        expectAppletType = AppletType.wx;
+        break;
+    }
+
+    if (operationType === name &&
+      path.scope && path.scope.hasBinding && !path.scope.hasBinding(operationType) &&
+      path.isReferencedIdentifier && path.isReferencedIdentifier()) {
+      path.replaceWith(babelTypes.Identifier(expectAppletType))
+    }
+  }
+
+  /**
+   * MemberExpression hook
+   *
+   * wx['request']
+   *
+   * wx.request
+   * wx[functionName]
    *
    * @param path { get: Function }
    * @param appletType AppletType
