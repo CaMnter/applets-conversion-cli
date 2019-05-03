@@ -20,8 +20,6 @@ export enum BabelType {
 
 export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
 
-  public types: any = types as any;
-
   abstract createPlugin(): Function;
 
   /**
@@ -99,10 +97,10 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
     if (property && property.replaceWith && 'function' === typeof property.replaceWith) {
       switch (type) {
         case BabelType.id:
-          property.replaceWith(this.types.Identifier(name));
+          property.replaceWith(types.Identifier(name));
           break;
         case BabelType.string:
-          property.replaceWith(this.types.StringLiteral(name));
+          property.replaceWith(types.StringLiteral(name));
           break;
       }
     }
