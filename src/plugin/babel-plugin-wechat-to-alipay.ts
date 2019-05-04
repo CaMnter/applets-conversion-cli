@@ -8,6 +8,7 @@ export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
 
   public createPlugin(): Function {
     const _identifierHook = this.identifierHook.bind(this);
+    const _callExpressionHook = this.callExpressionHook.bind(this);
     const _memberExpressionHook = this.memberExpressionHook.bind(this);
     return function (): object {
       return {
@@ -17,12 +18,23 @@ export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
           /**
            * wx
            *
-           * @param path
-           * @param appletType
-           * @constructor
+           * @param path { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }
+           * @constructor constructor
            */
           Identifier(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }) {
             _identifierHook(path, AppletType.wx)
+          },
+
+          /**
+           * wx.request({ url: 'https://www.camnter.com' })
+           * wx['request']({ url: 'https://www.camnter.com' })
+           * wx[functionName]({ url: 'https://www.camnter.com' })
+           *
+           * @param path { get: Function }
+           * @constructor constructor
+           */
+          CallExpression(path: { get: Function }) {
+            _callExpressionHook(path, AppletType.wx);
           },
 
           /**
@@ -31,7 +43,7 @@ export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
            * wx.request
            * wx[functionName]
            *
-           * @param path path
+           * @param path { get: Function }
            * @constructor constructor
            */
           MemberExpression(path: { get: Function }) {

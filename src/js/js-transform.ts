@@ -2,8 +2,6 @@
  * Created by：CaMnter
  */
 
-import { BabelPluginIApplet } from "../plugin/base/babel-plugin-i-applet";
-
 const babel = require('@babel/core');
 
 export function jsTransForm(code: string | undefined, babelPlugin: Function) {

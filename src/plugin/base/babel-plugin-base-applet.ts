@@ -42,7 +42,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param path { get?: Function }
    * @param key string
    */
-  public getAstValue(path: { get?: Function }, key?: string) {
+  public getAstValue(path: { get?: Function }, key?: string): string {
     if (key && path.get && 'function' === typeof path.get) {
       return path.get(key).node;
     } else {
@@ -73,6 +73,39 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
 
 
   /**
+   * Handle applet type
+   *
+   * @param appletType AppletType
+   */
+  public handleAppletType(appletType: AppletType): {
+    map: object | any | undefined,
+    operationType: string | undefined,
+    expectAppletType: string | undefined
+  } {
+    let map: object | any | undefined = undefined;
+    let operationType: string | undefined = undefined;
+    let expectAppletType: string | undefined = undefined;
+    switch (appletType) {
+      case AppletType.wx:
+        map = wechatToAlipayMap;
+        operationType = AppletType.wx;
+        expectAppletType = AppletType.my;
+        break;
+      case AppletType.my:
+        map = alipayToWechatMap;
+        operationType = AppletType.my;
+        expectAppletType = AppletType.wx;
+        break;
+    }
+    return {
+      map,
+      operationType,
+      expectAppletType
+    };
+  }
+
+
+  /**
    * Identifier hook
    *
    * wx
@@ -80,26 +113,16 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param path path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }
    * @param appletType AppletType
    */
-  identifierHook(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }, appletType: AppletType) {
+  public identifierHook(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }, appletType: AppletType): void {
     const name: string = this.getAstValue(path, 'name');
 
-    let operationType: string | undefined = undefined;
-    let expectAppletType: string | undefined = undefined;
-    switch (appletType) {
-      case AppletType.wx:
-        operationType = AppletType.wx;
-        expectAppletType = AppletType.my;
-        break;
-      case AppletType.my:
-        operationType = AppletType.my;
-        expectAppletType = AppletType.wx;
-        break;
-    }
+    const typeProcessingResult = this.handleAppletType(appletType);
+    const { operationType, expectAppletType } = typeProcessingResult;
 
-    if (operationType === name &&
+    if (typeProcessingResult.operationType === name &&
       path.scope && path.scope.hasBinding && !path.scope.hasBinding(operationType) &&
       path.isReferencedIdentifier && path.isReferencedIdentifier()) {
-      path.replaceWith(babelTypes.Identifier(expectAppletType))
+      path.replaceWith(babelTypes.Identifier(expectAppletType));
     }
   }
 
@@ -113,26 +136,13 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param path { get: Function }
    * @param appletType AppletType
    */
-  public callExpressionHook(path: { get: Function }, appletType: AppletType) {
+  public callExpressionHook(path: { get: Function }, appletType: AppletType): void {
     const calleeAst: { isMemberExpression?: Function, get?: Function } = this.getAst(path, 'callee');
     if (calleeAst && calleeAst.isMemberExpression && calleeAst.isMemberExpression()) {
 
-      // TODO refactor
-      let map: object | any | undefined = undefined;
-      let operationType: string | undefined = undefined;
-      let expectAppletType: string | undefined = undefined;
-      switch (appletType) {
-        case AppletType.wx:
-          map = wechatToAlipayMap;
-          operationType = AppletType.wx;
-          expectAppletType = AppletType.my;
-          break;
-        case AppletType.my:
-          map = alipayToWechatMap;
-          operationType = AppletType.my;
-          expectAppletType = AppletType.wx;
-          break;
-      }
+      const typeProcessingResult = this.handleAppletType(appletType);
+      const { map, operationType } = typeProcessingResult;
+
       if (calleeAst.get && 'function' === typeof calleeAst.get && operationType === calleeAst.get('object.name').node) {
         if (calleeAst.get('computed').node) {
           // dynamic
@@ -178,22 +188,12 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param path { get: Function }
    * @param appletType AppletType
    */
-  public memberExpressionHook(path: { get: Function }, appletType: AppletType) {
+  public memberExpressionHook(path: { get: Function }, appletType: AppletType): void {
     const objectName: string = this.getAstValue(path, 'object.name');
     const propertyType: string = this.getAstValue(path, 'property.type');
 
-    let map: object | any | undefined = undefined;
-    let operationType: string | undefined = undefined;
-    switch (appletType) {
-      case AppletType.wx:
-        map = wechatToAlipayMap;
-        operationType = AppletType.wx;
-        break;
-      case AppletType.my:
-        map = alipayToWechatMap;
-        operationType = AppletType.my;
-        break;
-    }
+    const typeProcessingResult = this.handleAppletType(appletType);
+    const { map, operationType } = typeProcessingResult;
 
     if (map && operationType && operationType !== '') {
       if (operationType === objectName) {
