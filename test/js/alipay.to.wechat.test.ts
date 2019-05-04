@@ -63,4 +63,34 @@ describe('「alipay to wechat」', function () {
     assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
   });
 
+  it('my.httpRequest({ url: \'https://www.camnter.com\' }) => wx.request({ url: \'https://www.camnter.com\' })', () => {
+    const code = 'my.httpRequest({\n' +
+      '  url: \'https://www.camnter.com\'\n' +
+      '});';
+    const expect = 'wx.request({\n' +
+      '  url: \'https://www.camnter.com\'\n' +
+      '});';
+    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
+  });
+
+  it('my[\"httpRequest\"]({ url: \'https://www.camnter.com\' }) => wx[\"request\"]({ url: \'https://www.camnter.com\' })', () => {
+    const code = 'my[\"httpRequest\"]({\n' +
+      '  url: \'https://www.camnter.com\'\n' +
+      '});';
+    const expect = 'wx[\"request\"]({\n' +
+      '  url: \'https://www.camnter.com\'\n' +
+      '});';
+    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
+  });
+
+  it('my[functionName]({ url: \'https://www.camnter.com\' }) => wx[functionName]({ url: \'https://www.camnter.com\' })', () => {
+    const code = 'my[functionName]({\n' +
+      '  url: \'https://www.camnter.com\'\n' +
+      '});';
+    const expect = 'wx[functionName]({\n' +
+      '  url: \'https://www.camnter.com\'\n' +
+      '});';
+    assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
+  });
+
 })
