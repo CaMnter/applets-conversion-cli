@@ -139,7 +139,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
     if (calleeAst && calleeAst.isMemberExpression && calleeAst.isMemberExpression()) {
 
       const typeProcessingResult = this.handleAppletType(appletType);
-      const { map, operationType } = typeProcessingResult;
+      const { map, operationType, expectAppletType } = typeProcessingResult;
 
       if (calleeAst.get && 'function' === typeof calleeAst.get && operationType === calleeAst.get('object.name').node) {
         if (calleeAst.get('computed').node) {
@@ -166,9 +166,9 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
             this.replaceAst(calleePropertyAst, BabelType.id, expectCalleePropertyValue);
           }
           // wx => my
-          if (operationType === calleeObjectName) {
+          if (expectAppletType && operationType === calleeObjectName) {
             const calleeObjectAst: { get?: Function, replaceWith?: Function, isMemberExpression?: Function } = this.getAst(path, 'callee.object');
-            this.replaceAst(calleeObjectAst, BabelType.id, expectCalleePropertyValue);
+            this.replaceAst(calleeObjectAst, BabelType.id, expectAppletType);
           }
         }
       }

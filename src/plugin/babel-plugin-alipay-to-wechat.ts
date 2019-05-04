@@ -35,9 +35,9 @@ export class BabelPluginAlipayToWechat extends BabelPluginBaseApplet {
            * @param path { get: Function }
            * @constructor constructor
            */
-          // CallExpression(path: { get: Function }) {
-          //   _callExpressionHook(path, AppletType.my);
-          // },
+          CallExpression(path: { get: Function }) {
+            _callExpressionHook(path, AppletType.my);
+          },
 
           /**
            * my['request']
