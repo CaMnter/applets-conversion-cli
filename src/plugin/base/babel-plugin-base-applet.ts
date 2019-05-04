@@ -2,23 +2,21 @@
  * Created by：CaMnter
  */
 
-import { BabelPluginIApplet } from "./babel-plugin-i-applet";
+import { BabelType } from "./enum/babel-type";
+import { AppletType } from "./enum/applet-type";
 import { wechatToAlipayMap } from "../map/wechat-to-alipay-map";
 import { alipayToWechatMap } from "../map/alipay-to-wechat-map";
+import { BabelPluginIApplet } from "./babel-plugin-i-applet";
+import { BabelPluginIIdentifierHook } from "./hook/babel-plugin-i-identifier-hook";
+import { BabelPluginICallExpressionHook } from "./hook/babel-plugin-i-call-expression-hook";
+import { BabelPluginIMemberExpressionHook } from "./hook/babel-plugin-i-member-expression-hook";
 
 export const babelTypes = require('@babel/types');
 
-export enum AppletType {
-  wx = 'wx',
-  my = 'my'
-};
-
-export enum BabelType {
-  id = 'id',
-  string = 'string'
-};
-
-export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
+export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
+  BabelPluginIIdentifierHook,
+  BabelPluginICallExpressionHook,
+  BabelPluginIMemberExpressionHook {
 
   abstract createPlugin(): Function;
 

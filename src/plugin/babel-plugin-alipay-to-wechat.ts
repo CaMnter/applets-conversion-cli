@@ -2,7 +2,8 @@
  * Created by：CaMnter
  */
 
-import { AppletType, BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
+import { AppletType } from "./base/enum/applet-type";
+import { BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
 
 export class BabelPluginAlipayToWechat extends BabelPluginBaseApplet {
 
@@ -34,9 +35,9 @@ export class BabelPluginAlipayToWechat extends BabelPluginBaseApplet {
            * @param path { get: Function }
            * @constructor constructor
            */
-          CallExpression(path: { get: Function }) {
-            _callExpressionHook(path, AppletType.wx);
-          },
+          // CallExpression(path: { get: Function }) {
+          //   _callExpressionHook(path, AppletType.my);
+          // },
 
           /**
            * my['request']
