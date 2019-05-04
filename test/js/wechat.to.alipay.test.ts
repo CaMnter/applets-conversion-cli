@@ -20,10 +20,8 @@
 
 // @ts-ignore
 const assert = require('assert');
-// @ts-ignore
-const { jsTransForm } = require('../../lib/js/js-transform');
-// @ts-ignore
-const { getBabelPluginWechatToAlipay } = require('../../lib/plugin/provider');
+import { jsTransForm } from '../../lib/js/js-transform' ;
+import { getBabelPluginWechatToAlipay } from '../../lib/plugin/provider' ;
 
 describe('「wechat to alipay」', function () {
 

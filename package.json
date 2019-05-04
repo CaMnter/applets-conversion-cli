@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha \"test/**/*.ts\""
+    "test": "./node_modules/.bin/mocha --require ./node_modules/ts-node/register \"test/**/*.ts\""
   },
   "keywords": [
     "wechat-applet",
@@ -31,8 +31,11 @@
     "cheerio": "^1.0.0-rc.3"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
     "mocha": "^6.1.4",
+    "ts-node": "^8.1.0",
     "tslib": "^1.9.3",
     "typescript": "^3.4.5"
   }
