@@ -20,7 +20,7 @@
 
 const babel = require('@babel/core');
 
-export function jsTransForm(code: string | undefined, babelPlugin: Function) {
+export function jsTransForm(code: string | undefined, babelPlugin: Function): string {
   // IApplet
   const opts: { plugins?: Array<any> } = {};
   if (babelPlugin) {
