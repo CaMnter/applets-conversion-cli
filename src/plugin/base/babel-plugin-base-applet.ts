@@ -28,11 +28,11 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param path { get?: Function }
    * @param key string
    */
-  public getAst(path: { get?: Function }, key?: string) {
+  public getAst(path: { get?: Function }, key?: string): { get?: Function, replaceWith?: Function, isMemberExpression?: Function } {
     if (key && path.get && 'function' === typeof path.get) {
       return path.get(key);
     } else {
-      return undefined;
+      return {};
     }
   }
 
@@ -50,83 +50,6 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
     }
   }
 
-  /**
-   * object.name「value」
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getObjectNameValue(path: { get?: Function }): string {
-    return this.getAstValue(path, 'object.name');
-  }
-
-  /**
-   * property.type「value」
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getPropertyTypeValue(path: { get?: Function }): string {
-    return this.getAstValue(path, 'property.type');
-  }
-
-  /**
-   * property.name「value」
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getPropertyNameValue(path: { get?: Function }): string {
-    return this.getAstValue(path, 'property.name');
-  }
-
-  /**
-   * property.value「value」
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getPropertyValueValue(path: { get?: Function }): string {
-    return this.getAstValue(path, 'property.value');
-  }
-
-  /**
-   * name「value」
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getNameValue(path: { get?: Function }): string {
-    return this.getAstValue(path, 'name');
-  }
-
-  /**
-   * property
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getProperty(path: { get?: Function }): { replaceWith?: Function } | undefined {
-    return this.getAst(path, 'property');
-  }
-
-  /**
-   * callee
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   */
-  public getCallee(path: { get?: Function }): { isMemberExpression: Function, get: Function } | undefined {
-    return this.getAst(path, 'callee');
-  }
-
 
   /**
    * replace ast
@@ -135,7 +58,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param type BabelType
    * @param name string
    */
-  public replaceAst(ast: { replaceWith?: Function }, type: BabelType, name: string): void {
+  public replaceAst(ast: { get?: Function, replaceWith?: Function, isMemberExpression?: Function }, type: BabelType, name: string): void {
     if (ast && ast.replaceWith && 'function' === typeof ast.replaceWith) {
       switch (type) {
         case BabelType.id:
@@ -150,29 +73,6 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
 
 
   /**
-   * replace property
-   *
-   * TODO refactor
-   *
-   * @param path { get?: Function }
-   * @param type BabelType
-   * @param name string
-   */
-  public replaceProperty(path: { get?: Function }, type: BabelType, name: string): void {
-    const property: { replaceWith?: Function } | undefined = this.getProperty(path);
-    if (property && property.replaceWith && 'function' === typeof property.replaceWith) {
-      switch (type) {
-        case BabelType.id:
-          property.replaceWith(babelTypes.Identifier(name));
-          break;
-        case BabelType.string:
-          property.replaceWith(babelTypes.StringLiteral(name));
-          break;
-      }
-    }
-  }
-
-  /**
    * Identifier hook
    *
    * wx
@@ -181,7 +81,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param appletType AppletType
    */
   identifierHook(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }, appletType: AppletType) {
-    const name: string = this.getNameValue(path);
+    const name: string = this.getAstValue(path, 'name');
 
     let operationType: string | undefined = undefined;
     let expectAppletType: string | undefined = undefined;
@@ -214,8 +114,8 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param appletType AppletType
    */
   public callExpressionHook(path: { get: Function }, appletType: AppletType) {
-    const callee: { isMemberExpression: Function, get: Function } | undefined = this.getCallee(path);
-    if (callee && callee.isMemberExpression()) {
+    const calleeAst: { isMemberExpression?: Function, get?: Function } = this.getAst(path, 'callee');
+    if (calleeAst && calleeAst.isMemberExpression && calleeAst.isMemberExpression()) {
 
       // TODO refactor
       let map: object | any | undefined = undefined;
@@ -233,15 +133,16 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
           expectAppletType = AppletType.wx;
           break;
       }
-      if (operationType === callee.get('object.name').node) {
-        if (callee.get('computed').node) {
+      if (calleeAst.get && 'function' === typeof calleeAst.get && operationType === calleeAst.get('object.name').node) {
+        if (calleeAst.get('computed').node) {
           // dynamic
           const calleePropertyType = this.getAstValue(path, 'callee.property.type');
           if ('StringLiteral' === calleePropertyType) {
             const calleePropertyValue = this.getAstValue(path, 'callee.property.value');
             const expectCalleePropertyValue = map[calleePropertyValue];
             if (expectCalleePropertyValue) {
-              this.replaceProperty(path, BabelType.string, expectCalleePropertyValue);
+              const propertyAst = this.getAst(path, 'property');
+              this.replaceAst(propertyAst, BabelType.string, expectCalleePropertyValue);
             }
           }
         } else {
@@ -253,13 +154,13 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
           const expectCalleePropertyValue = map[calleePropertyName];
           // request => httpRequest
           if (expectCalleePropertyValue) {
-            const calleeProperty: { replaceWith: Function } = this.getAst(path, 'callee.property');
-            this.replaceAst(calleeProperty, BabelType.id, expectCalleePropertyValue);
+            const calleePropertyAst: { get?: Function, replaceWith?: Function, isMemberExpression?: Function } = this.getAst(path, 'callee.property');
+            this.replaceAst(calleePropertyAst, BabelType.id, expectCalleePropertyValue);
           }
           // wx => my
           if (operationType === calleeObjectName) {
-            const calleeObject: { replaceWith: Function } = this.getAst(path, 'callee.object');
-            this.replaceAst(calleeObject, BabelType.id, expectCalleePropertyValue);
+            const calleeObjectAst: { get?: Function, replaceWith?: Function, isMemberExpression?: Function } = this.getAst(path, 'callee.object');
+            this.replaceAst(calleeObjectAst, BabelType.id, expectCalleePropertyValue);
           }
         }
       }
@@ -278,8 +179,8 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
    * @param appletType AppletType
    */
   public memberExpressionHook(path: { get: Function }, appletType: AppletType) {
-    const objectName: string = this.getObjectNameValue(path);
-    const propertyType: string = this.getPropertyTypeValue(path);
+    const objectName: string = this.getAstValue(path, 'object.name');
+    const propertyType: string = this.getAstValue(path, 'property.type');
 
     let map: object | any | undefined = undefined;
     let operationType: string | undefined = undefined;
@@ -300,19 +201,21 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet {
           // wx.request
           // wx[functionName]
           case 'Identifier': {
-            const propertyName: string = this.getPropertyNameValue(path);
+            const propertyName: string = this.getAstValue(path, 'property.name');
             const expectPropertyName = map[propertyName];
             if (expectPropertyName) {
-              this.replaceProperty(path, BabelType.id, expectPropertyName);
+              const propertyAst = this.getAst(path, 'property');
+              this.replaceAst(propertyAst, BabelType.id, expectPropertyName);
             }
             break;
           }
           // wx['request']
           case 'StringLiteral': {
-            const propertyValue: string = this.getPropertyValueValue(path);
+            const propertyValue: string = this.getAstValue(path, 'property.value');
             const expectPropertyName = map[propertyValue];
             if (expectPropertyName) {
-              this.replaceProperty(path, BabelType.string, expectPropertyName);
+              const propertyAst = this.getAst(path, 'property');
+              this.replaceAst(propertyAst, BabelType.string, expectPropertyName);
             }
             break;
           }

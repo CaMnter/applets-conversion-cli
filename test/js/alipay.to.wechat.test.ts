@@ -46,4 +46,5 @@ describe('「alipay to wechat」', function () {
     const expect = 'wx[\"navigateTo\"]();';
     assert.equal(jsTransForm(code, getBabelPluginAlipayToWechat()), expect);
   });
+
 })
