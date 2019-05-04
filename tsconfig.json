@@ -26,7 +26,7 @@
     // 不是函数的所有返回路径都有返回值时报错
     "noImplicitReturns": true,
     // 若有未使用的参数则抛错
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     // 启用实验性的ES装饰器
     "experimentalDecorators": true,
     // 报告 switch 的case 语句贯穿错误
