@@ -18,7 +18,7 @@
  * Created by：CaMnter
  */
 
-export const wechatToAlipayXmlMap = {
+export const wechatToAlipayXmlMap: { [attr: string]: string } = {
   'wx:if': 'a:if',
   'wx:elif': 'a:elif',
   'wx:else': 'a:else',
