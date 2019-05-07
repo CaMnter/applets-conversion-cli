@@ -18,15 +18,14 @@
  * Created by：CaMnter
  */
 
+import { load } from 'cheerio';
 import { expect } from 'chai';
-
-const cheerio = require('cheerio');
 
 describe('「cheerio」', function () {
 
   it('cheerio html', () => {
     const code = '<view wx:if="{{you}}">';
-    const $ = cheerio.load(code);
+    const $ = load(code);
     const result = $.html({
       xmlMode: true,
       lowerCaseTags: true,

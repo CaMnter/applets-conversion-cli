@@ -18,16 +18,15 @@
  * Created by：CaMnter
  */
 
+import { load } from 'cheerio';
 import { expect } from 'chai';
 import { extractBodyContent } from "../../src/utils/extract-body-content";
-
-const cheerio = require('cheerio');
 
 describe('「extract body content」', function () {
 
   it('<view wx:if="{{you}}"> => <view wx:if="{{you}}"/>', () => {
     const code = '<view wx:if="{{you}}">';
-    const $ = cheerio.load(code);
+    const $ = load(code);
     const result = extractBodyContent($);
     expect(result).to.equal('<view wx:if="{{you}}"/>');
   });
