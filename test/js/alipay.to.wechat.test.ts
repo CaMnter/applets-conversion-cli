@@ -20,7 +20,7 @@
 
 import { expect } from 'chai';
 import { jsTransForm } from '../../src/js/js-transform' ;
-import { getBabelPluginAlipayToWechat } from '../../src/plugin/provider';
+import { getBabelPluginAlipayToWechat } from '../../src/plugin/babel-plugin-provider';
 
 describe('「alipay to wechat」', function () {
 
