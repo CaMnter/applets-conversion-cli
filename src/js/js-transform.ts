@@ -18,14 +18,21 @@
  * Created by：CaMnter
  */
 
-const babel = require('@babel/core');
+import { BabelFileResult, transform } from "@babel/core";
 
-export function jsTransForm(code: string | undefined, babelPlugin: Function): string {
+export function jsTransForm(code: string | undefined | null, babelPlugin: Function): string {
+  let expectCode = '';
+  if (!code) {
+    return expectCode;
+  }
   // IApplet
   const opts: { plugins?: Array<any> } = {};
   if (babelPlugin) {
     opts.plugins = [babelPlugin];
-    code = babel.transform(code, opts).code;
+    const result: BabelFileResult | null = transform(code, opts);
+    if (result && result.code && 'string' == typeof result.code) {
+      expectCode = result.code;
+    }
   }
-  return code && 'string' == typeof code ? code.trim() : '';
+  return expectCode;
 }
