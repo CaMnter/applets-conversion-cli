@@ -18,7 +18,7 @@
  * Created by：CaMnter
  */
 
-import { AppletType } from "../plugin/base/enum/applet-type";
+import { AppletType } from "../babel-plugin/base/enum/applet-type";
 import { alipayToWechatXmlMap } from "../xml/alipay-to-wechat-map";
 import { wechatToAlipayXmlMap } from "../xml/wechat-to-alipay-map";
 

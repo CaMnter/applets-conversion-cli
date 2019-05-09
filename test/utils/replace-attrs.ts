@@ -20,7 +20,7 @@
 
 import { load } from 'cheerio';
 import { expect } from 'chai';
-import { AppletType } from "../../src/plugin/base/enum/applet-type";
+import { AppletType } from "../../src/babel-plugin/base/enum/applet-type";
 import { replaceAttrs } from "../../src/utils/replace-attrs";
 
 describe('「replace attrs」', function () {

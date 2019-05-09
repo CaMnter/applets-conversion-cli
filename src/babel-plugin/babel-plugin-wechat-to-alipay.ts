@@ -21,7 +21,7 @@
 import { AppletType } from "./base/enum/applet-type";
 import { BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
 
-export class BabelPluginAlipayToWechat extends BabelPluginBaseApplet {
+export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
 
   public createPlugin(): Function {
     const _identifierHook = this.identifierHook.bind(this);
@@ -29,46 +29,46 @@ export class BabelPluginAlipayToWechat extends BabelPluginBaseApplet {
     const _memberExpressionHook = this.memberExpressionHook.bind(this);
     return function (): object {
       return {
-        name: 'babel plugin alipay to wechat',
+        name: 'babel babel-plugin wechat to alpay',
         visitor: {
 
           /**
-           * my
+           * wx
            *
-           * @param path
-           * @param appletType
-           * @constructor
+           * @param path { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }
+           * @constructor constructor
            */
           Identifier(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }) {
-            _identifierHook(path, AppletType.my)
+            _identifierHook(path, AppletType.wx)
           },
 
           /**
-           * my.request({ url: 'https://www.camnter.com' })
-           * my['request']({ url: 'https://www.camnter.com' })
-           * my[functionName]({ url: 'https://www.camnter.com' })
+           * wx.request({ url: 'https://www.camnter.com' })
+           * wx['request']({ url: 'https://www.camnter.com' })
+           * wx[functionName]({ url: 'https://www.camnter.com' })
            *
            * @param path { get: Function }
            * @constructor constructor
            */
           CallExpression(path: { get: Function }) {
-            _callExpressionHook(path, AppletType.my);
+            _callExpressionHook(path, AppletType.wx);
           },
 
           /**
-           * my['request']
+           * wx['request']
            *
-           * my.request
-           * my[functionName]
+           * wx.request
+           * wx[functionName]
            *
-           * @param path path
+           * @param path { get: Function }
            * @constructor constructor
            */
           MemberExpression(path: { get: Function }) {
-            _memberExpressionHook(path, AppletType.my);
+            _memberExpressionHook(path, AppletType.wx);
           },
         }
       };
     };
   }
+
 }
