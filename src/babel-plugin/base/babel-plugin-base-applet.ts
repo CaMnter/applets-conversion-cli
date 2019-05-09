@@ -20,6 +20,7 @@
 
 import { BabelType } from "./enum/babel-type";
 import { AppletType } from "./enum/applet-type";
+import { isFunction } from "../../utils/utils";
 import { alipayToWechatMap } from "../map/alipay-to-wechat-map";
 import { wechatToAlipayMap } from "../map/wechat-to-alipay-map";
 import { BabelPluginIApplet } from "./babel-plugin-i-applet";
@@ -43,7 +44,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param key string
    */
   public getAst(path: { get?: Function }, key?: string): { get?: Function, replaceWith?: Function, isMemberExpression?: Function } {
-    if (key && path.get && 'function' === typeof path.get) {
+    if (key && path.get && isFunction(path.get)) {
       return path.get(key);
     } else {
       return {};
@@ -57,7 +58,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param key string
    */
   public getAstValue(path: { get?: Function }, key?: string): string {
-    if (key && path.get && 'function' === typeof path.get) {
+    if (key && path.get && isFunction(path.get)) {
       return path.get(key).node;
     } else {
       return '';
@@ -72,7 +73,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param name string
    */
   public replaceAst(ast: { get?: Function, replaceWith?: Function, isMemberExpression?: Function }, type: BabelType, name: string): void {
-    if (ast && ast.replaceWith && 'function' === typeof ast.replaceWith) {
+    if (ast && ast.replaceWith && isFunction(ast.replaceWith)) {
       switch (type) {
         case BabelType.id:
           ast.replaceWith(babelTypes.Identifier(name));
@@ -154,7 +155,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
       const typeProcessingResult = this.handleAppletType(appletType);
       const { map, operationType, expectAppletType } = typeProcessingResult;
 
-      if (calleeAst.get && 'function' === typeof calleeAst.get && operationType === calleeAst.get('object.name').node) {
+      if (calleeAst.get && isFunction(calleeAst.get) && operationType === calleeAst.get('object.name').node) {
         if (calleeAst.get('computed').node) {
           // dynamic
           const calleePropertyType = this.getAstValue(path, 'callee.property.type');

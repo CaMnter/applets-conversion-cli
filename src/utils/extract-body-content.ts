@@ -18,17 +18,19 @@
  * Created by：CaMnter
  */
 
+import { isFunction } from "./utils";
+
 /**
  * Extract body content
  *
  * @param $ CheerioStatic
  */
 export function extractBodyContent($?: CheerioStatic): string {
-  if (!($ && $.html && 'function' === typeof $.html)) {
+  if (!($ && $.html && isFunction($.html))) {
     return '';
   }
   const body = $('body');
-  return body && body.children && 'function' === typeof body.children ?
+  return body && body.children && isFunction(body.children) ?
     $.html(body.children(), {
       xmlMode: true,
       lowerCaseTags: true,
