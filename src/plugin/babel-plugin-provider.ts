@@ -21,10 +21,10 @@
 import { BabelPluginWechatToAlipay } from "./babel-plugin-wechat-to-alipay";
 import { BabelPluginAlipayToWechat } from "./babel-plugin-alipay-to-wechat";
 
-export function getBabelPluginWechatToAlipay() {
+export function getBabelPluginWechatToAlipay(): Function {
   return new BabelPluginWechatToAlipay().createPlugin();
 }
 
-export function getBabelPluginAlipayToWechat() {
+export function getBabelPluginAlipayToWechat(): Function {
   return new BabelPluginAlipayToWechat().createPlugin();
 }
