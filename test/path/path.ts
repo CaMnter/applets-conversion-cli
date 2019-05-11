@@ -23,10 +23,16 @@ import { expect } from 'chai';
 
 describe('「path」', function () {
 
-  it('path relative', () => {
+  it('path relative「1」', () => {
     const from: string = 'app/page/my/index.js';
     const to: string = 'app/common/utils/views/index.js';
     expect(path.relative(from, to)).to.equal('../../../common/utils/views/index.js');
+  });
+
+  it('path relative「2」', () => {
+    const from: string = 'app/page';
+    const to: string = 'app/page/my/index.js';
+    expect(path.relative(from, to)).to.equal('my/index.js');
   });
 
 });
