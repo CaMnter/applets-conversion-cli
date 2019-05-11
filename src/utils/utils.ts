@@ -56,3 +56,10 @@ export function isString(target: any | undefined): boolean {
 export function isNumber(target: any | undefined): boolean {
   return target && 'number' === typeof target;
 }
+
+/**
+ * nothing to do
+ */
+export function nothingToDo() {
+
+}
