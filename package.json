@@ -29,9 +29,11 @@
     "@types/babel__core": "^7.1.1",
     "@types/cheerio": "^0.22.11",
     "@types/css": "^0.0.31",
+    "@types/glob": "^7.1.1",
     "@types/node": "^12.0.0",
     "cheerio": "^1.0.0-rc.3",
     "css": "^2.2.4",
+    "glob": "^7.1.4",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
