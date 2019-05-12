@@ -137,7 +137,7 @@ export function writeFileSync(filePath: string, content: string, options?: Write
 
   const dir: string = path.dirname(filePath);
   mkdirSync(dir);
-  fs.writeFileSync(filePath, content);
+  fs.writeFileSync(filePath, content, options);
 }
 
 export function mkFileSync(input: string): boolean {
