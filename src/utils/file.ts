@@ -78,9 +78,13 @@ export function overrideFileSync(
   let content: string = fs.readFileSync(input, options) as string;
   let filePath: string = output;
   if (options && options.override && isFunction(options.override)) {
+    let inputAbsolutePath = options.inputAbsolutePath as string;
+    if (!(inputAbsolutePath && isString(inputAbsolutePath) && '' !== inputAbsolutePath)) {
+      inputAbsolutePath = path.join(process.cwd(), input);
+    }
     const result: { content?: string, filePath?: string } | undefined = options.override(
       content,
-      options.inputAbsolutePath as string,
+      inputAbsolutePath,
       input
     );
     if (result && result.content) {
