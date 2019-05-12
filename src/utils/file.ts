@@ -18,10 +18,10 @@
  * Created by：CaMnter
  */
 
-
 import * as fs from 'fs';
-import { Stats, WriteFileOptions } from 'fs';
+import * as glob from 'glob';
 import * as path from 'path';
+import { Stats, WriteFileOptions } from 'fs';
 import { isString, isFunction } from './utils'
 
 export function overrideSync(
@@ -30,7 +30,7 @@ export function overrideSync(
   options: {
     flag?: string,
     encoding?: string | null,
-    // fileContent: string, filePath: string
+    // content?: string, absolutePath?: string, relativePath?: string
     override?: (content?: string, absolutePath?: string, relativePath?: string) => { content?: string, filePath?: string } | undefined
     [option: string]: string | boolean | Function | undefined | null
   }
@@ -63,13 +63,14 @@ export function overrideFileSync(
   options: {
     flag?: string,
     encoding?: string | null,
-    // fileContent: string, filePath: string
+    inputAbsolutePath?: string | null,
+    // content?: string, absolutePath?: string, relativePath?: string
     override?: (content?: string, absolutePath?: string, relativePath?: string) => { content?: string, filePath?: string } | undefined
     [option: string]: string | boolean | Function | undefined | null
   }
 ): void {
   const mkFile: boolean = mkFileSync(output);
-  if (mkFile) {
+  if (!mkFile) {
     throw new Error(`mkFile error, path = ${ output }`);
     return;
   }
@@ -77,7 +78,11 @@ export function overrideFileSync(
   let content: string = fs.readFileSync(input, options) as string;
   let filePath: string = output;
   if (options && options.override && isFunction(options.override)) {
-    const result: { content?: string, filePath?: string } | undefined = options.override(content, filePath);
+    const result: { content?: string, filePath?: string } | undefined = options.override(
+      content,
+      options.inputAbsolutePath as string,
+      input
+    );
     if (result && result.content) {
       content = result.content;
     }
@@ -100,13 +105,25 @@ export function overrideDirSync(
   }
 ): void {
   const mkdir: boolean = mkdirSync(output);
-  if (mkdir) {
+  if (!mkdir) {
     throw new Error(`mkdir error, path = ${ output }`);
     return;
   }
 
-  // TODO readdirSync
+  const currentDirPath: string = process.cwd();
+  const inputAbsolutePath: string = path.join(currentDirPath, input);
+  const outputAbsolutePath: string = path.join(currentDirPath, output);
+  const globPattern = inputAbsolutePath + '!(node_modules)/**/*.{js,axml,wxml,acss,wxss}';
+  const globResult: string[] = glob.sync(globPattern);
 
+  globResult.forEach(filePath => {
+    // TODO filter
+
+    options.relativePath = input;
+    options.absolutePath = path.join(currentDirPath, filePath);
+    const createPath = path.join(outputAbsolutePath, filePath);
+    overrideFileSync(filePath, createPath, options)
+  });
 }
 
 export function writeFileSync(filePath: string, content: string, options?: WriteFileOptions): void {
@@ -120,11 +137,21 @@ export function writeFileSync(filePath: string, content: string, options?: Write
 }
 
 export function mkFileSync(input: string): boolean {
-  if (!(input && isString(input) && fs.existsSync(input))) {
+  if (!(input && isString(input))) {
     return false;
   }
 
-  fs.mkdirSync(path.join(input));
+  const targetFilePath: string = path.join(input);
+  if (targetFilePath && fs.existsSync(targetFilePath)) {
+    return true;
+  }
+
+  const targetDirPath: string = path.dirname(targetFilePath);
+  if (fs.existsSync(targetDirPath)) {
+    return true;
+  }
+
+  fs.mkdirSync(targetDirPath);
   return true;
 }
 
@@ -150,12 +177,16 @@ export function mkdirSync(input: string): boolean {
    *
    *「actualChildrenPathList」['my', 'index.js']
    *「forEach」
-   *「1」「path.join(actualDeepestPath, childrenPath)」app/page/my
-   *「2」「path.join(actualDeepestPath, childrenPath)」app/page/my/index.js
+   *「1」「targetDir」app/page/my
+   *「2」「targetDir」app/page/my/index.js
    */
   const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
   actualChildrenPathList.forEach((childrenPath: string) => {
-    fs.mkdirSync(path.join(actualDeepestPath, childrenPath));
+    const targetDir: string = path.join(actualDeepestPath, childrenPath);
+    const exists: boolean = fs.existsSync(targetDir);
+    if (!exists) {
+      fs.mkdirSync(targetDir);
+    }
   });
   return true;
 }
