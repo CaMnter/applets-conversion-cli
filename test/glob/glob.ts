@@ -19,12 +19,19 @@
  */
 
 import * as glob from 'glob';
+import * as path from 'path';
 import { expect } from 'chai';
 
 describe('「glob」', function () {
 
   it('glob sync', () => {
     const result = glob.sync("!(node_modules)/**/*.{js,ts,json}");
+    const expectResult = Array.isArray(result);
+    expect(expectResult).to.equal(true);
+  });
+
+  it('glob specified directory', () => {
+    const result = glob.sync(path.join(process.cwd(), 'test') + "!(node_modules)/**/*.{js,ts,json}");
     const expectResult = Array.isArray(result);
     expect(expectResult).to.equal(true);
   });
