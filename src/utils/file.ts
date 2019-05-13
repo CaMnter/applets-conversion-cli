@@ -172,7 +172,7 @@ export function mkdirSync(input: string): boolean {
   const actualChildrenPath: string = path.relative(actualDeepestPath, input);
 
   // no need to create
-  if (actualChildrenPath) {
+  if (!actualChildrenPath) {
     return true;
   }
 
@@ -188,6 +188,8 @@ export function mkdirSync(input: string): boolean {
    *「1」「targetDir」app/page/my
    *「2」「targetDir」app/page/my/index.js
    */
+
+    // TODO ../..
   const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
   actualChildrenPathList.forEach((childrenPath: string) => {
     const targetDir: string = path.join(actualDeepestPath, childrenPath);
