@@ -65,7 +65,7 @@ export function overrideFileSync(
     encoding?: string | null,
     inputAbsolutePath?: string | null,
     // content?: string, absolutePath?: string, relativePath?: string
-    override?: (content?: string, absolutePath?: string, relativePath?: string) => { content?: string, filePath?: string } | undefined
+    override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
     [option: string]: string | boolean | Function | undefined | null
   }
 ): void {
@@ -104,7 +104,7 @@ export function overrideDirSync(
     flag?: string,
     encoding?: string | null,
     // fileContent: string, filePath: string
-    override?: (content?: string, absolutePath?: string, relativePath?: string) => { content?: string, filePath?: string } | undefined
+    override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
     [option: string]: string | boolean | Function | undefined | null
   }
 ): void {
@@ -116,17 +116,16 @@ export function overrideDirSync(
 
   const currentDirPath: string = process.cwd();
   const inputAbsolutePath: string = path.join(currentDirPath, input);
-  const outputAbsolutePath: string = path.join(currentDirPath, output);
-  const globPattern = inputAbsolutePath + '!(node_modules)/**/*.{js,axml,wxml,acss,wxss}';
+  const globPattern = inputAbsolutePath + '!(node_modules)/**/*.{js,ts,axml,wxml,acss,wxss}';
   const globResult: string[] = glob.sync(globPattern);
 
   globResult.forEach(filePath => {
     // TODO filter
-
     options.relativePath = input;
     options.absolutePath = path.join(currentDirPath, filePath);
-    const createPath = path.join(outputAbsolutePath, filePath);
-    overrideFileSync(filePath, createPath, options)
+    const basename: string = path.basename(filePath);
+    const createFilePath: string = path.join(output, basename);
+    overrideFileSync(filePath, createFilePath, options)
   });
 }
 
@@ -160,8 +159,13 @@ export function mkFileSync(input: string): boolean {
 }
 
 export function mkdirSync(input: string): boolean {
-  if (!(input && isString(input) && fs.existsSync(input))) {
+  if (!(input && isString(input))) {
     return false;
+  }
+
+  const targetDirPath: string = path.join(input);
+  if (targetDirPath && fs.existsSync(targetDirPath)) {
+    return true;
   }
 
   const actualDeepestPath: string = getActualDeepestPath(input);
