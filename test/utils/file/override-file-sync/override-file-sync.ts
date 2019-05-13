@@ -26,7 +26,7 @@ describe('「override file sync」', function () {
     const input: string = 'test/utils/file/override-file-sync/input.ts';
     const output: string = 'test/utils/file/override-file-sync/output.ts';
     overrideFileSync(input, output, {
-      override: function (content?: string, absolutePath?: string, relativePath?: string) {
+      override: function (content: string, absolutePath: string, relativePath: string) {
         return {
           content: `${ content }\n// Only save you from anything\n// Only save you from anything\n// Only save you from anything`,
           filePath: output
@@ -39,7 +39,7 @@ describe('「override file sync」', function () {
     const input: string = 'test/utils/file/override-file-sync/input.ts';
     const output: string = 'test/utils/file/override-file-sync/output/output.ts';
     overrideFileSync(input, output, {
-      override: function (content?: string, absolutePath?: string, relativePath?: string) {
+      override: function (content: string, absolutePath: string, relativePath: string) {
         return {
           content: `${ content }\n// Only save you from anything\n// Only save you from anything\n// Only save you from anything`,
           filePath: output
