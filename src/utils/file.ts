@@ -163,7 +163,7 @@ export function mkdirSync(input: string): boolean {
     return false;
   }
 
-  const targetDirPath: string = path.join(input);
+  let targetDirPath: string = path.join(input);
   if (targetDirPath && fs.existsSync(targetDirPath)) {
     return true;
   }
@@ -184,20 +184,32 @@ export function mkdirSync(input: string): boolean {
    *「actualChildrenPath」'my/index.js'
    *
    *「actualChildrenPathList」['my', 'index.js']
-   *「forEach」
-   *「1」「targetDir」app/page/my
-   *「2」「targetDir」app/page/my/index.js
    */
-
-    // TODO ../..
-  const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
-  actualChildrenPathList.forEach((childrenPath: string) => {
-    const targetDir: string = path.join(actualDeepestPath, childrenPath);
-    const exists: boolean = fs.existsSync(targetDir);
-    if (!exists) {
-      fs.mkdirSync(targetDir);
-    }
-  });
+  const startsWithSlash: boolean = input.startsWith('/');
+  const startsWithFallbackSymbol: boolean = input.startsWith('../');
+  let outputDirPath: string = actualDeepestPath;
+  if (startsWithSlash) {
+    /**
+     * TODO /**
+     */
+  } else if (startsWithFallbackSymbol) {
+    /**
+     * TODO ../**
+     */
+  } else {
+    /**
+     * **
+     * normal
+     */
+    const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
+    actualChildrenPathList.forEach((childrenPath: string) => {
+      outputDirPath = path.join(outputDirPath, childrenPath);
+      const exists: boolean = fs.existsSync(outputDirPath);
+      if (!exists) {
+        fs.mkdirSync(outputDirPath);
+      }
+    });
+  }
   return true;
 }
 
