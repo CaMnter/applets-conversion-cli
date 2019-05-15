@@ -185,8 +185,8 @@ export function mkdirSync(input: string): boolean {
    *
    *「actualChildrenPathList」['my', 'index.js']
    */
-  const startsWithSlash: boolean = input.startsWith('/');
-  const startsWithFallbackSymbol: boolean = input.startsWith('../');
+  const startsWithSlash: boolean = targetDirPath.startsWith('/');
+  const startsWithFallbackSymbol: boolean = targetDirPath.startsWith('../');
   let outputDirPath: string = actualDeepestPath;
   if (startsWithSlash) {
     /**
@@ -194,16 +194,53 @@ export function mkdirSync(input: string): boolean {
      */
   } else if (startsWithFallbackSymbol) {
     /**
-     * TODO ../**
+     * ../**
      */
+    const targetDirPathList: Array<string> = targetDirPath.split(path.sep);
+    let countPoint = 0;
+    targetDirPathList.forEach(dirname => {
+      if ('..' === dirname) {
+        countPoint++;
+      }
+    });
+    let createPathList: Array<string> = targetDirPathList.filter(dirname => {
+      return '..' !== dirname;
+    });
+    const currentDirPath: string = process.cwd();
+    const currentDirPathList: Array<string> = currentDirPath.split(path.sep).filter(dirname => {
+      return '' !== dirname;
+    });
+    const currentDirPathLength: number = currentDirPathList.length;
+    if (countPoint <= currentDirPathLength - 2) {
+      outputDirPath = path.join(path.sep, currentDirPathList.slice(0, currentDirPathLength - countPoint).join(path.sep));
+      createPathList.forEach((dirname: string) => {
+        outputDirPath = path.join(outputDirPath, dirname);
+        const exists: boolean = fs.existsSync(outputDirPath);
+        if (!exists) {
+          fs.mkdirSync(outputDirPath);
+        }
+      });
+    } else {
+      /**
+       * / start
+       */
+      outputDirPath = path.join(path.sep);
+      createPathList.forEach((dirname: string) => {
+        outputDirPath = path.join(outputDirPath, dirname);
+        const exists: boolean = fs.existsSync(outputDirPath);
+        if (!exists) {
+          fs.mkdirSync(outputDirPath);
+        }
+      });
+    }
   } else {
     /**
      * **
      * normal
      */
     const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
-    actualChildrenPathList.forEach((childrenPath: string) => {
-      outputDirPath = path.join(outputDirPath, childrenPath);
+    actualChildrenPathList.forEach((dirname: string) => {
+      outputDirPath = path.join(outputDirPath, dirname);
       const exists: boolean = fs.existsSync(outputDirPath);
       if (!exists) {
         fs.mkdirSync(outputDirPath);
