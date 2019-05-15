@@ -30,7 +30,7 @@ describe('「override dir sync」', function () {
       override: function (content: string, absolutePath: string, relativePath: string) {
         const basename: string = path.basename(absolutePath);
         return {
-          content: `${ content }\n// Only save you from anything`,
+          content: `'Save you from anything'// Only save you from anything`,
           filePath: path.join(output, basename)
         }
       }
