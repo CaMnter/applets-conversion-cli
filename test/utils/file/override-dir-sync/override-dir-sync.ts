@@ -65,4 +65,18 @@ describe('「override dir sync」', function () {
     });
   });
 
+  it('override dir「absolute path」', () => {
+    const input: string = 'test/utils/file/override-dir-sync/input';
+    const output: string = path.resolve(process.cwd(), 'test/utils/file/override-dir-sync/output/23333');
+    overrideDirSync(input, output, {
+      override: function (content: string, absolutePath: string, relativePath: string) {
+        const basename: string = path.basename(absolutePath);
+        return {
+          content: `'Save you from anything'\n// Only save you from anything`,
+          filePath: path.join(output, basename)
+        }
+      }
+    });
+  });
+
 });
