@@ -168,8 +168,8 @@ export function mkdirSync(input: string): boolean {
     return true;
   }
 
-  const actualDeepestPath: string = getActualDeepestPath(input);
-  const actualChildrenPath: string = path.relative(actualDeepestPath, input);
+  let actualDeepestPath: string = getActualDeepestPath(input);
+  let actualChildrenPath: string = path.relative(actualDeepestPath, input);
 
   // no need to create
   if (!actualChildrenPath) {
@@ -185,69 +185,47 @@ export function mkdirSync(input: string): boolean {
    *
    *「actualChildrenPathList」['my', 'index.js']
    */
-  const startsWithSlash: boolean = targetDirPath.startsWith('/');
-  const startsWithFallbackSymbol: boolean = targetDirPath.startsWith('../');
-  let outputDirPath: string = actualDeepestPath;
+  const startsWithSlash: boolean = targetDirPath.startsWith(path.sep);
+  const startsWithFallbackSymbol: boolean = targetDirPath.startsWith(`..${ path.sep }`);
+  let actualPath: string = '';
   if (startsWithSlash) {
     /**
-     * TODO /**
+     * /**
      */
+    actualPath = path.join(targetDirPath);
+    actualDeepestPath = getActualDeepestPath(actualPath);
+    actualChildrenPath = path.relative(actualDeepestPath, actualPath);
+
+    mkDirsSync(actualDeepestPath, actualChildrenPath);
   } else if (startsWithFallbackSymbol) {
     /**
      * ../**
      */
-    const targetDirPathList: Array<string> = targetDirPath.split(path.sep);
-    let countPoint = 0;
-    targetDirPathList.forEach(dirname => {
-      if ('..' === dirname) {
-        countPoint++;
-      }
-    });
-    let createPathList: Array<string> = targetDirPathList.filter(dirname => {
-      return '..' !== dirname;
-    });
-    const currentDirPath: string = process.cwd();
-    const currentDirPathList: Array<string> = currentDirPath.split(path.sep).filter(dirname => {
-      return '' !== dirname;
-    });
-    const currentDirPathLength: number = currentDirPathList.length;
-    if (countPoint <= currentDirPathLength - 2) {
-      outputDirPath = path.join(path.sep, currentDirPathList.slice(0, currentDirPathLength - countPoint).join(path.sep));
-      createPathList.forEach((dirname: string) => {
-        outputDirPath = path.join(outputDirPath, dirname);
-        const exists: boolean = fs.existsSync(outputDirPath);
-        if (!exists) {
-          fs.mkdirSync(outputDirPath);
-        }
-      });
-    } else {
-      /**
-       * / start
-       */
-      outputDirPath = path.join(path.sep);
-      createPathList.forEach((dirname: string) => {
-        outputDirPath = path.join(outputDirPath, dirname);
-        const exists: boolean = fs.existsSync(outputDirPath);
-        if (!exists) {
-          fs.mkdirSync(outputDirPath);
-        }
-      });
-    }
+    actualPath = path.resolve(process.cwd(), targetDirPath);
+    actualDeepestPath = getActualDeepestPath(actualPath);
+    actualChildrenPath = path.relative(actualDeepestPath, actualPath);
+
+    mkDirsSync(actualDeepestPath, actualChildrenPath);
   } else {
     /**
      * **
      * normal
      */
-    const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
-    actualChildrenPathList.forEach((dirname: string) => {
-      outputDirPath = path.join(outputDirPath, dirname);
-      const exists: boolean = fs.existsSync(outputDirPath);
-      if (!exists) {
-        fs.mkdirSync(outputDirPath);
-      }
-    });
+    mkDirsSync(actualDeepestPath, actualChildrenPath);
   }
   return true;
+}
+
+export function mkDirsSync(actualDeepestPath: string, actualChildrenPath: string) {
+  let outputDirPath: string = actualDeepestPath;
+  const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
+  actualChildrenPathList.forEach((dirname: string) => {
+    outputDirPath = path.join(outputDirPath, dirname);
+    const exists: boolean = fs.existsSync(outputDirPath);
+    if (!exists) {
+      fs.mkdirSync(outputDirPath);
+    }
+  });
 }
 
 export function getActualDeepestPath(input: string): string {
