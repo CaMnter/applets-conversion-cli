@@ -52,17 +52,17 @@ describe('「override dir sync」', function () {
   });
 
   it('override dir「fallback symbol」', () => {
-    const input: string = 'test/utils/file/override-dir-sync/input';
-    const output: string = '../../output/2333';
-    overrideDirSync(input, output, {
-      override: function (content: string, absolutePath: string, relativePath: string) {
-        const basename: string = path.basename(absolutePath);
-        return {
-          content: `'Save you from anything'\n// Only save you from anything`,
-          filePath: path.join(output, basename)
-        }
-      }
-    });
+    // const input: string = 'test/utils/file/override-dir-sync/input';
+    // const output: string = '../../output/2333';
+    // overrideDirSync(input, output, {
+    //   override: function (content: string, absolutePath: string, relativePath: string) {
+    //     const basename: string = path.basename(absolutePath);
+    //     return {
+    //       content: `'Save you from anything'\n// Only save you from anything`,
+    //       filePath: path.join(output, basename)
+    //     }
+    //   }
+    // });
   });
 
   it('override dir「absolute path」', () => {

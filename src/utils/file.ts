@@ -24,6 +24,13 @@ import * as path from 'path';
 import { Stats, WriteFileOptions } from 'fs';
 import { isString, isFunction } from './utils'
 
+/**
+ * override sync
+ *
+ * @param input input
+ * @param output string
+ * @param options object
+ */
 export function overrideSync(
   input: string,
   output: string,
@@ -57,6 +64,13 @@ export function overrideSync(
   }
 }
 
+/**
+ * override file sync
+ *
+ * @param input input
+ * @param output string
+ * @param options object
+ */
 export function overrideFileSync(
   input: string,
   output: string,
@@ -97,6 +111,13 @@ export function overrideFileSync(
   writeFileSync(filePath, content);
 }
 
+/**
+ * override dir sync
+ *
+ * @param input input
+ * @param output output
+ * @param options options
+ */
 export function overrideDirSync(
   input: string,
   output: string,
@@ -129,7 +150,18 @@ export function overrideDirSync(
   });
 }
 
-export function writeFileSync(filePath: string, content: string, options?: WriteFileOptions): void {
+/**
+ * write file sync
+ *
+ * @param filePath filePath
+ * @param content content
+ * @param options options
+ */
+export function writeFileSync(
+  filePath: string,
+  content: string,
+  options?: WriteFileOptions
+): void {
   if (!(filePath && isString(filePath))) {
     return;
   }
@@ -139,6 +171,11 @@ export function writeFileSync(filePath: string, content: string, options?: Write
   fs.writeFileSync(filePath, content, options);
 }
 
+/**
+ * mk file sync
+ *
+ * @param input input
+ */
 export function mkFileSync(input: string): boolean {
   if (!(input && isString(input))) {
     return false;
@@ -158,6 +195,11 @@ export function mkFileSync(input: string): boolean {
   return true;
 }
 
+/**
+ * mk dir sync
+ *
+ * @param input input
+ */
 export function mkdirSync(input: string): boolean {
   if (!(input && isString(input))) {
     return false;
@@ -216,7 +258,13 @@ export function mkdirSync(input: string): boolean {
   return true;
 }
 
-export function mkDirsSync(actualDeepestPath: string, actualChildrenPath: string) {
+/**
+ * mk dirs sync
+ *
+ * @param actualDeepestPath actualDeepestPath
+ * @param actualChildrenPath actualChildrenPath
+ */
+export function mkDirsSync(actualDeepestPath: string, actualChildrenPath: string): void {
   let outputDirPath: string = actualDeepestPath;
   const actualChildrenPathList: Array<string> = actualChildrenPath.split(path.sep);
   actualChildrenPathList.forEach((dirname: string) => {
@@ -228,6 +276,11 @@ export function mkDirsSync(actualDeepestPath: string, actualChildrenPath: string
   });
 }
 
+/**
+ * get actual deepest path
+ *
+ * @param input input
+ */
 export function getActualDeepestPath(input: string): string {
   const exists: boolean = fs.existsSync(input);
   if (!exists) {
