@@ -18,7 +18,7 @@
  * Created by：CaMnter
  */
 
-import { overrideFileSync } from "../../../../src/utils/file-system/file";
+import { overrideFileSync } from "../../../../src/utils/file-system/file-system";
 
 describe('「override file sync」', function () {
 
