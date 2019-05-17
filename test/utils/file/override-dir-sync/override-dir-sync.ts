@@ -19,7 +19,7 @@
  */
 
 import * as path from 'path';
-import { overrideDirSync } from "../../../../src/utils/file";
+import { overrideDirSync } from "../../../../src/utils/file-system/file";
 
 describe('「override dir sync」', function () {
 
