@@ -37,8 +37,8 @@ export function overrideSync(
   options: {
     flag?: string,
     encoding?: string | null,
-    // content?: string, absolutePath?: string, relativePath?: string
-    override?: (content?: string, absolutePath?: string, relativePath?: string) => { content?: string, filePath?: string } | undefined
+    // fileContent: string, filePath: string
+    override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
     [option: string]: string | boolean | Function | undefined | null
   }
 ): void {
