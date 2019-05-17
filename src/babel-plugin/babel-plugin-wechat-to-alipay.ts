@@ -21,7 +21,7 @@
 import { AppletType } from "../type/applet-type";
 import { BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
 
-export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
+class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
 
   public createPlugin(): Function {
     const _identifierHook = this.identifierHook.bind(this);
@@ -72,3 +72,5 @@ export class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
   }
 
 }
+
+export default BabelPluginWechatToAlipay;
