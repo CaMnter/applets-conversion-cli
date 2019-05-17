@@ -18,8 +18,8 @@
  * Created by：CaMnter
  */
 
-import { BabelType } from "./enum/babel-type";
-import { AppletType } from "./enum/applet-type";
+import { BabelType } from "./babel-type/babel-type";
+import { AppletType } from "../../type/applet-type";
 import { isFunction } from "../../utils/utils";
 import { alipayToWechatMap } from "../map/alipay-to-wechat-map";
 import { wechatToAlipayMap } from "../map/wechat-to-alipay-map";
@@ -86,7 +86,7 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
   }
 
   /**
-   * Handle applet type
+   * Handle applet babel-type
    *
    * @param appletType AppletType
    */

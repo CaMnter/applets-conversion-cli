@@ -18,7 +18,7 @@
  * Created by：CaMnter
  */
 
-import { AppletType } from "./base/enum/applet-type";
+import { AppletType } from "../type/applet-type";
 import { BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
 
 export class BabelPluginAlipayToWechat extends BabelPluginBaseApplet {

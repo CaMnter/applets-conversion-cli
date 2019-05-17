@@ -18,7 +18,7 @@
  * Created by：CaMnter
  */
 
-import { AppletType } from "../enum/applet-type";
+import { AppletType } from "../../../type/applet-type";
 
 export interface BabelPluginIMemberExpressionHook {
 
