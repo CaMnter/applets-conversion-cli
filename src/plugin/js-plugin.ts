@@ -33,11 +33,11 @@ class JsPlugin implements IPlugin {
     this._babelPlugin = babelPlugin;
 
     if (!code || '' === code) {
-      throw new Error(`JsPlugin # constructor error:「code」${ code }`);
+      throw new Error(`JsPlugin # constructor #「code」error: ${ code }`);
     }
 
     if (!babelPlugin) {
-      throw new Error(`JsPlugin # constructor error:「babelPlugin」${ babelPlugin }`);
+      throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ babelPlugin }`);
     }
   }
 

@@ -39,15 +39,15 @@ class XmlPlugin implements IPlugin {
     this._expect = expect;
 
     if (!code || '' === code) {
-      throw new Error(`XmlPlugin # constructor error:「code」${ code }`);
+      throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
     }
 
     if (!target) {
-      throw new Error(`XmlPlugin # constructor error:「target」${ target }`);
+      throw new Error(`XmlPlugin # constructor #「target」 error: ${ target }`);
     }
 
     if (!expect) {
-      throw new Error(`XmlPlugin # constructor error:「target」${ expect }`);
+      throw new Error(`XmlPlugin # constructor #「expect」 error: å${ expect }`);
     }
   }
 
