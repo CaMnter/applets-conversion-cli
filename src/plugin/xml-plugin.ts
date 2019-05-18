@@ -21,8 +21,8 @@
 import { load } from 'cheerio';
 import { IPlugin } from "./i-plugin";
 import { AppletType } from "../type/applet-type";
-import { replaceAttrs } from "../utils/replace-attrs";
-import { extractBodyContent } from "../utils/extract-body-content";
+import { replaceAttrs } from "../xml/replace-attrs";
+import { extractBodyContent } from "../xml/extract-body-content";
 
 class XmlPlugin implements IPlugin {
 

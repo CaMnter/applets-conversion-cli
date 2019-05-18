@@ -18,17 +18,22 @@
  * Created by：CaMnter
  */
 
-import { load } from 'cheerio';
-import { expect } from 'chai';
-import { extractBodyContent } from "../../src/utils/extract-body-content";
+import { isFunction } from "../utils/utils";
 
-describe('「extract body content」', function () {
-
-  it('<view wx:if="{{you}}"> => <view wx:if="{{you}}"/>', () => {
-    const code = '<view wx:if="{{you}}">';
-    const $ = load(code);
-    const result = extractBodyContent($);
-    expect(result).to.equal('<view wx:if="{{you}}"/>');
-  });
-
-});
+/**
+ * Extract body content
+ *
+ * @param $ CheerioStatic
+ */
+export function extractBodyContent($?: CheerioStatic): string {
+  if (!($ && $.html && isFunction($.html))) {
+    return '';
+  }
+  const body = $('body');
+  return body && body.children && isFunction(body.children) ?
+    $.html(body.children(), {
+      xmlMode: true,
+      lowerCaseTags: true,
+      recognizeSelfClosing: true
+    }) : '';
+}
