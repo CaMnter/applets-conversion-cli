@@ -45,7 +45,6 @@ class JsPlugin implements IPlugin {
     this._result = jsTransForm(this._code, this._babelPlugin);
   }
 
-
   get code(): string | undefined | null {
     return this._code;
   }
