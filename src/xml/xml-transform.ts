@@ -24,13 +24,13 @@ import { wechatToAlipayXmlMap } from "./map/wechat-to-alipay-map";
 
 
 /**
- * replace attrs
+ * xml transform
  *
  * @param target AppletType
  * @param expect AppletType
  * @param $ CheerioStatic
  */
-export function replaceAttrs(target: AppletType, expect: AppletType, $?: CheerioStatic): CheerioStatic | undefined {
+export function xmlTransform(target: AppletType, expect: AppletType, $?: CheerioStatic): CheerioStatic | undefined {
   if (!$) {
     return undefined;
   }

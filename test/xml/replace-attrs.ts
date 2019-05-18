@@ -21,14 +21,14 @@
 import { load } from 'cheerio';
 import { expect } from 'chai';
 import { AppletType } from "../../src/type/applet-type";
-import { replaceAttrs } from "../../src/xml/replace-attrs";
+import { xmlTransform } from "../../src/xml/xml-transform";
 
 describe('「replace attrs」', function () {
 
   it('replace attrs xml', () => {
     const code = '<view wx:if="{{Save}}"><view wx:for="{{you}}" wx:for-index="wxIndex" wx:for-item="wxItem"><text wx:key="{{wxIndex}}" catchtap="catchtap">{{wxItem}}</text></view></view>';
     let $ = load(code);
-    replaceAttrs(AppletType.wx, AppletType.my, $);
+    xmlTransform(AppletType.wx, AppletType.my, $);
     expect($.html()).to.equal('<html><head></head><body><view a:if="{{Save}}"><view a:for="{{you}}" a:for-index="wxIndex" a:for-item="wxItem"><text a:key="{{wxIndex}}" catchTap="catchtap">{{wxItem}}</text></view></view></body></html>');
   });
 

@@ -21,7 +21,7 @@
 import { load } from 'cheerio';
 import { IPlugin } from "./i-plugin";
 import { AppletType } from "../type/applet-type";
-import { replaceAttrs } from "../xml/replace-attrs";
+import { xmlTransform } from "../xml/xml-transform";
 import { extractBodyContent } from "../xml/extract-body-content";
 
 class XmlPlugin implements IPlugin {
@@ -53,7 +53,7 @@ class XmlPlugin implements IPlugin {
 
   run(): void {
     this._$ = load(this._code as string);
-    replaceAttrs(this._target, this._expect, this._$);
+    xmlTransform(this._target, this._expect, this._$);
     this._result = extractBodyContent(this._$);
   }
 
