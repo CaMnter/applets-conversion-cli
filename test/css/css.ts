@@ -69,7 +69,7 @@ describe('「css」', function () {
     }
   });
 
-  it('css parse', () => {
+  it('css stringify', () => {
     const code = '@import \'./sign/save.wxss\';\n' +
       '@import \'./sign/you.wxss\';\n' +
       '@import \'./sign/from.wxss\';\n' +
