@@ -53,8 +53,8 @@ class CssPlugin implements IPlugin {
   }
 
   run(): void {
-    this.checkAppletType('_target', this._target, this._targetCss);
-    this.checkAppletType('_expect', this._expect, this._expectCss);
+    this.checkAppletType('_target', '_targetCss', this._target,);
+    this.checkAppletType('_expect', '_expectCss', this._expect,);
 
     if (!this._targetCss || !this._expectCss) {
       throw new Error(`CssPlugin # run # missing CssType「this.targetCss」: ${ this._targetCss }「this.expectCss」: ${ this._expectCss }`);
@@ -63,13 +63,14 @@ class CssPlugin implements IPlugin {
     this._result = cssTransform(this._code, this._targetCss, this._expectCss);
   }
 
-  checkAppletType(name: string, target: AppletType, targetCss?: CssType): void {
-    switch (this._target) {
+  checkAppletType(name: string, targetCssName: string, target: AppletType,): void {
+    const _this = this as any;
+    switch (target) {
       case AppletType.wx:
-        targetCss = CssType.wxss;
+        _this[`${ targetCssName }`] = CssType.wxss;
         break;
       case AppletType.my:
-        targetCss = CssType.acss;
+        _this[`${ targetCssName }`] = CssType.acss;
         break;
       default:
         throw new Error(`CssPlugin # checkAppletType # atypical applet type「${ name }」: ${ this._target }`);
