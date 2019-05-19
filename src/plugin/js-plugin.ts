@@ -23,30 +23,23 @@ import { jsTransForm } from "../js/js-transform";
 
 class JsPlugin implements IPlugin {
 
-  private readonly _code: string | undefined | null;
   private readonly _babelPlugin: Function;
 
   private _result: string | undefined;
 
-  constructor(code: string | undefined | null, babelPlugin: Function) {
-    if (!code || '' === code) {
-      throw new Error(`JsPlugin # constructor #「code」error: ${ code }`);
-    }
-
+  constructor(babelPlugin: Function) {
     if (!babelPlugin) {
       throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ babelPlugin }`);
     }
 
-    this._code = code;
     this._babelPlugin = babelPlugin;
   }
 
-  run(): void {
-    this._result = jsTransForm(this._code, this._babelPlugin);
-  }
-
-  get code(): string | undefined | null {
-    return this._code;
+  run(code: string | undefined | null): void {
+    if (!code || '' === code) {
+      throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
+    }
+    this._result = jsTransForm(code, this._babelPlugin);
   }
 
   get babelPlugin(): Function {

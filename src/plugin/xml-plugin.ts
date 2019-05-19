@@ -24,18 +24,13 @@ import { xmlTransForm } from "../xml/xml-transform";
 
 class XmlPlugin implements IPlugin {
 
-  private readonly _code: string | undefined | null;
   private readonly _target: AppletType;
   private readonly _expect: AppletType;
 
   private _result: string | undefined;
   private _$: CheerioStatic | undefined;
 
-  constructor(code: string | undefined | null, target: AppletType, expect: AppletType) {
-    if (!code || '' === code) {
-      throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
-    }
-
+  constructor(target: AppletType, expect: AppletType) {
     if (!target) {
       throw new Error(`XmlPlugin # constructor #「target」error: ${ target }`);
     }
@@ -44,19 +39,17 @@ class XmlPlugin implements IPlugin {
       throw new Error(`XmlPlugin # constructor #「expect」error: ${ expect }`);
     }
 
-    this._code = code;
     this._target = target;
     this._expect = expect;
   }
 
-  run(): void {
-    const { $, bodyContent } = xmlTransForm(this._code, this._target, this._expect)
+  run(code: string | undefined | null): void {
+    if (!code || '' === code) {
+      throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
+    }
+    const { $, bodyContent } = xmlTransForm(code, this._target, this._expect);
     this._$ = $;
     this._result = bodyContent;
-  }
-
-  get code(): string | undefined | null {
-    return this._code;
   }
 
   get target(): AppletType {

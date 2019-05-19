@@ -25,7 +25,6 @@ import { cssTransform } from "../css/css-transform";
 
 class CssPlugin implements IPlugin {
 
-  private readonly _code: string | undefined | null;
   private readonly _target: AppletType;
   private readonly _expect: AppletType;
 
@@ -34,11 +33,7 @@ class CssPlugin implements IPlugin {
 
   private _result?: string;
 
-  constructor(code: string | undefined | null, target: AppletType, expect: AppletType) {
-    if (!code || '' === code) {
-      throw new Error(`CssPlugin # constructor #「code」error: ${ code }`);
-    }
-
+  constructor(target: AppletType, expect: AppletType) {
     if (!target) {
       throw new Error(`CssPlugin # constructor #「target」error: ${ target }`);
     }
@@ -47,20 +42,22 @@ class CssPlugin implements IPlugin {
       throw new Error(`CssPlugin # constructor #「expect」error: ${ expect }`);
     }
 
-    this._code = code;
     this._target = target;
     this._expect = expect;
   }
 
-  run(): void {
-    this.checkAppletType('_target', '_targetCss', this._target,);
-    this.checkAppletType('_expect', '_expectCss', this._expect,);
+  run(code: string | undefined | null): void {
+    if (!code || '' === code) {
+      throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
+    }
+    this.checkAppletType('_target', '_targetCss', this._target);
+    this.checkAppletType('_expect', '_expectCss', this._expect);
 
     if (!this._targetCss || !this._expectCss) {
       throw new Error(`CssPlugin # run # missing CssType「this.targetCss」: ${ this._targetCss }「this.expectCss」: ${ this._expectCss }`);
     }
 
-    this._result = cssTransform(this._code, this._targetCss, this._expectCss);
+    this._result = cssTransform(code, this._targetCss, this._expectCss);
   }
 
   checkAppletType(name: string, targetCssName: string, target: AppletType,): void {
@@ -76,10 +73,6 @@ class CssPlugin implements IPlugin {
         throw new Error(`CssPlugin # checkAppletType # atypical applet type「${ name }」: ${ this._target }`);
         break;
     }
-  }
-
-  get code(): string | undefined | null {
-    return this._code;
   }
 
   get target(): AppletType {

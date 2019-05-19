@@ -22,7 +22,9 @@ export interface IPlugin {
 
   /**
    * plugin main method
+   *
+   * @param code code
    */
-  run(): void
+  run(code: string | undefined | null): void
 
 }
