@@ -22,7 +22,6 @@ import { AppletType } from "../type/applet-type";
 import { alipayToWechatXmlMap } from "./map/alipay-to-wechat-map";
 import { wechatToAlipayXmlMap } from "./map/wechat-to-alipay-map";
 
-
 /**
  * xml transform
  *

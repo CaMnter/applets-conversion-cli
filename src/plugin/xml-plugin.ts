@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-import { load } from 'cheerio';
 import { IPlugin } from "./i-plugin";
 import { AppletType } from "../type/applet-type";
-import { replaceAttrs } from "../xml/replace-attrs";
-import { extractBodyContent } from "../xml/extract-body-content";
+import { xmlTransForm } from "../xml/xml-transform";
 
 /**
  * @author CaMnter
@@ -34,10 +32,6 @@ class XmlPlugin implements IPlugin {
   private _$: CheerioStatic | undefined;
 
   constructor(code: string | undefined | null, target: AppletType, expect: AppletType) {
-    this._code = code;
-    this._target = target;
-    this._expect = expect;
-
     if (!code || '' === code) {
       throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
     }
@@ -49,12 +43,16 @@ class XmlPlugin implements IPlugin {
     if (!expect) {
       throw new Error(`XmlPlugin # constructor #「expect」error: ${ expect }`);
     }
+
+    this._code = code;
+    this._target = target;
+    this._expect = expect;
   }
 
   run(): void {
-    this._$ = load(this._code as string);
-    replaceAttrs(this._target, this._expect, this._$);
-    this._result = extractBodyContent(this._$);
+    const { $, bodyContent } = xmlTransForm(this._code, this._target, this._expect)
+    this._$ = $;
+    this._result = bodyContent;
   }
 
   get code(): string | undefined | null {
