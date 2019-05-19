@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { BabelType } from "./babel-type/babel-type";
 import { AppletType } from "../../type/applet-type";
 import { isFunction } from "../../utils/utils";
@@ -27,6 +23,10 @@ import { BabelPluginIApplet } from "./babel-plugin-i-applet";
 import { BabelPluginIIdentifierHook } from "./hook/babel-plugin-i-identifier-hook";
 import { BabelPluginICallExpressionHook } from "./hook/babel-plugin-i-call-expression-hook";
 import { BabelPluginIMemberExpressionHook } from "./hook/babel-plugin-i-member-expression-hook";
+
+/**
+ * @author CaMnter
+ */
 
 export const babelTypes = require('@babel/types');
 

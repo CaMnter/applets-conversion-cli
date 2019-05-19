@@ -57,7 +57,7 @@ class CssPlugin implements IPlugin {
     this.checkAppletType('_expect', this._expect, this._expectCss);
 
     if (!this._targetCss || !this._expectCss) {
-      throw new Error(`CssPlugin # run # Missing CssType「this.targetCss」: ${ this._targetCss }「this.expectCss」: ${ this._expectCss }`);
+      throw new Error(`CssPlugin # run # missing CssType「this.targetCss」: ${ this._targetCss }「this.expectCss」: ${ this._expectCss }`);
     }
 
     this._result = cssTransform(this._code, this._targetCss, this._expectCss);

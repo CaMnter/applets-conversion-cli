@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { AppletType } from "../type/applet-type";
 import { BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
+
+/**
+ * @author CaMnter
+ */
 
 class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
 

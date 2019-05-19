@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { IPlugin } from "./i-plugin";
 import { jsTransForm } from "../js/js-transform";
+
+/**
+ * @author CaMnter
+ */
 
 class JsPlugin implements IPlugin {
 

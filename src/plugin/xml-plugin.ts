@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { load } from 'cheerio';
 import { IPlugin } from "./i-plugin";
 import { AppletType } from "../type/applet-type";
-import { xmlTransform } from "../xml/xml-transform";
+import { replaceAttrs } from "../xml/replace-attrs";
 import { extractBodyContent } from "../xml/extract-body-content";
+
+/**
+ * @author CaMnter
+ */
 
 class XmlPlugin implements IPlugin {
 
@@ -53,7 +53,7 @@ class XmlPlugin implements IPlugin {
 
   run(): void {
     this._$ = load(this._code as string);
-    xmlTransform(this._target, this._expect, this._$);
+    replaceAttrs(this._target, this._expect, this._$);
     this._result = extractBodyContent(this._$);
   }
 

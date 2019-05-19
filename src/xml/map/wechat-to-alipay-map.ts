@@ -15,7 +15,7 @@
  */
 
 /**
- * Created by：CaMnter
+ * @author CaMnter
  */
 
 export const wechatToAlipayXmlMap: { [attr: string]: string } = {

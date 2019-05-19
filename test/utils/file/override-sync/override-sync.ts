@@ -18,7 +18,7 @@ import { overrideFileSync, overrideSync } from "../../../../src/utils/file-syste
 import * as path from "path";
 
 /**
- * Created by：CaMnter
+ * @author CaMnter
  */
 
 describe('「override sync」', function () {

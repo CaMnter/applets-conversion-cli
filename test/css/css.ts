@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { expect } from 'chai';
 import { parse, stringify, Stylesheet } from 'css';
+
+/**
+ * @author CaMnter
+ */
 
 describe('「css」', function () {
 

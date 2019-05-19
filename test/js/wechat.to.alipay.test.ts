@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { expect } from 'chai';
 import { jsTransForm } from '../../src/js/js-transform' ;
 import BabelPluginWechatToAlipay from "../../src/babel-plugin/babel-plugin-wechat-to-alipay";
+
+/**
+ * @author CaMnter
+ */
 
 const plugin: Function = new BabelPluginWechatToAlipay().createPlugin();
 

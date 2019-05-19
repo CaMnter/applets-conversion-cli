@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { load } from 'cheerio';
 import { expect } from 'chai';
 import { extractBodyContent } from "../../src/xml/extract-body-content";
+
+/**
+ * @author CaMnter
+ */
 
 describe('「extract body content」', function () {
 

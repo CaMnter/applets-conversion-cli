@@ -15,7 +15,7 @@
  */
 
 /**
- * Created by：CaMnter
+ * @author CaMnter
  */
 
 import { isFunction } from "../utils/utils";

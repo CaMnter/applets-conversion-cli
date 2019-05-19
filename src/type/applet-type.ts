@@ -15,7 +15,7 @@
  */
 
 /**
- * Created by：CaMnter
+ * @author CaMnter
  */
 
 export enum AppletType {

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { BabelFileResult, transform } from "@babel/core";
+
+/**
+ * @author CaMnter
+ */
 
 export function jsTransForm(code: string | undefined | null, babelPlugin: Function): string {
   let expectCode = '';

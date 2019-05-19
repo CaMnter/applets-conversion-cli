@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { AppletType } from "../../../type/applet-type";
+
+/**
+ * @author CaMnter
+ */
 
 export interface BabelPluginICallExpressionHook {
 

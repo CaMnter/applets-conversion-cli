@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { overrideFileSync } from "../../../../src/utils/file-system/file-system";
+
+/**
+ * @author CaMnter
+ */
 
 describe('「override file sync」', function () {
 

@@ -15,11 +15,10 @@
  */
 
 /**
- * Created by：CaMnter
+ * @author CaMnter
  */
 
 const toString = Object.prototype.toString;
-
 
 /**
  * is object

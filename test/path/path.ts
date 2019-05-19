@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import * as path from 'path';
 import { expect } from 'chai';
+
+/**
+ * @author CaMnter
+ */
 
 describe('「path」', function () {
 

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import { load } from 'cheerio';
 import { expect } from 'chai';
+
+/**
+ * @author CaMnter
+ */
 
 describe('「cheerio」', function () {
 

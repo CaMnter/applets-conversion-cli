@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import * as glob from 'glob';
 import * as path from 'path';
 import { expect } from 'chai';
+
+/**
+ * @author CaMnter
+ */
 
 describe('「glob」', function () {
 

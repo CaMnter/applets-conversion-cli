@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Created by：CaMnter
- */
-
 import * as path from 'path';
 import { overrideDirSync } from "../../../../src/utils/file-system/file-system";
+
+/**
+ * @author CaMnter
+ */
 
 describe('「override dir sync」', function () {
 

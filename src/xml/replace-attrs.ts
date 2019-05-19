@@ -15,7 +15,7 @@
  */
 
 /**
- * Created by：CaMnter
+ * @author CaMnter
  */
 
 import { AppletType } from "../type/applet-type";
@@ -30,7 +30,7 @@ import { wechatToAlipayXmlMap } from "./map/wechat-to-alipay-map";
  * @param expect AppletType
  * @param $ CheerioStatic
  */
-export function xmlTransform(target: AppletType, expect: AppletType, $?: CheerioStatic): CheerioStatic | undefined {
+export function replaceAttrs(target: AppletType, expect: AppletType, $?: CheerioStatic): CheerioStatic | undefined {
   if (!$) {
     return undefined;
   }
