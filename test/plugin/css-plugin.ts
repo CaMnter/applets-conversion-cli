@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import { cssTransform } from "../../src/css/css-transform";
-import { CssType } from "../../src/css/type/css-type";
 import { expect } from "chai";
 import CssPlugin from "../../src/plugin/css-plugin";
 import { AppletType } from "../../src/type/applet-type";
