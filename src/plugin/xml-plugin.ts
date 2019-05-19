@@ -43,11 +43,11 @@ class XmlPlugin implements IPlugin {
     }
 
     if (!target) {
-      throw new Error(`XmlPlugin # constructor #「target」 error: ${ target }`);
+      throw new Error(`XmlPlugin # constructor #「target」error: ${ target }`);
     }
 
     if (!expect) {
-      throw new Error(`XmlPlugin # constructor #「expect」 error: å${ expect }`);
+      throw new Error(`XmlPlugin # constructor #「expect」error: ${ expect }`);
     }
   }
 

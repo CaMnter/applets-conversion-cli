@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-import { parse, stringify } from "css";
-import { replaceImport } from "../../src/css/replace-import";
-import { CssType } from "../../src/css/type/css-type";
 import { expect } from "chai";
+import { CssType } from "../../src/css/type/css-type";
 import { cssTransform } from "../../src/css/css-transform";
 
 /**

@@ -20,6 +20,9 @@
 
 export interface IPlugin {
 
+  /**
+   * plugin main method
+   */
   run(): void
 
 }
