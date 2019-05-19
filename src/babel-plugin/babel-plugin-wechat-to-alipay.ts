@@ -38,7 +38,12 @@ class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
            * @param path { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }
            * @constructor constructor
            */
-          Identifier(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }) {
+          Identifier(path: {
+            get: Function,
+            scope: { hasBinding: Function },
+            isReferencedIdentifier: Function,
+            replaceWith: Function
+          }) {
             _identifierHook(path, AppletType.wx)
           },
 

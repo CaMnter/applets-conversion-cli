@@ -102,3 +102,5 @@ class CssPlugin implements IPlugin {
   }
 
 }
+
+export default CssPlugin;

@@ -29,7 +29,9 @@ import { wechatToAlipayXmlMap } from "./map/wechat-to-alipay-map";
  * @param expect AppletType
  * @param $ CheerioStatic
  */
-export function replaceAttrs(target: AppletType, expect: AppletType, $?: CheerioStatic): CheerioStatic | undefined {
+export function replaceAttrs(target: AppletType,
+                             expect: AppletType,
+                             $?: CheerioStatic): CheerioStatic | undefined {
   if (!$) {
     return undefined;
   }

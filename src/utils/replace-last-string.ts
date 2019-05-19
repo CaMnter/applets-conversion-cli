@@ -26,8 +26,8 @@
  * @param expect expect
  */
 export function replaceLastString(content: string,
-                                  target?: string,
-                                  expect?: string): string {
+                                  target: string | undefined | null,
+                                  expect: string | undefined | null): string {
   if (!content || !target || !expect) {
     return content;
   }

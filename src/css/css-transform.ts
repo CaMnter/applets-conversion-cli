@@ -29,7 +29,9 @@ import { parse, stringify, Stylesheet } from "css";
  * @param target target
  * @param expect expect
  */
-export function cssTransform(code: string | undefined | null, target: CssType, expect: CssType): string {
+export function cssTransform(code: string | undefined | null,
+                             target: CssType,
+                             expect: CssType): string {
   let expectCode: string = '';
   if (!code) {
     return expectCode;

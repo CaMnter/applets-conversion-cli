@@ -43,7 +43,8 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param path { get?: Function }
    * @param key string
    */
-  public getAst(path: { get?: Function }, key?: string): { get?: Function, replaceWith?: Function, isMemberExpression?: Function } {
+  public getAst(path: { get?: Function },
+                key?: string): { get?: Function, replaceWith?: Function, isMemberExpression?: Function } {
     if (key && path.get && isFunction(path.get)) {
       return path.get(key);
     } else {
@@ -72,7 +73,11 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param type BabelType
    * @param name string
    */
-  public replaceAst(ast: { get?: Function, replaceWith?: Function, isMemberExpression?: Function }, type: BabelType, name: string): void {
+  public replaceAst(ast: {
+    get?: Function,
+    replaceWith?: Function,
+    isMemberExpression?: Function
+  }, type: BabelType, name: string): void {
     if (ast && ast.replaceWith && isFunction(ast.replaceWith)) {
       switch (type) {
         case BabelType.id:
@@ -125,7 +130,14 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param path path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }
    * @param appletType AppletType
    */
-  public identifierHook(path: { get: Function, scope: { hasBinding: Function }, isReferencedIdentifier: Function, replaceWith: Function }, appletType: AppletType): void {
+  public identifierHook(
+    path: {
+      get: Function,
+      scope: { hasBinding: Function },
+      isReferencedIdentifier: Function,
+      replaceWith: Function
+    },
+    appletType: AppletType): void {
     const name: string = this.getAstValue(path, 'name');
 
     const typeProcessingResult = this.handleAppletType(appletType);
@@ -148,7 +160,8 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param path { get: Function }
    * @param appletType AppletType
    */
-  public callExpressionHook(path: { get: Function }, appletType: AppletType): void {
+  public callExpressionHook(path: { get: Function },
+                            appletType: AppletType): void {
     const calleeAst: { isMemberExpression?: Function, get?: Function } = this.getAst(path, 'callee');
     if (calleeAst && calleeAst.isMemberExpression && calleeAst.isMemberExpression()) {
 
@@ -200,7 +213,8 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
    * @param path { get: Function }
    * @param appletType AppletType
    */
-  public memberExpressionHook(path: { get: Function }, appletType: AppletType): void {
+  public memberExpressionHook(path: { get: Function },
+                              appletType: AppletType): void {
     const objectName: string = this.getAstValue(path, 'object.name');
     const propertyType: string = this.getAstValue(path, 'property.type');
 

@@ -29,9 +29,6 @@ class JsPlugin implements IPlugin {
   private _result: string | undefined;
 
   constructor(code: string | undefined | null, babelPlugin: Function) {
-    this._code = code;
-    this._babelPlugin = babelPlugin;
-
     if (!code || '' === code) {
       throw new Error(`JsPlugin # constructor #「code」error: ${ code }`);
     }
@@ -39,6 +36,9 @@ class JsPlugin implements IPlugin {
     if (!babelPlugin) {
       throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ babelPlugin }`);
     }
+
+    this._code = code;
+    this._babelPlugin = babelPlugin;
   }
 
   run(): void {

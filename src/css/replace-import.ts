@@ -22,7 +22,9 @@ import { Rule, AtRule, Import, Comment, StyleRules, Stylesheet } from 'css';
  * @author CaMnter
  */
 
-export function replaceImport(target: CssType, expect: CssType, stylesheet?: Stylesheet): void {
+export function replaceImport(target: CssType,
+                              expect: CssType,
+                              stylesheet?: Stylesheet): void {
   if (!stylesheet) {
     return;
   }

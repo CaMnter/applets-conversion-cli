@@ -31,17 +31,15 @@ import { isString, isFunction } from '../utils'
  * @param output string
  * @param options object
  */
-export function overrideSync(
-  input: string,
-  output: string,
-  options: {
-    flag?: string,
-    encoding?: string | null,
-    // fileContent: string, filePath: string
-    override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
-    [option: string]: string | boolean | Function | undefined | null
-  }
-): void {
+export function overrideSync(input: string,
+                             output: string,
+                             options: {
+                               flag?: string,
+                               encoding?: string | null,
+                               // fileContent: string, filePath: string
+                               override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
+                               [option: string]: string | boolean | Function | undefined | null
+                             }): void {
   if (!(input && isString(input))) {
     return;
   }
@@ -71,18 +69,16 @@ export function overrideSync(
  * @param output string
  * @param options object
  */
-export function overrideFileSync(
-  input: string,
-  output: string,
-  options: {
-    flag?: string,
-    encoding?: string | null,
-    inputAbsolutePath?: string | null,
-    // content?: string, absolutePath?: string, relativePath?: string
-    override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
-    [option: string]: string | boolean | Function | undefined | null
-  }
-): void {
+export function overrideFileSync(input: string,
+                                 output: string,
+                                 options: {
+                                   flag?: string,
+                                   encoding?: string | null,
+                                   inputAbsolutePath?: string | null,
+                                   // content?: string, absolutePath?: string, relativePath?: string
+                                   override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
+                                   [option: string]: string | boolean | Function | undefined | null
+                                 }): void {
   const mkFile: boolean = mkFileSync(output);
   if (!mkFile) {
     throw new Error(`mkFile error, path = ${ output }`);
@@ -118,17 +114,15 @@ export function overrideFileSync(
  * @param output output
  * @param options options
  */
-export function overrideDirSync(
-  input: string,
-  output: string,
-  options: {
-    flag?: string,
-    encoding?: string | null,
-    // fileContent: string, filePath: string
-    override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
-    [option: string]: string | boolean | Function | undefined | null
-  }
-): void {
+export function overrideDirSync(input: string,
+                                output: string,
+                                options: {
+                                  flag?: string,
+                                  encoding?: string | null,
+                                  // fileContent: string, filePath: string
+                                  override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
+                                  [option: string]: string | boolean | Function | undefined | null
+                                }): void {
   const mkdir: boolean = mkdirSync(output);
   if (!mkdir) {
     throw new Error(`mkdir error, path = ${ output }`);
@@ -157,11 +151,9 @@ export function overrideDirSync(
  * @param content content
  * @param options options
  */
-export function writeFileSync(
-  filePath: string,
-  content: string,
-  options?: WriteFileOptions
-): void {
+export function writeFileSync(filePath: string,
+                              content: string,
+                              options?: WriteFileOptions): void {
   if (!(filePath && isString(filePath))) {
     return;
   }
