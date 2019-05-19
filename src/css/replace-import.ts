@@ -37,8 +37,20 @@ export function replaceImport(target: CssType, expect: CssType, stylesheet?: Sty
       const valueImport: Import = value as Import;
       const importValue = valueImport.import;
       if (importValue) {
-        if (importValue.endsWith(target)) {
-          valueImport.import = replaceLastString(importValue, target, expect);
+        let suffix: string = '';
+        let replace: boolean = false;
+        if (importValue.endsWith(`${ target }'`)) {
+          suffix = `'`;
+          replace = true;
+        } else if (importValue.endsWith(`${ target }"`)) {
+          suffix = `"`;
+          replace = true;
+        } else if (importValue.endsWith(`${ target }`)) {
+          suffix = '';
+          replace = true;
+        }
+        if (replace) {
+          valueImport.import = replaceLastString(importValue, `${ target }${ suffix }`, `${ expect }${ suffix }`);
         }
       }
     }
