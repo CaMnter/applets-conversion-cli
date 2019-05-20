@@ -64,9 +64,8 @@ describe('css plugin', function () {
       '\tbackground: #ff69b4\n' +
       '}';
 
-    const cssPlugin: CssPlugin = new CssPlugin(code, AppletType.wx, AppletType.my);
-    cssPlugin.run();
-    const result = cssPlugin.result;
+    const cssPlugin: CssPlugin = new CssPlugin(AppletType.wx, AppletType.my);
+    const result = cssPlugin.run(code);
     expect(result).to.equal('@import \'./sign/save.acss\';\n' +
       '\n' +
       '@import \'./sign/you.acss\';\n' +
