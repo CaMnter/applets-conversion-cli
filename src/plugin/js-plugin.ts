@@ -35,11 +35,13 @@ class JsPlugin implements IPlugin {
     this._babelPlugin = babelPlugin;
   }
 
-  run(code: string | undefined | null): void {
+  run(code: string | undefined | null): string {
     if (!code || '' === code) {
       throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
     }
+
     this._result = jsTransForm(code, this._babelPlugin);
+    return this._result;
   }
 
   get babelPlugin(): Function {

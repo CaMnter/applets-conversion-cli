@@ -46,7 +46,7 @@ class CssPlugin implements IPlugin {
     this._expect = expect;
   }
 
-  run(code: string | undefined | null): void {
+  run(code: string | undefined | null): string {
     if (!code || '' === code) {
       throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
     }
@@ -58,6 +58,7 @@ class CssPlugin implements IPlugin {
     }
 
     this._result = cssTransform(code, this._targetCss, this._expectCss);
+    return this._result;
   }
 
   checkAppletType(name: string, targetCssName: string, target: AppletType,): void {

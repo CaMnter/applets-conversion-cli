@@ -25,6 +25,6 @@ export interface IPlugin {
    *
    * @param code code
    */
-  run(code: string | undefined | null): void
+  run(code: string | undefined | null): string
 
 }
