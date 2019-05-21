@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { IPlugin } from "./i-plugin";
+import BasePlugin from "./base-plugin";
 import { AppletType } from "../type/applet-type";
 import { xmlTransForm } from "../xml/xml-transform";
 
@@ -22,26 +22,13 @@ import { xmlTransForm } from "../xml/xml-transform";
  * @author CaMnter
  */
 
-class XmlPlugin implements IPlugin {
-
-  private readonly _target: AppletType;
-  private readonly _expect: AppletType;
-
-  private _result: string | undefined;
-  private _$: CheerioStatic | undefined;
+class XmlPlugin extends BasePlugin {
 
   constructor(target: AppletType, expect: AppletType) {
-    if (!target) {
-      throw new Error(`XmlPlugin # constructor #「target」error: ${ target }`);
-    }
-
-    if (!expect) {
-      throw new Error(`XmlPlugin # constructor #「expect」error: ${ expect }`);
-    }
-
-    this._target = target;
-    this._expect = expect;
+    super(target, expect);
   }
+
+  private _$: CheerioStatic | undefined;
 
   run(code: string | undefined | null): string {
     if (!code || '' === code) {
@@ -50,18 +37,6 @@ class XmlPlugin implements IPlugin {
     const { $, bodyContent } = xmlTransForm(code, this._target, this._expect);
     this._$ = $;
     this._result = bodyContent;
-    return this._result;
-  }
-
-  get target(): AppletType {
-    return this._target;
-  }
-
-  get expect(): AppletType {
-    return this._expect;
-  }
-
-  get result(): string | undefined {
     return this._result;
   }
 

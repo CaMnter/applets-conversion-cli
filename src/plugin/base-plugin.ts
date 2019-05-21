@@ -15,37 +15,40 @@
  */
 
 import { IPlugin } from "./i-plugin";
-import { jsTransForm } from "../js/js-transform";
+import { AppletType } from "../type/applet-type";
 
 /**
  * @author CaMnter
  */
 
-class JsPlugin implements IPlugin {
+abstract class BasePlugin implements IPlugin {
 
-  private readonly _babelPlugin: Function;
+  protected readonly _target: AppletType;
+  protected readonly _expect: AppletType;
 
-  private _result: string | undefined;
+  protected _result: string | undefined;
 
-  constructor(babelPlugin: Function) {
-    if (!babelPlugin) {
-      throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ babelPlugin }`);
+  protected constructor(target: AppletType, expect: AppletType) {
+    if (!target) {
+      throw new Error(`BasePlugin # constructor #「target」error: ${ target }`);
     }
 
-    this._babelPlugin = babelPlugin;
-  }
-
-  run(code: string | undefined | null): string {
-    if (!code || '' === code) {
-      throw new Error(`JsPlugin # constructor #「code」error: ${ code }`);
+    if (!expect) {
+      throw new Error(`BasePlugin # constructor #「expect」error: ${ expect }`);
     }
 
-    this._result = jsTransForm(code, this._babelPlugin);
-    return this._result;
+    this._target = target;
+    this._expect = expect;
   }
 
-  get babelPlugin(): Function {
-    return this._babelPlugin;
+  abstract run(code: string | undefined | null): string ;
+
+  get target(): AppletType {
+    return this._target;
+  }
+
+  get expect(): AppletType {
+    return this._expect;
   }
 
   get result(): string | undefined {
@@ -54,4 +57,4 @@ class JsPlugin implements IPlugin {
 
 }
 
-export default JsPlugin;
+export default BasePlugin;

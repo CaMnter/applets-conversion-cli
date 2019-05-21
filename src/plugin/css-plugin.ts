@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { IPlugin } from "./i-plugin";
+import BasePlugin from "./base-plugin";
 import { CssType } from "../css/type/css-type";
 import { AppletType } from "../type/applet-type";
 import { cssTransform } from "../css/css-transform";
@@ -23,27 +23,13 @@ import { cssTransform } from "../css/css-transform";
  * @author CaMnter
  */
 
-class CssPlugin implements IPlugin {
-
-  private readonly _target: AppletType;
-  private readonly _expect: AppletType;
+class CssPlugin extends BasePlugin {
 
   private _targetCss?: CssType;
   private _expectCss?: CssType;
 
-  private _result?: string;
-
   constructor(target: AppletType, expect: AppletType) {
-    if (!target) {
-      throw new Error(`CssPlugin # constructor #「target」error: ${ target }`);
-    }
-
-    if (!expect) {
-      throw new Error(`CssPlugin # constructor #「expect」error: ${ expect }`);
-    }
-
-    this._target = target;
-    this._expect = expect;
+    super(target, expect);
   }
 
   run(code: string | undefined | null): string {
@@ -76,24 +62,12 @@ class CssPlugin implements IPlugin {
     }
   }
 
-  get target(): AppletType {
-    return this._target;
-  }
-
-  get expect(): AppletType {
-    return this._expect;
-  }
-
   get targetCss(): CssType | undefined {
     return this._targetCss;
   }
 
   get expectCss(): CssType | undefined {
     return this._expectCss;
-  }
-
-  get result(): string | undefined {
-    return this._result;
   }
 
 }
