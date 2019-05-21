@@ -14,34 +14,58 @@
  * limitations under the License.
  */
 
-import { IPlugin } from "./i-plugin";
+import BasePlugin from "./base-plugin";
 import { jsTransForm } from "../js/js-transform";
+import { AppletType } from "../type/applet-type";
+import BabelPluginWechatToAlipay from "../babel-plugin/babel-plugin-wechat-to-alipay";
+import BabelPluginAlipayToWechat from "../babel-plugin/babel-plugin-alipay-to-wechat";
 
 /**
  * @author CaMnter
  */
 
-class JsPlugin implements IPlugin {
+class JsPlugin extends BasePlugin {
 
   private readonly _babelPlugin: Function;
 
-  private _result: string | undefined;
+  constructor(target: AppletType, expect: AppletType) {
+    super(target, expect);
 
-  constructor(babelPlugin: Function) {
-    if (!babelPlugin) {
-      throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ babelPlugin }`);
+    this._babelPlugin = this.getBabelPlugin(this._target, this._expect);
+    if (!this._babelPlugin) {
+      throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ this._babelPlugin }`);
     }
-
-    this._babelPlugin = babelPlugin;
   }
 
   run(code: string | undefined | null): string {
     if (!code || '' === code) {
-      throw new Error(`JsPlugin # constructor #「code」error: ${ code }`);
+      throw new Error(`JsPlugin # run #「code」error: ${ code }`);
     }
 
     this._result = jsTransForm(code, this._babelPlugin);
     return this._result;
+  }
+
+  getBabelPlugin(target: AppletType, expect: AppletType): Function {
+    switch (target) {
+      case AppletType.wx:
+        switch (expect) {
+          case AppletType.my:
+            return new BabelPluginWechatToAlipay().createPlugin();
+            break;
+          // TODO more
+        }
+        break;
+      case AppletType.my:
+        switch (expect) {
+          case AppletType.wx:
+            return new BabelPluginAlipayToWechat().createPlugin();
+            break;
+          // TODO more
+        }
+        break;
+    }
+    throw new Error(`JsPlugin # getBabelPlugin #「babelPlugin」undefined error`);
   }
 
   get babelPlugin(): Function {
