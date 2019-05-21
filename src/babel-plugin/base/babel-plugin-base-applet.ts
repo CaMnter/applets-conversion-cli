@@ -17,8 +17,8 @@
 import { BabelType } from "./babel-type/babel-type";
 import { AppletType } from "../../type/applet-type";
 import { isFunction } from "../../utils/utils";
-import { alipayToWechatMap } from "../map/alipay-to-wechat-map";
-import { wechatToAlipayMap } from "../map/wechat-to-alipay-map";
+import { alipayToWechatMap } from "../../map/js/alipay-to-wechat-map";
+import { wechatToAlipayMap } from "../../map/js/wechat-to-alipay-map";
 import { BabelPluginIApplet } from "./babel-plugin-i-applet";
 import { BabelPluginIIdentifierHook } from "./hook/babel-plugin-i-identifier-hook";
 import { BabelPluginICallExpressionHook } from "./hook/babel-plugin-i-call-expression-hook";

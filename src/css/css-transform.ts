@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { CssType } from "./type/css-type";
+import { CssType } from "../type/css-type";
 import { replaceImport } from "./replace-import";
 import { parse, stringify, Stylesheet } from "css";
 

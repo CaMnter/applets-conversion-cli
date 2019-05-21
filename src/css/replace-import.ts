@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { CssType } from "./type/css-type";
+import { CssType } from "../type/css-type";
 import { replaceLastString } from "../utils/replace-last-string";
 import { Rule, AtRule, Import, Comment, StyleRules, Stylesheet } from 'css';
 

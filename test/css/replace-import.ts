@@ -16,7 +16,7 @@
 
 import { expect } from 'chai';
 import { parse, stringify } from "css";
-import { CssType } from "../../src/css/type/css-type";
+import { CssType } from "../../src/type/css-type";
 import { replaceImport } from "../../src/css/replace-import";
 
 /**

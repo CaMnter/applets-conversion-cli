@@ -15,7 +15,7 @@
  */
 
 import { expect } from "chai";
-import { CssType } from "../../src/css/type/css-type";
+import { CssType } from "../../src/type/css-type";
 import { cssTransform } from "../../src/css/css-transform";
 
 /**

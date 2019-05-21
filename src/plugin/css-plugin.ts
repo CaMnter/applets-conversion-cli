@@ -15,7 +15,7 @@
  */
 
 import BasePlugin from "./base-plugin";
-import { CssType } from "../css/type/css-type";
+import { CssType } from "../type/css-type";
 import { AppletType } from "../type/applet-type";
 import { cssTransform } from "../css/css-transform";
 

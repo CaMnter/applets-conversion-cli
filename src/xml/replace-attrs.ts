@@ -19,8 +19,8 @@
  */
 
 import { AppletType } from "../type/applet-type";
-import { alipayToWechatXmlMap } from "./map/alipay-to-wechat-map";
-import { wechatToAlipayXmlMap } from "./map/wechat-to-alipay-map";
+import { alipayToWechatXmlMap } from "../map/xml/alipay-to-wechat-map";
+import { wechatToAlipayXmlMap } from "../map/xml/wechat-to-alipay-map";
 
 /**
  * xml transform
