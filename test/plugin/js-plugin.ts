@@ -16,57 +16,53 @@
 
 import { expect } from "chai";
 import JsPlugin from "../../src/plugin/js-plugin";
-import BabelPluginAlipayToWechat from "../../src/babel-plugin/babel-plugin-alipay-to-wechat";
-import BabelPluginWechatToAlipay from "../../src/babel-plugin/babel-plugin-wechat-to-alipay";
+import { AppletType } from "../../src/type/applet-type";
 
 /**
  * @author CaMnter
  */
-
-const babelPluginAlipayToWechat: Function = new BabelPluginAlipayToWechat().createPlugin();
-const babelPluginWechatToAlipay: Function = new BabelPluginWechatToAlipay().createPlugin();
 
 describe('js plugin', function () {
 
   it('my.httpRequest => wx.request', () => {
     const code = 'my.httpRequest;';
     const expectCode = 'wx.request;';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('my.navigateTo => wx.navigateTo', () => {
     const code = 'my.navigateTo;';
     const expectCode = 'wx.navigateTo;';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('my.httpRequest() => wx.request()', () => {
     const code = 'my.httpRequest();';
     const expectCode = 'wx.request();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('my.navigateTo() => wx.navigateTo()', () => {
     const code = 'my.navigateTo();';
     const expectCode = 'wx.navigateTo();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('my[\"httpRequest\"]() => wx[\"request\"]()', () => {
     const code = 'my[\"httpRequest\"]();';
     const expectCode = 'wx[\"request\"]();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('my[\"navigateTo\"]() => wx[\"navigateTo\"]()', () => {
     const code = 'my[\"navigateTo\"]();';
     const expectCode = 'wx[\"navigateTo\"]();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -77,7 +73,7 @@ describe('js plugin', function () {
     const expectCode = 'wx.request({\n' +
       '  url: \'https://www.camnter.com\'\n' +
       '});';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -88,7 +84,7 @@ describe('js plugin', function () {
     const expectCode = 'wx[\"request\"]({\n' +
       '  url: \'https://www.camnter.com\'\n' +
       '});';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -99,7 +95,7 @@ describe('js plugin', function () {
     const expectCode = 'wx[functionName]({\n' +
       '  url: \'https://www.camnter.com\'\n' +
       '});';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginAlipayToWechat);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.my, AppletType.wx);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -108,42 +104,42 @@ describe('js plugin', function () {
   it('wx.request => my.httpRequest', () => {
     const code = 'wx.request;';
     const expectCode = 'my.httpRequest;';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('wx.navigateTo => my.navigateTo', () => {
     const code = 'wx.navigateTo;';
     const expectCode = 'my.navigateTo;';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('wx.request() => my.httpRequest()', () => {
     const code = 'wx.request();';
     const expectCode = 'my.httpRequest();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('wx.navigateTo() => my.navigateTo()', () => {
     const code = 'wx.navigateTo();';
     const expectCode = 'my.navigateTo();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('wx[\"request\"]() => my[\"httpRequest\"]()', () => {
     const code = 'wx[\"request\"]();';
     const expectCode = 'my[\"httpRequest\"]();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
   it('wx[\"navigateTo\"]() => my[\"navigateTo\"]()', () => {
     const code = 'wx[\"navigateTo\"]();';
     const expectCode = 'my[\"navigateTo\"]();';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -154,7 +150,7 @@ describe('js plugin', function () {
     const expectCode = 'my.httpRequest({\n' +
       '  url: \'https://www.camnter.com\'\n' +
       '});';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -165,7 +161,7 @@ describe('js plugin', function () {
     const expectCode = 'my[\"httpRequest\"]({\n' +
       '  url: \'https://www.camnter.com\'\n' +
       '});';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
@@ -176,7 +172,7 @@ describe('js plugin', function () {
     const expectCode = 'my[functionName]({\n' +
       '  url: \'https://www.camnter.com\'\n' +
       '});';
-    const jsPlugin: JsPlugin = new JsPlugin(babelPluginWechatToAlipay);
+    const jsPlugin: JsPlugin = new JsPlugin(AppletType.wx, AppletType.my);
     expect(jsPlugin.run(code)).to.equal(expectCode);
   });
 
