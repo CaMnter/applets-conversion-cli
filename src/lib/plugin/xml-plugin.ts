@@ -17,6 +17,7 @@
 import BasePlugin from "./base-plugin";
 import { AppletType } from "../type/applet-type";
 import { xmlTransForm } from "../xml/xml-transform";
+import { IPlugin } from "./i-plugin";
 
 /**
  * @author CaMnter
@@ -26,8 +27,13 @@ class XmlPlugin extends BasePlugin {
 
   private _$: CheerioStatic | undefined;
 
-  constructor(target: AppletType, expect: AppletType) {
+  private readonly _plugins: Array<IPlugin>;
+
+  constructor(target: AppletType,
+              expect: AppletType,
+              ...plugins: Array<IPlugin>) {
     super(target, expect);
+    this._plugins = plugins;
   }
 
   run(code: string | undefined | null): string {
@@ -38,6 +44,10 @@ class XmlPlugin extends BasePlugin {
     this._$ = $;
     this._result = bodyContent;
     return this._result;
+  }
+
+  get plugins(): Array<IPlugin> {
+    return this._plugins;
   }
 
   get $(): CheerioStatic | undefined {

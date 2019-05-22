@@ -18,6 +18,7 @@ import BasePlugin from "./base-plugin";
 import { CssType } from "../type/css-type";
 import { AppletType } from "../type/applet-type";
 import { cssTransform } from "../css/css-transform";
+import { IPlugin } from "./i-plugin";
 
 /**
  * @author CaMnter
@@ -28,8 +29,13 @@ class CssPlugin extends BasePlugin {
   private _targetCss?: CssType;
   private _expectCss?: CssType;
 
-  constructor(target: AppletType, expect: AppletType) {
+  private readonly _plugins: Array<IPlugin>;
+
+  constructor(target: AppletType,
+              expect: AppletType,
+              ...plugins: Array<IPlugin>) {
     super(target, expect);
+    this._plugins = plugins;
   }
 
   run(code: string | undefined | null): string {
@@ -60,6 +66,10 @@ class CssPlugin extends BasePlugin {
         throw new Error(`CssPlugin # checkAppletType # atypical applet type「${ name }」: ${ this._target }`);
         break;
     }
+  }
+
+  get plugins(): Array<IPlugin> {
+    return this._plugins;
   }
 
   get targetCss(): CssType | undefined {
