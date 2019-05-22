@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { overrideFileSync, overrideSync } from "../../../../src/utils/file-system/file-system";
+import { overrideFileSync, overrideSync } from "../../../../src/lib/utils/file-system/file-system";
 import * as path from "path";
 
 /**

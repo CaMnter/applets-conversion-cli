@@ -15,8 +15,8 @@
  */
 
 import { expect } from 'chai';
-import XmlPlugin from "../../src/plugin/xml-plugin";
-import { AppletType } from "../../src/type/applet-type";
+import XmlPlugin from "../../src/lib/plugin/xml-plugin";
+import { AppletType } from "../../src/lib/type/applet-type";
 
 /**
  * @author CaMnter

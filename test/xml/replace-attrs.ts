@@ -16,8 +16,8 @@
 
 import { load } from 'cheerio';
 import { expect } from 'chai';
-import { AppletType } from "../../src/type/applet-type";
-import { replaceAttrs } from "../../src/xml/replace-attrs";
+import { AppletType } from "../../src/lib/type/applet-type";
+import { replaceAttrs } from "../../src/lib/xml/replace-attrs";
 
 /**
  * @author CaMnter

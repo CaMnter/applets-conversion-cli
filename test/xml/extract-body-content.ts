@@ -16,7 +16,7 @@
 
 import { load } from 'cheerio';
 import { expect } from 'chai';
-import { extractBodyContent } from "../../src/xml/extract-body-content";
+import { extractBodyContent } from "../../src/lib/xml/extract-body-content";
 
 /**
  * @author CaMnter

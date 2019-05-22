@@ -24,11 +24,11 @@ import { xmlTransForm } from "../xml/xml-transform";
 
 class XmlPlugin extends BasePlugin {
 
+  private _$: CheerioStatic | undefined;
+
   constructor(target: AppletType, expect: AppletType) {
     super(target, expect);
   }
-
-  private _$: CheerioStatic | undefined;
 
   run(code: string | undefined | null): string {
     if (!code || '' === code) {

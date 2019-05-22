@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { overrideFileSync } from "../../../../src/utils/file-system/file-system";
+import { overrideFileSync } from "../../../../src/lib/utils/file-system/file-system";
 
 /**
  * @author CaMnter

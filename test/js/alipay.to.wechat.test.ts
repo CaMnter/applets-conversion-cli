@@ -15,8 +15,8 @@
  */
 
 import { expect } from 'chai';
-import { jsTransForm } from '../../src/js/js-transform' ;
-import BabelPluginAlipayToWechat from "../../src/babel-plugin/babel-plugin-alipay-to-wechat";
+import { jsTransForm } from '../../src/lib/js/js-transform' ;
+import BabelPluginAlipayToWechat from "../../src/lib/babel-plugin/babel-plugin-alipay-to-wechat";
 
 /**
  * @author CaMnter

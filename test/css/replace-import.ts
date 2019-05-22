@@ -16,8 +16,8 @@
 
 import { expect } from 'chai';
 import { parse, stringify } from "css";
-import { CssType } from "../../src/type/css-type";
-import { replaceImport } from "../../src/css/replace-import";
+import { CssType } from "../../src/lib/type/css-type";
+import { replaceImport } from "../../src/lib/css/replace-import";
 
 /**
  * @author CaMnter

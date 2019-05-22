@@ -15,7 +15,7 @@
  */
 
 import { expect } from 'chai';
-import { replaceLastString } from "../../src/utils/replace-last-string";
+import { replaceLastString } from "../../src/lib/utils/replace-last-string";
 
 /**
  * @author CaMnter

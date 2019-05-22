@@ -15,7 +15,7 @@
  */
 
 import * as path from 'path';
-import { overrideDirSync } from "../../../../src/utils/file-system/file-system";
+import { overrideDirSync } from "../../../../src/lib/utils/file-system/file-system";
 
 /**
  * @author CaMnter

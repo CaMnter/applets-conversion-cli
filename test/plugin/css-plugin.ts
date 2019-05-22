@@ -15,8 +15,8 @@
  */
 
 import { expect } from "chai";
-import CssPlugin from "../../src/plugin/css-plugin";
-import { AppletType } from "../../src/type/applet-type";
+import CssPlugin from "../../src/lib/plugin/css-plugin";
+import { AppletType } from "../../src/lib/type/applet-type";
 
 /**
  * @author CaMnter
