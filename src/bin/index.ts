@@ -25,7 +25,7 @@ import { appletsConversionTool, AppletsConversionToolParams } from "../index";
 
 let currentVersion = 'latest';
 try {
-  const { version } = require('./package.json');
+  const { version } = require('../../package.json');
   currentVersion = version;
 } catch (e) {
 }
