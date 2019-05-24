@@ -25,7 +25,7 @@ import { overrideSync } from "./lib/utils/file-system/file-system";
  * @author CaMnter
  */
 
-interface AppletsConversionToolParams {
+export interface AppletsConversionToolParams {
   // target directory
   src?: string,
   // output directory
@@ -44,7 +44,7 @@ interface AppletsConversionToolParams {
   }
 }
 
-interface Plugins {
+export interface Plugins {
   // js plugin
   jsPlugin?: JsPlugin,
   // css plugin
@@ -53,12 +53,12 @@ interface Plugins {
   xmlPlugin?: XmlPlugin,
 }
 
-enum Plan {
+export enum Plan {
   wxToMy,
   myToWx
 }
 
-enum ExtName {
+export enum ExtName {
   js = 'js',
   // TODO extend feature
   ts = 'ts',
@@ -68,14 +68,14 @@ enum ExtName {
   wxss = 'wxss',
 }
 
-const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
+export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
 
 /**
  * applets conversion tool
  *
  * @param params AppletsConversionToolParams
  */
-function appletsConversionTool(params: AppletsConversionToolParams): void {
+export function appletsConversionTool(params: AppletsConversionToolParams): void {
   let { src, out, target, expect, options } = params;
   const currentAbsolutePath: string = path.resolve(process.cwd());
 
@@ -137,7 +137,7 @@ function appletsConversionTool(params: AppletsConversionToolParams): void {
  * @param paramsName paramsName
  * @param target target
  */
-function checkAppletsType(paramsName: string, target?: string): boolean {
+export function checkAppletsType(paramsName: string, target?: string): boolean {
   if (!target || '' === target) {
     return false;
   }
@@ -156,7 +156,7 @@ function checkAppletsType(paramsName: string, target?: string): boolean {
  * @param target target
  * @param expect expect
  */
-function getPlan(target: string, expect: string): Plan | undefined {
+export function getPlan(target: string, expect: string): Plan | undefined {
   switch (target) {
     case AppletType.wx:
       switch (expect) {
@@ -181,7 +181,7 @@ function getPlan(target: string, expect: string): Plan | undefined {
  *
  * @param plan plan
  */
-function getPlugins(plan: Plan): Plugins {
+export function getPlugins(plan: Plan): Plugins {
   let jsPlugin: JsPlugin | undefined;
   let cssPlugin: CssPlugin | undefined;
   let xmlPlugin: XmlPlugin | undefined;
@@ -213,10 +213,10 @@ function getPlugins(plan: Plan): Plugins {
  * @param plan plan
  * @param plugins plugins
  */
-function contentHook(extName: string,
-                     content: string,
-                     plan: Plan,
-                     plugins: Plugins): string {
+export function contentHook(extName: string,
+                            content: string,
+                            plan: Plan,
+                            plugins: Plugins): string {
   const { jsPlugin, cssPlugin, xmlPlugin } = plugins;
   let expectContent = content;
   switch (plan) {
