@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+import { IPlugin } from "./i-plugin";
 import BasePlugin from "./base-plugin";
 import { AppletType } from "../type/applet-type";
 import { xmlTransForm } from "../xml/xml-transform";
-import { IPlugin } from "./i-plugin";
 
 /**
  * @author CaMnter

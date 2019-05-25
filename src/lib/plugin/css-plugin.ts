@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+import { IPlugin } from "./i-plugin";
 import BasePlugin from "./base-plugin";
 import { CssType } from "../type/css-type";
 import { AppletType } from "../type/applet-type";
 import { cssTransform } from "../css/css-transform";
-import { IPlugin } from "./i-plugin";
 
 /**
  * @author CaMnter
@@ -40,7 +40,7 @@ class CssPlugin extends BasePlugin {
 
   run(code: string | undefined | null): string {
     if (!code || '' === code) {
-      throw new Error(`XmlPlugin # constructor #「code」error: ${ code }`);
+      throw new Error(`CssPlugin # constructor #「code」error: ${ code }`);
     }
     this.checkAppletType('_target', '_targetCss', this._target);
     this.checkAppletType('_expect', '_expectCss', this._expect);

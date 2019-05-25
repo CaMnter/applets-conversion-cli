@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import { IPlugin } from "./i-plugin";
 import BasePlugin from "./base-plugin";
-import { jsTransForm } from "../js/js-transform";
 import { AppletType } from "../type/applet-type";
+import { jsTransForm } from "../js/js-transform";
 import BabelPluginWechatToAlipay from "../babel-plugin/babel-plugin-wechat-to-alipay";
 import BabelPluginAlipayToWechat from "../babel-plugin/babel-plugin-alipay-to-wechat";
-import { IPlugin } from "./i-plugin";
 
 /**
  * @author CaMnter
