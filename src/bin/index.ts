@@ -37,7 +37,7 @@ commander
   .option('-o, --out <string>', '输出路径')
   .option('-t, --target <string>', '目标类型「\'wx\', \'my\'」')
   .option('-e, --expect <string>', '期望类型「\'wx\', \'my\'」')
-  .option('-5, --es5 <boolan>', '是否转为 es5', false)
+  .option('-5, --es5', '是否转为 es5', false)
   .option('-f, --filter', '过滤关键字「\'node_modules\'」', [])
   .parse(process.argv);
 

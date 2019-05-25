@@ -27,7 +27,7 @@ import { ICompileStream } from "gulp-typescript/release/project";
 const mergeStream: Function = require('merge-stream');
 const tsProject: Project = gulpTypescript.createProject('tsconfig.json');
 
-gulp.task('compile', () => {
+gulp.task('default', () => {
   const tsResult: ICompileStream = gulp.src(['src/**/*.ts'])
     .pipe(gulpSourcemaps.init())
     .pipe(tsProject());
