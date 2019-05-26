@@ -28,34 +28,86 @@ const green: Chalk = chalk.hex('#3BB82F');
 const yellow: Chalk = chalk.hex('#DAAA7C');
 const magenta: Chalk = chalk.hex('#D192E2');
 
+enum LogType {
+  info,
+  warn,
+  error
+}
+
+/**
+ * main method
+ *
+ * @param logType logType
+ * @param chalk chalk
+ * @param text text
+ */
+export function main(logType: LogType, chalk: Chalk, ...text: Array<string>) {
+  const themeText = text.map((value: string) => {
+    return chalk(value);
+  });
+  console.log(getLogTitle(logType), ...themeText);
+}
+
+/**
+ * get log title
+ *
+ * @param logType logType
+ */
+export function getLogTitle(logType: LogType): string {
+  let title;
+  switch (logType) {
+    default:
+    case LogType.info:
+      title = gray('「info」');
+      break;
+    case LogType.warn:
+      title = yellow('「warn」');
+      break;
+    case LogType.error:
+      title = red('「error」');
+      break;
+  }
+  return title;
+}
+
 /**
  * info
  *
- * @param text text
  * @param chalk chalk
+ * @param text text
  */
-export function info(text: string, chalk?: Chalk) {
-  console.log(gray('「info」'), chalk ? chalk(text) : text);
+export function info(chalk: Chalk, ...text: Array<string>) {
+  main(LogType.info, chalk, ...text);
 }
 
 /**
  * warn
  *
- * @param text text
  * @param chalk chalk
+ * @param text text
  */
-export function warn(text: string, chalk?: Chalk) {
-  console.log(yellow('「warn」'), chalk ? chalk(text) : text);
+export function warn(chalk: Chalk, ...text: Array<string>) {
+  main(LogType.warn, chalk, ...text);
 }
 
 /**
  * error
  *
- * @param text text
  * @param chalk chalk
+ * @param text text
  */
-export function error(text: string, chalk?: Chalk) {
-  console.log(red('「error」'), chalk ? chalk(text) : text);
+export function error(chalk: Chalk, ...text: Array<string>) {
+  main(LogType.error, chalk, ...text);
+}
+
+/**
+ * main any method
+ *
+ * @param logType logType
+ * @param any any
+ */
+function mainAny(logType: LogType, ...any: Array<any>) {
+  console.log(getLogTitle(logType), any);
 }
 
 /**
@@ -63,8 +115,8 @@ export function error(text: string, chalk?: Chalk) {
  *
  * @param any any
  */
-export function infoAny(any: any) {
-  console.log(gray('「info」'), any);
+export function infoAny(...any: Array<any>) {
+  mainAny(LogType.info, ...any);
 }
 
 /**
@@ -72,8 +124,8 @@ export function infoAny(any: any) {
  *
  * @param any any
  */
-export function warnAny(any: any) {
-  console.log(gray('「warn」'), any);
+export function warnAny(...any: Array<any>) {
+  mainAny(LogType.warn, ...any);
 }
 
 /**
@@ -81,6 +133,6 @@ export function warnAny(any: any) {
  *
  * @param any any
  */
-export function errorAny(any: any) {
-  console.log(gray('「error」'), any);
+export function errorAny(...any: Array<any>) {
+  mainAny(LogType.error, ...any);
 }
