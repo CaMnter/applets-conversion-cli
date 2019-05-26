@@ -20,13 +20,14 @@ import chalk, { Chalk } from "chalk";
  * @author CaMnter
  */
 
-const red: Chalk = chalk.hex('#C13928');
-const cyan: Chalk = chalk.hex('#6AC2CC');
-const gray: Chalk = chalk.hex('#6F7783');
-const white: Chalk = chalk.hex('#FFFFFF');
-const green: Chalk = chalk.hex('#3BB82F');
-const yellow: Chalk = chalk.hex('#DAAA7C');
-const magenta: Chalk = chalk.hex('#D192E2');
+export const red: Chalk = chalk.hex('#C13928');
+export const cyan: Chalk = chalk.hex('#6AC2CC');
+export const gray: Chalk = chalk.hex('#6F7783');
+export const white: Chalk = chalk.hex('#FFFFFF');
+export const green: Chalk = chalk.hex('#007F00');
+export const orange: Chalk = chalk.hex('#DAAA7C');
+export const yellow: Chalk = chalk.hex('#ECEA38');
+export const magenta: Chalk = chalk.hex('#D192E2');
 
 enum LogType {
   info,
@@ -61,7 +62,7 @@ export function getLogTitle(logType: LogType): string {
       title = gray('「info」');
       break;
     case LogType.warn:
-      title = yellow('「warn」');
+      title = orange('「warn」');
       break;
     case LogType.error:
       title = red('「error」');

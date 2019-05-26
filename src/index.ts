@@ -20,6 +20,7 @@ import XmlPlugin from "./lib/plugin/xml-plugin";
 import CssPlugin from "./lib/plugin/css-plugin";
 import { AppletType } from "./lib/type/applet-type";
 import { overrideSync } from "./lib/utils/file-system/file-system";
+import { info, error, warnAny, red, orange, yellow, magenta } from "./lib/utils/log";
 
 /**
  * @author CaMnter
@@ -54,8 +55,8 @@ export interface Plugins {
 }
 
 export enum Plan {
-  wxToMy,
-  myToWx
+  wxToMy = 'wxToMy',
+  myToWx = 'myToWx',
 }
 
 export enum ExtName {
@@ -69,6 +70,7 @@ export enum ExtName {
 }
 
 export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
+export const appletTypeListPrintText = appletTypeList.join(', ');
 
 /**
  * applets conversion tool
@@ -76,22 +78,25 @@ export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
  * @param params AppletsConversionToolParams
  */
 export function appletsConversionTool(params: AppletsConversionToolParams): void {
+  info(magenta, '转换开始');
   let { src, out, target, expect, options } = params;
   const currentAbsolutePath: string = path.resolve(process.cwd());
 
   if (!target || !checkAppletsType('target', target)) {
+    error(red, `缺少必填参数 -t or --target「目标类型」`);
     return;
   }
   if (!expect || !checkAppletsType('expect', expect)) {
+    error(red, `缺少必填参数 -e or --expect「期望类型」`);
     return;
   }
   if (target === expect) {
-    // TODO console.log error
+    error(red, `--t or --target 不能和 -e or --expect 一致，target = ${ target }  target = ${ expect }`);
     return;
   }
   const plan: Plan | undefined = getPlan(target, expect);
   if (!plan) {
-    // TODO console.log error
+    error(red, `--t or --target 或 -e or --expect 校验失败，target = ${ target }  target = ${ expect }`);
     return;
   }
 
@@ -105,6 +110,12 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     useSrcDefaultPath = false;
   }
 
+  if (useSrcDefaultPath) {
+    info(yellow, `缺少 src 参数，默认为当前命令行目录 src = ${ src }`);
+  } else {
+    info(yellow, `src = ${ src }`);
+  }
+
   if (!out || '' === out) {
     out = src;
     useOutDefaultPath = true;
@@ -113,15 +124,40 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     useOutDefaultPath = false;
   }
 
-  const plugins: Plugins = getPlugins(plan);
+  if (useOutDefaultPath) {
+    info(yellow, `缺少 out 参数，默认为当前命令行目录 out = ${ out }`);
+  } else {
+    info(yellow, `out = ${ out }`);
+  }
 
-  // TODO console.log info「src」「out」「useSrcDefaultPath」「useOutDefaultPath」
+  const printParams = {
+    src,
+    out,
+    target,
+    expect,
+    ...options
+  };
+  Object.keys(printParams).forEach((key: string) => {
+    const value: string | object | Array<any> = (printParams as any)[key];
+    if (Array.isArray(value)) {
+      info(orange, `${ key } -> ${ JSON.stringify(value) }`)
+    } else {
+      info(orange, `${ key } -> ${ value }`);
+    }
+  });
+
+  const plugins: Plugins = getPlugins(plan);
 
   overrideSync(src, out, {
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
       const basename: string = path.basename(absolutePath);
-      let expectContent: string = contentHook(extName, content, plan, plugins);
+      let expectContent: string = content;
+      try {
+        expectContent = contentHook(extName, content, plan, plugins);
+      } catch (e) {
+        warnAny(e);
+      }
       return {
         content: expectContent,
         filePath: path.join(out as string, basename)
@@ -129,6 +165,7 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     }
   });
 
+  info(magenta, '转换结束');
 }
 
 /**
@@ -145,8 +182,9 @@ export function checkAppletsType(paramsName: string, target?: string): boolean {
     return value === target;
   });
 
-  // TODO console.log error
-
+  if (!some) {
+    error(red, `${ paramsName } 参数错误，应为「${ appletTypeListPrintText }」`);
+  }
   return some;
 }
 

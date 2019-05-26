@@ -49,8 +49,8 @@ const params: AppletsConversionToolParams = {
   target,
   expect,
   options: {
-    es5,
-    filter
+    es5: es5 || false,
+    filter: filter || [],
   }
 };
 
