@@ -35,7 +35,93 @@ export abstract class BabelPluginBaseApplet implements BabelPluginIApplet,
   BabelPluginICallExpressionHook,
   BabelPluginIMemberExpressionHook {
 
-  abstract createPlugin(): Function;
+  /**
+   * abstract get name
+   */
+  abstract getName(): string;
+
+  /**
+   * abstract get target
+   */
+  abstract getTarget(): AppletType;
+
+  /**
+   * abstract get expect
+   */
+  abstract getExpect(): AppletType;
+
+  public createPlugin(): Function {
+    const _getName = this.getName.bind(this);
+    const _getTarget = this.getTarget.bind(this);
+    const _identifierHook = this.identifierHook.bind(this);
+    const _callExpressionHook = this.callExpressionHook.bind(this);
+    const _memberExpressionHook = this.memberExpressionHook.bind(this);
+    return function (): object {
+      return {
+        name: _getName(),
+        visitor: {
+
+          /**
+           * wx
+           *
+           * ----------------
+           *
+           * my
+           *
+           * @param path
+           * @param appletType
+           * @constructor
+           */
+          Identifier(path: {
+            get: Function,
+            scope: { hasBinding: Function },
+            isReferencedIdentifier: Function,
+            replaceWith: Function
+          }) {
+            _identifierHook(path, _getTarget())
+          },
+
+          /**
+           * wx.request({ url: 'https://www.camnter.com' })
+           * wx['request']({ url: 'https://www.camnter.com' })
+           * wx[functionName]({ url: 'https://www.camnter.com' })
+           *
+           * ----------------
+           *
+           * my.request({ url: 'https://www.camnter.com' })
+           * my['request']({ url: 'https://www.camnter.com' })
+           * my[functionName]({ url: 'https://www.camnter.com' })
+           *
+           * @param path { get: Function }
+           * @constructor constructor
+           */
+          CallExpression(path: { get: Function }) {
+            _callExpressionHook(path, _getTarget());
+          },
+
+          /**
+           * wx['request']
+           *
+           * wx.request
+           * wx[functionName]
+           *
+           * ----------------
+           *
+           * my['request']
+           *
+           * my.request
+           * my[functionName]
+           *
+           * @param path path
+           * @constructor constructor
+           */
+          MemberExpression(path: { get: Function }) {
+            _memberExpressionHook(path, _getTarget());
+          },
+        }
+      };
+    };
+  }
 
   /**
    * ast

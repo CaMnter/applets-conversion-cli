@@ -23,6 +23,18 @@ import { BabelPluginBaseApplet } from "./base/babel-plugin-base-applet";
 
 class BabelPluginWechatToAlipay extends BabelPluginBaseApplet {
 
+  getName(): string {
+    return 'babel babel-plugin wechat to alpay';
+  }
+
+  getTarget(): AppletType {
+    return AppletType.my;
+  }
+
+  getExpect(): AppletType {
+    return AppletType.wx;
+  }
+
   public createPlugin(): Function {
     const _identifierHook = this.identifierHook.bind(this);
     const _callExpressionHook = this.callExpressionHook.bind(this);
