@@ -18,7 +18,7 @@
  * @author CaMnter
  */
 
-export const alipayToWechatXmlMap: { [attr: string]: string } = {
+const $base: { [attr: string]: string } = {
   'a:if': 'wx:if',
   'a:elif': 'wx:elif',
   'a:else': 'wx:else',
@@ -27,12 +27,69 @@ export const alipayToWechatXmlMap: { [attr: string]: string } = {
   'a:for-index': 'wx:for-index',
   'a:for-item': 'wx:for-item',
   'a:key': 'a:key',
+
   'onTap': 'onTap',
   'catchTap': 'catchTap',
-  'onInput': 'bindinput',
-  'onChange': 'bindchange',
-  'onFocus': 'bindfocus',
-  'onSubmit': 'bindsubmit',
+  'onLongTap': 'bindlongtap',
 
-  // TODO
+  'onBlur': 'bindblur',
+  'onReset': 'bindreset',
+  'onInput': 'bindinput',
+  'onFocus': 'bindfocus',
+  'onChange': 'bindchange',
+  'onSubmit': 'bindsubmit',
+  'onConfirm': 'bindconfirm',
+  'onChanging': 'bindchanging',
+
+  'onTouchStart': 'bindtouchstart',
+  'onTouchMove': 'bindtouchmove',
+  'onTouchEnd': 'bindtouchend',
+  'onTouchCancel': 'bindtouchcancel',
+};
+
+const scrollView: { [attr: string]: string } = {
+  'onScroll': 'bindscroll',
+  'onScrollToLower': 'bindscrolltolower',
+  'onScrollToUpper': 'bindscrolltoupper',
+};
+
+const progress: { [attr: string]: string } = {
+  'active-color': 'activeColor',
+  'background-color': 'backgroundColor'
+};
+
+const slider: { [attr: string]: string } = {
+  'active-color': 'activeColor',
+};
+
+const image: { [attr: string]: string } = {
+  'onLoad': 'bindload',
+  'onError': 'binderror',
+};
+
+const canvas: { [attr: string]: string } = {
+  'id': 'canvas-id',
+};
+
+const map: { [attr: string]: string } = {
+  'polygon': 'polygons',
+  'onMarkerTap': 'bindmarkertap',
+  'onCalloutTap': 'bindcallouttap',
+  'onControlTap': 'bindcontroltap',
+  'onRegionChange': 'bindregionchange',
+};
+
+const views: { [attr: string]: { [attr: string]: string } } = {
+  'scroll-view': scrollView,
+  progress,
+  slider,
+  image,
+  canvas,
+  map,
+};
+
+
+export const alipayToWechatXmlMap: { $base: { [attr: string]: string }, [attr: string]: { [attr: string]: string } } = {
+  $base,
+  ...views
 };

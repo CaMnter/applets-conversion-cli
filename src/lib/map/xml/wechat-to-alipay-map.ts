@@ -18,21 +18,22 @@
  * @author CaMnter
  */
 
-export const wechatToAlipayXmlMap: { [attr: string]: string } = {
-  'wx:if': 'a:if',
-  'wx:elif': 'a:elif',
-  'wx:else': 'a:else',
-  'wx:for': 'a:for',
-  'wx:for-items': 'a:for',
-  'wx:for-index': 'a:for-index',
-  'wx:for-item': 'a:for-item',
-  'wx:key': 'a:key',
-  'bindtap': 'onTap',
-  'catchtap': 'catchTap',
-  'bindinput': 'onInput',
-  'bindchange': 'onChange',
-  'bindfocus': 'onFocus',
-  'bindsubmit': 'onSubmit',
-
+export const wechatToAlipayXmlMap: { $base: { [attr: string]: string }, [attr: string]: { [attr: string]: string } } = {
+  $base: {
+    'wx:if': 'a:if',
+    'wx:elif': 'a:elif',
+    'wx:else': 'a:else',
+    'wx:for': 'a:for',
+    'wx:for-items': 'a:for',
+    'wx:for-index': 'a:for-index',
+    'wx:for-item': 'a:for-item',
+    'wx:key': 'a:key',
+    'bindtap': 'onTap',
+    'catchtap': 'catchTap',
+    'bindinput': 'onInput',
+    'bindchange': 'onChange',
+    'bindfocus': 'onFocus',
+    'bindsubmit': 'onSubmit',
+  }
   // TODO
 };

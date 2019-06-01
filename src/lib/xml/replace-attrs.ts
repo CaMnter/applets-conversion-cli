@@ -36,17 +36,28 @@ export function replaceAttrs(target: AppletType,
     return undefined;
   }
 
-  const map: { [attr: string]: string } | undefined = getXmlAttrsMap(target, expect);
+  const map: { $base: { [attr: string]: string }, [attr: string]: { [attr: string]: string } } | undefined = getXmlAttrsMap(target, expect);
   if (!map) {
     return undefined;
   }
 
+  // base table
+  let table: { [attr: string]: string } = { ...map.$base };
+
   $('*').each((index: number, element: CheerioElement) => {
+    const name: string = element.name;
+    const extendTable = map[name];
+    if (extendTable && Object.keys(extendTable).length > 0) {
+      table = {
+        ...table,
+        ...extendTable
+      }
+    }
     const attribs: { [attr: string]: string } = element.attribs;
     if (attribs) {
       const expectAttribs: { [attr: string]: string } = {};
       Object.keys(element.attribs).forEach((attrName: string) => {
-        const alipayAttrName = (map as { [attr: string]: string })[attrName];
+        const alipayAttrName = table[attrName];
         if (alipayAttrName) {
           const value = element.attribs[attrName];
           expectAttribs[alipayAttrName] = value;
@@ -65,8 +76,8 @@ export function replaceAttrs(target: AppletType,
  * @param target AppletType
  * @param expect AppletType
  */
-export function getXmlAttrsMap(target: AppletType, expect: AppletType): { [attr: string]: string } | undefined {
-  let map: { [attr: string]: string } | undefined = undefined;
+export function getXmlAttrsMap(target: AppletType, expect: AppletType): { $base: { [attr: string]: string }, [attr: string]: { [attr: string]: string } } | undefined {
+  let map: { $base: { [attr: string]: string }, [attr: string]: { [attr: string]: string } } | undefined = undefined;
   if (AppletType.wx === target && AppletType.my === expect) {
     map = wechatToAlipayXmlMap;
   } else if (AppletType.my === target && AppletType.wx === expect) {
