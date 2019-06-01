@@ -26,10 +26,10 @@ const $base: { [attr: string]: string } = {
   // 没有 a:for-items
   'a:for-index': 'wx:for-index',
   'a:for-item': 'wx:for-item',
-  'a:key': 'a:key',
+  'a:key': 'wx:key',
 
-  'onTap': 'onTap',
-  'catchTap': 'catchTap',
+  'onTap': 'bindtap',
+  'catchTap': 'catchtap',
   'onLongTap': 'bindlongtap',
 
   'onBlur': 'bindblur',

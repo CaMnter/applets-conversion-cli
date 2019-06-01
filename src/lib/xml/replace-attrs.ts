@@ -46,18 +46,24 @@ export function replaceAttrs(target: AppletType,
 
   $('*').each((index: number, element: CheerioElement) => {
     const name: string = element.name;
-    const extendTable = map[name];
+    const extendTable: { [attr: string]: string } = map[name];
     if (extendTable && Object.keys(extendTable).length > 0) {
       table = {
         ...table,
         ...extendTable
       }
     }
+
+    // lower case, cheerio makes the used attributes lowercase
+    let expectTable: { [attr: string]: string } = {};
+    Object.keys(table).forEach((property: string) => {
+      expectTable[property.toLowerCase()] = table[property];
+    });
     const attribs: { [attr: string]: string } = element.attribs;
     if (attribs) {
       const expectAttribs: { [attr: string]: string } = {};
       Object.keys(element.attribs).forEach((attrName: string) => {
-        const alipayAttrName = table[attrName];
+        const alipayAttrName = expectTable[attrName];
         if (alipayAttrName) {
           const value = element.attribs[attrName];
           expectAttribs[alipayAttrName] = value;
