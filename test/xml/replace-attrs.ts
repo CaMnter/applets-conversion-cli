@@ -26,10 +26,10 @@ import { replaceAttrs } from "../../src/lib/xml/replace-attrs";
 describe('「replace attrs」', function () {
 
   it('replace attrs xml「wx -> my」', () => {
-    const code = '<scroll-view wx:if="{{Save}}"><view wx:for="{{you}}" wx:for-index="wxIndex" wx:for-item="wxItem"><text wx:key="{{wxIndex}}" catchtap="catchtap">{{wxItem}}</text></view></scroll-view>';
+    const code = '<scroll-view wx:if="{{Save}}" bindscroll="onScroll"><view wx:for="{{you}}" wx:for-index="wxIndex" wx:for-item="wxItem"><text wx:key="{{wxIndex}}" bindtap="onTap">{{wxItem}}</text></view></scroll-view>';
     let $ = load(code);
     replaceAttrs(AppletType.wx, AppletType.my, $);
-    expect($.html()).to.equal('<html><head></head><body><scroll-view a:if="{{Save}}"><view a:for="{{you}}" a:for-index="wxIndex" a:for-item="wxItem"><text a:key="{{wxIndex}}" catchTap="catchtap">{{wxItem}}</text></view></scroll-view></body></html>');
+    expect($.html()).to.equal('<html><head></head><body><scroll-view a:if="{{Save}}" onScroll="onScroll"><view a:for="{{you}}" a:for-index="wxIndex" a:for-item="wxItem"><text a:key="{{wxIndex}}" onTap="onTap">{{wxItem}}</text></view></scroll-view></body></html>');
   });
 
   it('replace attrs xml「my -> wx」', () => {

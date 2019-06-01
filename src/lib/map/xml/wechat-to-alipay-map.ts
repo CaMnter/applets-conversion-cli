@@ -18,22 +18,79 @@
  * @author CaMnter
  */
 
+const $base: { [attr: string]: string } = {
+  'wx:if': 'a:if',
+  'wx:elif': 'a:elif',
+  'wx:else': 'a:else',
+  'wx:for': 'a:for',
+  // 没有 a:for-items
+  'wx:for-index': 'a:for-index',
+  'wx:for-item': 'a:for-item',
+  'wx:key': 'a:key',
+
+  'bindtap': 'onTap',
+  'catchtap': 'catchTap',
+  'bindlongtap': 'onLongTap',
+
+  'bindblur': 'onBlur',
+  'bindreset': 'onReset',
+  'bindinput': 'onInput',
+
+  'bindfocus': 'onFocus',
+  'bindchange': 'onChange',
+  'bindsubmit': 'onSubmit',
+  'bindconfirm': 'onConfirm',
+  'bindchanging': 'onChanging',
+
+  'bindtouchstart': 'onTouchStart',
+  'bindtouchmove': 'onTouchMove',
+  'bindtouchend': 'onTouchEnd',
+  'bindtouchcancel': 'onTouchCancel',
+};
+
+const scrollView: { [attr: string]: string } = {
+  'bindscroll': 'onScroll',
+  'bindscrolltolower': 'onScrollToLower',
+  'bindscrolltoupper': 'onScrollToUpper',
+};
+
+const progress: { [attr: string]: string } = {
+  'activeColor': 'active-color',
+  'backgroundColor': 'background-color'
+};
+
+const slider: { [attr: string]: string } = {
+  'activeColor': 'active-color',
+};
+
+const image: { [attr: string]: string } = {
+  'bindload': 'onLoad',
+  'binderror': 'onError'
+};
+
+const canvas: { [attr: string]: string } = {
+  'canvas-id': 'id',
+};
+
+const map: { [attr: string]: string } = {
+  'polygons': 'polygon',
+  'bindmarkertap': 'onMarkerTap',
+  'bindcallouttap': 'onCalloutTap',
+  'bindcontroltap': 'onControlTap',
+  'bindregionchange': 'onRegionChange',
+};
+
+const views: { [attr: string]: { [attr: string]: string } } = {
+  'scroll-view': scrollView,
+  progress,
+  slider,
+  image,
+  canvas,
+  map,
+};
+
+
 export const wechatToAlipayXmlMap: { $base: { [attr: string]: string }, [attr: string]: { [attr: string]: string } } = {
-  $base: {
-    'wx:if': 'a:if',
-    'wx:elif': 'a:elif',
-    'wx:else': 'a:else',
-    'wx:for': 'a:for',
-    'wx:for-items': 'a:for',
-    'wx:for-index': 'a:for-index',
-    'wx:for-item': 'a:for-item',
-    'wx:key': 'a:key',
-    'bindtap': 'onTap',
-    'catchtap': 'catchTap',
-    'bindinput': 'onInput',
-    'bindchange': 'onChange',
-    'bindfocus': 'onFocus',
-    'bindsubmit': 'onSubmit',
-  }
-  // TODO
+  $base,
+  ...views
 };
