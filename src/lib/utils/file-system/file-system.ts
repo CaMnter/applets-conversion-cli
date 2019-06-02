@@ -145,6 +145,17 @@ export function overrideDirSync(input: string,
 }
 
 /**
+ * match key
+ *
+ * @param key
+ */
+export function matchKey(key: string): boolean {
+  const start: RegExp = new RegExp(`^${ key }.*`);
+  const include: RegExp = new RegExp(`\/${ key }`);
+  return start.test(key) || include.test(key);
+}
+
+/**
  * write file sync
  *
  * @param filePath filePath
