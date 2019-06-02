@@ -130,6 +130,13 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     info(yellow, `out = ${ out }`);
   }
 
+  let es5: boolean | undefined;
+  let filter: Array<string> | undefined;
+  if (options) {
+    es5 = options.es5;
+    filter = options.filter;
+  }
+
   const printParams = {
     src,
     out,
@@ -149,6 +156,8 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
   const plugins: Plugins = getPlugins(plan);
 
   overrideSync(src, out, {
+    es5,
+    filter,
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
       const basename: string = path.basename(absolutePath);

@@ -24,6 +24,17 @@ import { isString, isFunction } from '../utils'
  * @author CaMnter
  */
 
+interface OverrideOptions {
+  flag?: string,
+  encoding?: string | null,
+  // fileContent: string, filePath: string
+  es5?: boolean,
+  filter?: Array<string>,
+  override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
+
+  [option: string]: string | boolean | Array<string> | Function | undefined | null
+}
+
 /**
  * override sync
  *
@@ -33,13 +44,7 @@ import { isString, isFunction } from '../utils'
  */
 export function overrideSync(input: string,
                              output: string,
-                             options: {
-                               flag?: string,
-                               encoding?: string | null,
-                               // fileContent: string, filePath: string
-                               override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
-                               [option: string]: string | boolean | Function | undefined | null
-                             }): void {
+                             options: OverrideOptions): void {
   if (!(input && isString(input))) {
     return;
   }
@@ -71,14 +76,7 @@ export function overrideSync(input: string,
  */
 export function overrideFileSync(input: string,
                                  output: string,
-                                 options: {
-                                   flag?: string,
-                                   encoding?: string | null,
-                                   inputAbsolutePath?: string | null,
-                                   // content?: string, absolutePath?: string, relativePath?: string
-                                   override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
-                                   [option: string]: string | boolean | Function | undefined | null
-                                 }): void {
+                                 options: OverrideOptions): void {
   const mkFile: boolean = mkFileSync(output);
   if (!mkFile) {
     throw new Error(`mkFile error, path = ${ output }`);
@@ -116,13 +114,7 @@ export function overrideFileSync(input: string,
  */
 export function overrideDirSync(input: string,
                                 output: string,
-                                options: {
-                                  flag?: string,
-                                  encoding?: string | null,
-                                  // fileContent: string, filePath: string
-                                  override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
-                                  [option: string]: string | boolean | Function | undefined | null
-                                }): void {
+                                options: OverrideOptions): void {
   const mkdir: boolean = mkdirSync(output);
   if (!mkdir) {
     throw new Error(`mkdir error, path = ${ output }`);

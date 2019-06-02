@@ -38,10 +38,21 @@ commander
   .option('-t, --target <string>', '目标类型「\'wx\', \'my\'」')
   .option('-e, --expect <string>', '期望类型「\'wx\', \'my\'」')
   .option('-5, --es5', '是否转为 es5', false)
-  .option('-f, --filter', '过滤关键字「\'node_modules\'」', [])
+  .option('-f, --filter', '过滤关键字「node_module, .tea, .idea」等', '')
   .parse(process.argv);
 
-const { src, out, target, expect, es5, filter } = commander;
+const { src, out, target, expect, es5 } = commander;
+
+const filter: string = commander.filter;
+let expectFilter: Array<string> = [];
+if (filter && '' !== filter) {
+  expectFilter = filter.split(',');
+}
+if (expectFilter.length > 0) {
+  expectFilter = expectFilter.map((value: string) => {
+    return value.trim();
+  });
+}
 
 const params: AppletsConversionToolParams = {
   src,
@@ -50,7 +61,7 @@ const params: AppletsConversionToolParams = {
   expect,
   options: {
     es5: es5 || false,
-    filter: filter || [],
+    filter: expectFilter || [],
   }
 };
 
