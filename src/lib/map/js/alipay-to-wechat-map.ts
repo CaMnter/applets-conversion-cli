@@ -18,7 +18,17 @@
  * @author CaMnter
  */
 
-export const alipayToWechatMap = {
+export const alipayToWechatAlertMap: { [attr: string]: string }={
   // TODO
-  'httpRequest': 'request'
+};
+
+export const alipayToWechatMap = {
+  'alert': 'showModal',
+  'confirm': 'showModal',
+  'getAuthCode': 'login',
+  'getAuthUserInfo': 'getUserInfo',
+  'getClipboard': 'getClipboardData',
+  'httpRequest': 'request',
+  'tradePay': 'requestPayment',
+  'saveImage': 'saveImageToPhotosAlbum',
 }
