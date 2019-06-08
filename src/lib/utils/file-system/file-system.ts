@@ -30,6 +30,7 @@ interface OverrideOptions {
   // fileContent: string, filePath: string
   es5?: boolean,
   filter?: Array<string>,
+  hitFilter?: (absolutePath: string) => void,
   override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
 
   [option: string]: any
@@ -128,24 +129,49 @@ export function overrideDirSync(input: string,
   const globResult: string[] = glob.sync(globPattern);
 
   globResult.forEach(filePath => {
-    // TODO filter
-    options.relativePath = input;
-    options.absolutePath = path.join(currentDirPath, filePath);
-    const basename: string = path.basename(filePath);
-    const createFilePath: string = path.join(output, basename);
-    overrideFileSync(filePath, createFilePath, options)
+    if (matchFilter) {
+      if (options && options.hitFilter && isFunction(options.hitFilter)) {
+        options.hitFilter(filePath);
+      }
+    } else {
+      options.relativePath = input;
+      options.absolutePath = path.join(currentDirPath, filePath);
+      const basename: string = path.basename(filePath);
+      const createFilePath: string = path.join(output, basename);
+      overrideFileSync(filePath, createFilePath, options)
+    }
   });
+}
+
+/**
+ * match filter
+ *
+ * @param path path
+ * @param filter filter
+ */
+export function matchFilter(path: string, filter: Array<string>): boolean {
+  if (!isLegalString(path)) {
+    return false;
+  }
+  if (!filter || !Array.isArray(filter) || filter.length <= 0) {
+    return false;
+  }
+
+  return filter.some((key: string) => {
+    return matchKey(path, key);
+  })
 }
 
 /**
  * match key
  *
+ * @param path path
  * @param key
  */
-export function matchKey(key: string): boolean {
+export function matchKey(path: string, key: string): boolean {
   const start: RegExp = new RegExp(`^${ key }.*`);
   const include: RegExp = new RegExp(`\/${ key }`);
-  return start.test(key) || include.test(key);
+  return start.test(path) || include.test(path);
 }
 
 /**

@@ -71,6 +71,7 @@ export enum ExtName {
 
 export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
 export const appletTypeListPrintText = appletTypeList.join(', ');
+export const defaultFilter: Array<string> = ['node_modules', '.tea', '.idea'];
 
 /**
  * applets conversion tool
@@ -131,10 +132,13 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
   }
 
   let es5: boolean | undefined;
-  let filter: Array<string> | undefined;
+  let filter: Array<string> | undefined = defaultFilter;
   if (options) {
     es5 = options.es5;
-    filter = options.filter;
+    const optionsFilter: Array<string> | undefined = options.filter;
+    if (optionsFilter && Array.isArray(optionsFilter) && optionsFilter.length > 0) {
+      filter = [...filter, ...optionsFilter];
+    }
   }
 
   const printParams = {
