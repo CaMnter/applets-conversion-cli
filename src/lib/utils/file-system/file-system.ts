@@ -18,7 +18,7 @@ import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 import { Stats, WriteFileOptions } from 'fs';
-import { isString, isFunction, isLegalString } from '../utils'
+import { isString, isFunction, isLegalString, isLegalArray } from '../utils'
 
 /**
  * @author CaMnter
@@ -127,11 +127,12 @@ export function overrideDirSync(input: string,
   const inputAbsolutePath: string = input;
   const globPattern = inputAbsolutePath + '!(node_modules)/**/*.{js,ts,axml,wxml,acss,wxss}';
   const globResult: string[] = glob.sync(globPattern);
+  const { filter, hitFilter } = options;
 
   globResult.forEach(filePath => {
-    if (matchFilter) {
-      if (options && options.hitFilter && isFunction(options.hitFilter)) {
-        options.hitFilter(filePath);
+    if (isLegalArray(filter) && matchFilter(filePath, filter)) {
+      if (hitFilter && isFunction(hitFilter)) {
+        hitFilter(filePath);
       }
     } else {
       options.relativePath = input;
@@ -149,7 +150,7 @@ export function overrideDirSync(input: string,
  * @param path path
  * @param filter filter
  */
-export function matchFilter(path: string, filter: Array<string>): boolean {
+export function matchFilter(path: string, filter: Array<string> | undefined): boolean {
   if (!isLegalString(path)) {
     return false;
   }

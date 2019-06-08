@@ -20,7 +20,7 @@ import XmlPlugin from "./lib/plugin/xml-plugin";
 import CssPlugin from "./lib/plugin/css-plugin";
 import { AppletType } from "./lib/type/applet-type";
 import { overrideSync } from "./lib/utils/file-system/file-system";
-import { info, error, warnAny, red, orange, yellow, magenta, green } from "./lib/utils/log";
+import { info, error, warn, warnAny, red, cyan, green, orange, yellow, magenta } from "./lib/utils/log";
 
 /**
  * @author CaMnter
@@ -162,6 +162,9 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
   overrideSync(src, out, {
     es5,
     filter,
+    hitFilter: function (absolutePath: string) {
+      warn(cyan, `「filter」${ absolutePath }`)
+    },
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
       const basename: string = path.basename(absolutePath);

@@ -53,7 +53,7 @@ export function isString(target: any | undefined): boolean {
  * @param target
  */
 export function isLegalString(target: any | undefined): boolean {
-  return !(target && isString(target) && '' !== target)
+  return !(target && isString(target) && '' !== target);
 }
 
 /**
@@ -64,6 +64,19 @@ export function isLegalString(target: any | undefined): boolean {
 export function isNumber(target: any | undefined): boolean {
   return target && 'number' === typeof target;
 }
+
+/**
+ * is legal array
+ *
+ * @param target
+ */
+export function isLegalArray(target: Array<any> | undefined): boolean {
+  if (!target) {
+    return false;
+  }
+  return Array.isArray(target) && target.length > 0;
+}
+
 
 /**
  * nothing to do
