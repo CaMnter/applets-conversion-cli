@@ -48,6 +48,15 @@ export function isString(target: any | undefined): boolean {
 }
 
 /**
+ * is legal string
+ *
+ * @param target
+ */
+export function isLegalString(target: any | undefined): boolean {
+  return !(target && isString(target) && '' !== target)
+}
+
+/**
  * is number
  *
  * @param target target

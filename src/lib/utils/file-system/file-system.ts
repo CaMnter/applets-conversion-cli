@@ -18,7 +18,7 @@ import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 import { Stats, WriteFileOptions } from 'fs';
-import { isString, isFunction } from '../utils'
+import { isString, isFunction, isLegalString } from '../utils'
 
 /**
  * @author CaMnter
@@ -87,10 +87,8 @@ export function overrideFileSync(input: string,
   let filePath: string = output;
   if (options && options.override && isFunction(options.override)) {
     let inputAbsolutePath: string = input;
-    if (!(inputAbsolutePath && isString(inputAbsolutePath) && '' !== inputAbsolutePath)) {
-      if (!inputAbsolutePath.startsWith(path.sep)) {
-        inputAbsolutePath = path.join(process.cwd(), input);
-      }
+    if (isLegalString(inputAbsolutePath) && !inputAbsolutePath.startsWith(path.sep)) {
+      inputAbsolutePath = path.join(process.cwd(), input);
     }
     const relativePath: string = path.relative(inputAbsolutePath, input);
     const result: { content?: string, filePath?: string } | undefined = options.override(
