@@ -122,7 +122,7 @@ export function overrideDirSync(input: string,
   }
 
   const currentDirPath: string = process.cwd();
-  const inputAbsolutePath: string = path.join(currentDirPath, input);
+  const inputAbsolutePath: string = input;
   const globPattern = inputAbsolutePath + '!(node_modules)/**/*.{js,ts,axml,wxml,acss,wxss}';
   const globResult: string[] = glob.sync(globPattern);
 
