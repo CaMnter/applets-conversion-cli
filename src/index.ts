@@ -83,11 +83,11 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
   const currentAbsolutePath: string = path.resolve(process.cwd());
 
   if (!target || !checkAppletsType('target', target)) {
-    error(red, `缺少必填参数 -t or --target「目标类型」`);
+    error(red, `缺少必填参数 -t or --target「目标类型 ${ appletTypeListPrintText }」`);
     return;
   }
   if (!expect || !checkAppletsType('expect', expect)) {
-    error(red, `缺少必填参数 -e or --expect「期望类型」`);
+    error(red, `缺少必填参数 -e or --expect「期望类型 ${ appletTypeListPrintText }」`);
     return;
   }
   if (target === expect) {
