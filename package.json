@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --require ./node_modules/ts-node/register \"test/**/*.ts\""
+    "test": "./node_modules/.bin/mocha --require ./node_modules/ts-node/register \"test/**/*.ts\"",
+    "alipay": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx "
   },
   "keywords": [
     "wechat-applet",

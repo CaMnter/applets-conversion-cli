@@ -20,7 +20,7 @@ import XmlPlugin from "./lib/plugin/xml-plugin";
 import CssPlugin from "./lib/plugin/css-plugin";
 import { AppletType } from "./lib/type/applet-type";
 import { overrideSync } from "./lib/utils/file-system/file-system";
-import { info, error, warnAny, red, orange, yellow, magenta } from "./lib/utils/log";
+import { info, error, warnAny, red, orange, yellow, magenta, green } from "./lib/utils/log";
 
 /**
  * @author CaMnter
@@ -161,15 +161,17 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
       const basename: string = path.basename(absolutePath);
+      const filePath: string = path.join(out as string, basename);
       let expectContent: string = content;
       try {
         expectContent = contentHook(extName, content, plan, plugins);
+        info(green, `${ absolutePath } -> ${ filePath }`);
       } catch (e) {
         warnAny(e);
       }
       return {
         content: expectContent,
-        filePath: path.join(out as string, basename)
+        filePath
       }
     }
   });
