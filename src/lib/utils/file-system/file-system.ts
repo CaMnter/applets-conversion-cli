@@ -32,7 +32,7 @@ interface OverrideOptions {
   filter?: Array<string>,
   override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
 
-  [option: string]: string | boolean | Array<string> | Function | undefined | null
+  [option: string]: any
 }
 
 /**
