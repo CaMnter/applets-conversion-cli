@@ -53,7 +53,7 @@ export function isString(target: any | undefined): boolean {
  * @param target
  */
 export function isLegalString(target: any | undefined): boolean {
-  return !(target && isString(target) && '' !== target);
+  return target && isString(target) && '' !== target;
 }
 
 /**
