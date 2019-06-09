@@ -29,13 +29,9 @@ class JsPlugin extends BasePlugin {
 
   private readonly _babelPlugin: Function;
 
-  private readonly _plugins: Array<IPlugin>;
-
   constructor(target: AppletType,
-              expect: AppletType,
-              ...plugins: Array<IPlugin>) {
+              expect: AppletType) {
     super(target, expect);
-    this._plugins = plugins;
     this._babelPlugin = this.getBabelPlugin(this._target, this._expect);
     if (!this._babelPlugin) {
       throw new Error(`JsPlugin # constructor #「babelPlugin」error: ${ this._babelPlugin }`);
@@ -71,10 +67,6 @@ class JsPlugin extends BasePlugin {
         break;
     }
     throw new Error(`JsPlugin # getBabelPlugin #「babelPlugin」undefined error`);
-  }
-
-  get plugins(): Array<IPlugin> {
-    return this._plugins;
   }
 
   get babelPlugin(): Function {

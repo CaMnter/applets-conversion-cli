@@ -27,6 +27,7 @@ abstract class BasePlugin implements IPlugin {
   protected readonly _expect: AppletType;
 
   protected _result: string | undefined;
+  private _plugins: Array<IPlugin> = [];
 
   protected constructor(target: AppletType, expect: AppletType) {
     if (!target) {
@@ -42,6 +43,14 @@ abstract class BasePlugin implements IPlugin {
   }
 
   abstract run(code: string | undefined | null): string ;
+
+  get plugins(): Array<IPlugin> {
+    return this._plugins;
+  }
+
+  set plugins(value: Array<IPlugin>) {
+    this._plugins = value;
+  }
 
   get target(): AppletType {
     return this._target;

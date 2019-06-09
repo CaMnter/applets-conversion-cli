@@ -27,13 +27,9 @@ class XmlPlugin extends BasePlugin {
 
   private _$: CheerioStatic | undefined;
 
-  private readonly _plugins: Array<IPlugin>;
-
   constructor(target: AppletType,
-              expect: AppletType,
-              ...plugins: Array<IPlugin>) {
+              expect: AppletType) {
     super(target, expect);
-    this._plugins = plugins;
   }
 
   run(code: string | undefined | null): string {
@@ -44,10 +40,6 @@ class XmlPlugin extends BasePlugin {
     this._$ = $;
     this._result = bodyContent;
     return this._result;
-  }
-
-  get plugins(): Array<IPlugin> {
-    return this._plugins;
   }
 
   get $(): CheerioStatic | undefined {
