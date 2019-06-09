@@ -159,6 +159,13 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
 
   const plugins: Plugins = getPlugins(plan);
 
+  const expectSrc: string = src;
+  const expectOut: string = out;
+
+  /**
+   * src is the absolute path
+   * out is the absolute path
+   */
   overrideSync(src, out, {
     es5,
     filter,
@@ -167,8 +174,8 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     },
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
-      const basename: string = path.basename(absolutePath);
-      const filePath: string = path.join(out as string, basename);
+      const layerPath: string = path.relative(expectOut, absolutePath);
+      const filePath: string = path.resolve(expectOut, layerPath);
       let expectContent: string = content;
       try {
         expectContent = contentHook(extName, content, plan, plugins);
