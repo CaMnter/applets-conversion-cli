@@ -60,13 +60,13 @@ export enum Plan {
 }
 
 export enum ExtName {
-  js = 'js',
+  js = '.js',
   // TODO extend feature
-  ts = 'ts',
-  axml = 'axml',
-  wxml = 'wxml',
-  acss = 'acss',
-  wxss = 'wxss',
+  ts = '.ts',
+  axml = '.axml',
+  wxml = '.wxml',
+  acss = '.acss',
+  wxss = '.wxss',
 }
 
 export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
