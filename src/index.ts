@@ -174,7 +174,8 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     },
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
-      const layerPath: string = path.relative(expectSrc, absolutePath);
+      const hookPath: string = filePathHook(extName, absolutePath, plan);
+      const layerPath: string = path.relative(expectSrc, hookPath);
       const filePath: string = path.resolve(expectOut, layerPath);
       let expectContent: string = content;
       try {
@@ -333,4 +334,48 @@ export function contentHook(extName: string,
       break;
   }
   return expectContent;
+}
+
+/**
+ * file path hook
+ *
+ * @param extName extName
+ * @param filePath filePath
+ * @param plan plan
+ */
+export function filePathHook(extName: string,
+                             filePath: string,
+                             plan: Plan): string {
+  let expectFilePath = filePath;
+  switch (plan) {
+    case Plan.wxToMy:
+      /**
+       *「wxss」
+       *「wxml」
+       */
+      switch (extName) {
+        case ExtName.wxss:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.wxss }$`), ExtName.acss);
+          break;
+        case ExtName.wxml:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.wxml }$`), ExtName.axml);
+          break;
+      }
+      break;
+    case Plan.myToWx:
+      /**
+       *「acss」
+       *「axml」
+       */
+      switch (extName) {
+        case ExtName.acss:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.acss }$`), ExtName.wxss);
+          break;
+        case ExtName.axml:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.axml }$`), ExtName.wxml);
+          break;
+      }
+      break;
+  }
+  return expectFilePath;
 }
