@@ -1,0 +1,23 @@
+<view>
+
+  <view>
+    <img/>
+    <view>{{user.nickName &amp;&amp; user.nickName + &apos;\&apos;s&apos; || &apos;My&apos;}} Todo List</view>
+  </view>
+
+  <view>
+
+    <checkbox-group bindchange="onTodoChanged">
+      <label wx:for="{{todos}}" wx:for-item="item" wx:key="*this">
+        <checkbox>
+        <text>{{item.text}}</text>
+      </checkbox></label>
+    </checkbox-group>
+
+  </view>
+
+  <view>
+    <add-button/>
+  </view>
+
+</view>
