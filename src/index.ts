@@ -174,7 +174,7 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     },
     override: function (content: string, absolutePath: string, relativePath: string) {
       const extName: string = path.extname(absolutePath);
-      const layerPath: string = path.relative(expectOut, absolutePath);
+      const layerPath: string = path.relative(expectSrc, absolutePath);
       const filePath: string = path.resolve(expectOut, layerPath);
       let expectContent: string = content;
       try {
