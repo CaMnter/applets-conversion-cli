@@ -125,7 +125,7 @@ export function overrideDirSync(input: string,
 
   const currentDirPath: string = process.cwd();
   const inputAbsolutePath: string = input;
-  const globPattern = inputAbsolutePath + '!(node_modules)/**/*.{js,ts,axml,wxml,acss,wxss}';
+  const globPattern = inputAbsolutePath + '!(node_modules)/**/*.*';
   const globResult: string[] = glob.sync(globPattern);
   const { filter, hitFilter } = options;
 
