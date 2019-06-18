@@ -192,6 +192,7 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
           content: expectContent
         }
       } else {
+        info(green, `${ absolutePath } -> ${ filePath }`);
         /**
          * 走普通文件复制流程
          */
