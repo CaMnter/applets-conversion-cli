@@ -31,7 +31,7 @@ interface OverrideOptions {
   es5?: boolean,
   filter?: Array<string>,
   hitFilter?: (absolutePath: string) => void,
-  override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string } | undefined
+  override?: (content: string, absolutePath: string, relativePath: string) => { content?: string, filePath?: string, normalCopy?: boolean } | undefined
 
   [option: string]: any
 }
@@ -86,13 +86,14 @@ export function overrideFileSync(input: string,
 
   let content: string = fs.readFileSync(input, options) as string;
   let filePath: string = output;
+  let normalCopy: boolean = false;
   if (options && options.override && isFunction(options.override)) {
     let inputAbsolutePath: string = input;
     if (isLegalString(inputAbsolutePath) && !inputAbsolutePath.startsWith(path.sep)) {
       inputAbsolutePath = path.join(process.cwd(), input);
     }
     const relativePath: string = path.relative(inputAbsolutePath, input);
-    const result: { content?: string, filePath?: string } | undefined = options.override(
+    const result: { content?: string, filePath?: string, normalCopy?: boolean } | undefined = options.override(
       content,
       inputAbsolutePath,
       relativePath
@@ -103,8 +104,16 @@ export function overrideFileSync(input: string,
     if (result && result.filePath) {
       filePath = result.filePath;
     }
+    if (result && result.normalCopy) {
+      normalCopy = result.normalCopy;
+    }
   }
-  writeFileSync(filePath, content);
+  if (normalCopy) {
+    // normal copy file
+    copyFileSync(input, filePath);
+  } else {
+    writeFileSync(filePath, content);
+  }
 }
 
 /**
@@ -173,6 +182,24 @@ export function matchKey(path: string, key: string): boolean {
   const start: RegExp = new RegExp(`^${ key }.*`);
   const include: RegExp = new RegExp(`\/${ key }`);
   return start.test(path) || include.test(path);
+}
+
+/**
+ * copy file sync
+ *
+ * @param input input
+ * @param output output
+ */
+export function copyFileSync(input: string,
+                             output: string,): void {
+
+  if (!(output && isString(output))) {
+    return;
+  }
+
+  const dir: string = path.dirname(output);
+  mkdirSync(dir);
+  fs.copyFileSync(input, output);
 }
 
 /**

@@ -59,7 +59,7 @@ export enum Plan {
   myToWx = 'myToWx',
 }
 
-export enum ExtName {
+export enum HookExtName {
   js = '.js',
   // TODO extend feature
   ts = '.ts',
@@ -67,6 +67,7 @@ export enum ExtName {
   wxml = '.wxml',
   acss = '.acss',
   wxss = '.wxss',
+  json = '.json',
 }
 
 export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
@@ -178,15 +179,26 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
       const layerPath: string = path.relative(expectSrc, hookPath);
       const filePath: string = path.resolve(expectOut, layerPath);
       let expectContent: string = content;
-      try {
-        expectContent = contentHook(extName, content, plan, plugins);
-        info(green, `${ absolutePath } -> ${ filePath }`);
-      } catch (e) {
-        warnAny(e);
-      }
-      return {
-        content: expectContent,
-        filePath
+      if (isHookExtName(extName)) {
+        // js, ts, axml, wxml, acss, wxss, json
+        try {
+          expectContent = contentHook(extName, content, plan, plugins);
+          info(green, `${ absolutePath } -> ${ filePath }`);
+        } catch (e) {
+          warnAny(e);
+        }
+        return {
+          filePath,
+          content: expectContent
+        }
+      } else {
+        /**
+         * 走普通文件复制流程
+         */
+        return {
+          filePath,
+          normalCopy: true
+        }
       }
     }
   });
@@ -291,17 +303,17 @@ export function contentHook(extName: string,
        *「wxml」
        */
       switch (extName) {
-        case ExtName.js:
+        case HookExtName.js:
           if (jsPlugin) {
             expectContent = jsPlugin.run(content);
           }
           break;
-        case ExtName.wxss:
+        case HookExtName.wxss:
           if (cssPlugin) {
             expectContent = cssPlugin.run(content);
           }
           break;
-        case ExtName.wxml:
+        case HookExtName.wxml:
           if (xmlPlugin) {
             expectContent = xmlPlugin.run(content);
           }
@@ -315,17 +327,17 @@ export function contentHook(extName: string,
        *「axml」
        */
       switch (extName) {
-        case ExtName.js:
+        case HookExtName.js:
           if (jsPlugin) {
             expectContent = jsPlugin.run(content);
           }
           break;
-        case ExtName.acss:
+        case HookExtName.acss:
           if (cssPlugin) {
             expectContent = cssPlugin.run(content);
           }
           break;
-        case ExtName.axml:
+        case HookExtName.axml:
           if (xmlPlugin) {
             expectContent = xmlPlugin.run(content);
           }
@@ -354,11 +366,11 @@ export function filePathHook(extName: string,
        *「wxml」
        */
       switch (extName) {
-        case ExtName.wxss:
-          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.wxss }$`), ExtName.acss);
+        case HookExtName.wxss:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ HookExtName.wxss }$`), HookExtName.acss);
           break;
-        case ExtName.wxml:
-          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.wxml }$`), ExtName.axml);
+        case HookExtName.wxml:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ HookExtName.wxml }$`), HookExtName.axml);
           break;
       }
       break;
@@ -368,14 +380,26 @@ export function filePathHook(extName: string,
        *「axml」
        */
       switch (extName) {
-        case ExtName.acss:
-          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.acss }$`), ExtName.wxss);
+        case HookExtName.acss:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ HookExtName.acss }$`), HookExtName.wxss);
           break;
-        case ExtName.axml:
-          expectFilePath = expectFilePath.replace(new RegExp(`${ ExtName.axml }$`), ExtName.wxml);
+        case HookExtName.axml:
+          expectFilePath = expectFilePath.replace(new RegExp(`${ HookExtName.axml }$`), HookExtName.wxml);
           break;
       }
       break;
   }
   return expectFilePath;
+}
+
+/**
+ * is hook ext name
+ *
+ * @param extName extName
+ */
+export function isHookExtName(extName: string): boolean {
+  const keys: Array<string> = Object.keys(HookExtName);
+  return keys.some((value: string, index: number, array: string[]) => {
+    return HookExtName[value as any] === extName;
+  });
 }
