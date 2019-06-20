@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { IPlugin } from "./i-plugin";
 import BasePlugin from "./base-plugin";
 import { AppletType } from "../type/applet-type";
 import { jsTransForm } from "../js/js-transform";

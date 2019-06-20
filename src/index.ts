@@ -20,7 +20,7 @@ import XmlPlugin from "./lib/plugin/xml-plugin";
 import CssPlugin from "./lib/plugin/css-plugin";
 import { AppletType } from "./lib/type/applet-type";
 import { overrideSync } from "./lib/utils/file-system/file-system";
-import { info, error, warn, warnAny, red, cyan, green, orange, yellow, magenta } from "./lib/utils/log";
+import { info, error, warn, warnAny, red, cyan, green, orange, yellow, magenta, errorAny, white } from "./lib/utils/log";
 
 /**
  * @author CaMnter
@@ -68,6 +68,12 @@ export enum HookExtName {
   acss = '.acss',
   wxss = '.wxss',
   json = '.json',
+}
+
+interface ConversionError {
+  error?: Error,
+  filePath?: string,
+  errorMessage?: string
 }
 
 export const appletTypeList: Array<string> = [AppletType.wx, AppletType.my];
@@ -163,6 +169,8 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
   const expectSrc: string = src;
   const expectOut: string = out;
 
+  const errorList: Array<ConversionError> = [];
+
   /**
    * src is the absolute path
    * out is the absolute path
@@ -185,7 +193,11 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
           expectContent = contentHook(extName, content, plan, plugins);
           info(green, `${ absolutePath } -> ${ filePath }`);
         } catch (e) {
-          warnAny(e);
+          const conversionError: ConversionError | undefined = createConversionError(e);
+          if (conversionError) {
+            conversionError.filePath = absolutePath;
+            errorList.push(conversionError);
+          }
         }
         return {
           filePath,
@@ -204,7 +216,52 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     }
   });
 
+  printConversionErrors(errorList);
+
   info(magenta, '转换结束');
+}
+
+/**
+ * print conversion errors
+ *
+ * @param errorList errorList
+ */
+export function printConversionErrors(errorList: Array<ConversionError>) {
+  if (errorList.length > 0) {
+    errorList.forEach((conversionError: ConversionError) => {
+      const { filePath, errorMessage } = conversionError;
+      if (filePath) {
+        warn(red, filePath);
+      }
+      if (errorMessage) {
+        warn(white, errorMessage);
+      }
+      warn(yellow, '[注] 可以试试加个 --es5 试试');
+    });
+  }
+}
+
+/**
+ * create conversion error
+ *
+ * @param error error
+ */
+export function createConversionError(error: Error): ConversionError | undefined {
+  let conversionError: ConversionError | undefined;
+  if (error && error.stack) {
+    const stack: string = error.stack;
+    let stackList: Array<string> = stack.split('\n\n');
+    const length: number = stackList.length;
+    if (stackList.length > 1) {
+      stackList = stackList.slice(0, length - 1);
+    }
+    const errorMessage: string = stackList.join('\n\n');
+    conversionError = {
+      error,
+      errorMessage
+    };
+  }
+  return conversionError;
 }
 
 /**

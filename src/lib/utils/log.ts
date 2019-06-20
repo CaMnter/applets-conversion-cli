@@ -59,13 +59,13 @@ export function getLogTitle(logType: LogType): string {
   switch (logType) {
     default:
     case LogType.info:
-      title = gray('「info」');
+      title = gray('[info]');
       break;
     case LogType.warn:
-      title = orange('「warn」');
+      title = orange('[warn]');
       break;
     case LogType.error:
-      title = red('「error」');
+      title = red('[error]');
       break;
   }
   return title;
