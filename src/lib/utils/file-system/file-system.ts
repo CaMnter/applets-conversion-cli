@@ -87,8 +87,8 @@ export function overrideFileSync(input: string,
   let content: string = fs.readFileSync(input, options) as string;
   let filePath: string = output;
   let normalCopy: boolean = false;
+  let inputAbsolutePath: string = input;
   if (options && options.override && isFunction(options.override)) {
-    let inputAbsolutePath: string = input;
     if (isLegalString(inputAbsolutePath) && !inputAbsolutePath.startsWith(path.sep)) {
       inputAbsolutePath = path.join(process.cwd(), input);
     }
@@ -113,6 +113,16 @@ export function overrideFileSync(input: string,
     copyFileSync(input, filePath);
   } else {
     writeFileSync(filePath, content);
+  }
+
+  /**
+   * in the same directory
+   * acss -> wxss
+   *
+   * remove acss
+   */
+  if (filePath !== inputAbsolutePath && isTheSameDirectory(filePath, inputAbsolutePath)) {
+    fs.unlinkSync(inputAbsolutePath);
   }
 }
 
@@ -338,4 +348,14 @@ export function getActualDeepestPath(input: string): string {
   } else {
     return input;
   }
+}
+
+/**
+ * is the same directory
+ *
+ * @param firstPath firstPath
+ * @param secondPath secondPath
+ */
+export function isTheSameDirectory(firstPath: string, secondPath: string): boolean {
+  return path.dirname(firstPath) === path.dirname(secondPath);
 }
