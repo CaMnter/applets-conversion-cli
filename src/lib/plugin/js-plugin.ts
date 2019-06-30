@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+import { IPlugin } from "./i-plugin";
 import BasePlugin from "./base-plugin";
+import { error, red } from "../utils/log";
 import { AppletType } from "../type/applet-type";
 import { jsTransForm } from "../js/js-transform";
 import BabelPluginWechatToAlipay from "../babel-plugin/babel-plugin-wechat-to-alipay";
@@ -42,6 +44,19 @@ class JsPlugin extends BasePlugin {
       throw new Error(`JsPlugin # run #「code」error: ${ code }`);
     }
 
+    this._result = code;
+
+    this.plugins &&
+    Array.isArray(this.plugins) &&
+    this.plugins.length > 0 &&
+    this.plugins.forEach((plugin: IPlugin) => {
+      try {
+        this._result = plugin.run(code);
+      } catch (e) {
+        // extra plugin error
+        error(red, `JsPlugin # run # extra plugin error: ${ e }`);
+      }
+    });
     this._result = jsTransForm(code, this._babelPlugin);
     return this._result;
   }

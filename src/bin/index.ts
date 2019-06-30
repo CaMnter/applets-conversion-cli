@@ -37,7 +37,7 @@ commander
   .option('-o, --out <string>', '输出路径')
   .option('-t, --target <string>', '目标类型「\'wx\', \'my\'」')
   .option('-e, --expect <string>', '期望类型「\'wx\', \'my\'」')
-  .option('-5, --es5', '是否转为 es5', false)
+  .option('-5, --es5 <boolean>', '是否转为 es5', false)
   .option('-f, --filter <string>', '过滤关键字「node_module, .tea, .idea」等', '')
   .parse(process.argv);
 
@@ -60,7 +60,7 @@ const params: AppletsConversionToolParams = {
   target,
   expect,
   options: {
-    es5: es5 || false,
+    es5: es5 ? true : false,
     filter: expectFilter || [],
   }
 };

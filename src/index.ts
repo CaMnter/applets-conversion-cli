@@ -21,6 +21,7 @@ import CssPlugin from "./lib/plugin/css-plugin";
 import { AppletType } from "./lib/type/applet-type";
 import { overrideSync } from "./lib/utils/file-system/file-system";
 import { info, error, warn, warnAny, red, cyan, green, orange, yellow, magenta, errorAny, white } from "./lib/utils/log";
+import PluginObjectRestSpread from "./lib/plugin/js/plugin-object-rest-spread";
 
 /**
  * @author CaMnter
@@ -164,7 +165,7 @@ export function appletsConversionTool(params: AppletsConversionToolParams): void
     }
   });
 
-  const plugins: Plugins = getPlugins(plan);
+  const plugins: Plugins = getPlugins(plan, options);
 
   const expectSrc: string = src;
   const expectOut: string = out;
@@ -315,7 +316,7 @@ export function getPlan(target: string, expect: string): Plan | undefined {
  *
  * @param plan plan
  */
-export function getPlugins(plan: Plan): Plugins {
+export function getPlugins(plan: Plan, options?: { es5?: boolean, [option: string]: any }): Plugins {
   let jsPlugin: JsPlugin | undefined;
   let cssPlugin: CssPlugin | undefined;
   let xmlPlugin: XmlPlugin | undefined;
@@ -331,6 +332,14 @@ export function getPlugins(plan: Plan): Plugins {
       xmlPlugin = new XmlPlugin(AppletType.my, AppletType.wx);
       break;
     // TODO more
+  }
+  const es5: boolean = options && options.es5 ? options.es5 : false;
+  if (jsPlugin) {
+    if (es5) {
+      jsPlugin.plugins = [new PluginObjectRestSpread];
+    }
+
+    // TODO more plugins
   }
   return {
     jsPlugin,

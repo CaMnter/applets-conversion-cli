@@ -44,11 +44,11 @@ abstract class BasePlugin implements IPlugin {
 
   abstract run(code: string | undefined | null): string ;
 
-  get plugins(): Array<IPlugin> {
+  public get plugins(): Array<IPlugin> {
     return this._plugins;
   }
 
-  set plugins(value: Array<IPlugin>) {
+  public set plugins(value: Array<IPlugin>) {
     this._plugins = value;
   }
 
