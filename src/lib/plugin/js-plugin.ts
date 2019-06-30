@@ -57,7 +57,7 @@ class JsPlugin extends BasePlugin {
         error(red, `JsPlugin # run # extra plugin error: ${ e }`);
       }
     });
-    this._result = jsTransForm(code, this._babelPlugin);
+    this._result = jsTransForm(this._result, this._babelPlugin);
     return this._result;
   }
 
