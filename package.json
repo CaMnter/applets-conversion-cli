@@ -8,7 +8,8 @@
     "alipay-wechat": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx ",
     "alipay-wechat-s": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx -s test/applets/alipay-demo",
     "alipay-wechat-s-o": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx -s test/applets/alipay-demo -o test/applets/alipay-demo-to-wechat",
-    "alipay-wechat-s-o-f": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx -s test/applets/alipay-demo -o test/applets/alipay-demo-to-wechat-filter -f expect-filter-dir"
+    "alipay-wechat-s-o-f": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx -s test/applets/alipay-demo -o test/applets/alipay-demo-to-wechat-filter -f expect-filter-dir",
+    "wechat-alipay-s": "./node_modules/.bin/ts-node src/bin/index.ts -t wx -e my -s test/applets/wechat-demo"
   },
   "keywords": [
     "wechat-applet",
