@@ -27,14 +27,45 @@ npm install applets-conversion-tool -g
 <br>
 
 **参数**
-| 参数 | 值 | 描述
-|:-|:-|:-|
-| -s「--src」 | path | 转换前的输入目录路径 |
-| -o「--out」 | path | 转换后的输出目录路径 |
-| -t「--target」| wx, my | 输入目录的小程序类型「目前只支持 wx, my」 |
-| -e「--expect」| wx, my | 输出目录的小程序类型「目前只支持 wx, my」 |
-| -5「--es5」| true, false | 遇到一些 es6 语法时，是否转为 es5？ |
-| -f「--filter」| string | 过滤关键字，过滤存在对应关键字在文件路径，默认过滤「node_modules, .tea, .idea」 |
+<table>
+    <tbody>
+    <tr style="font-weight:bold">
+        <td align="left">参数</td>
+        <td align="left">值</td>
+        <td align="left">描述</td>
+    </tr>
+    <tr>
+        <td align="left"><b>-s</b>「–src」</td>
+        <td align="left">path</td>
+        <td align="left">转换前的输入目录路径</td>
+    </tr>
+    <tr>
+        <td align="left"><b>-o</b>「–out」</td>
+        <td align="left">path</td>
+        <td align="left">转换后的输出目录路径</td>
+    </tr>
+    <tr>
+        <td align="left"><b>-t</b>「–target」</td>
+        <td align="left">wx, my</td>
+        <td align="left">输入目录的小程序类型「目前只支持 wx, my」</td>
+    </tr>
+    <tr>
+        <td align="left"><b>-e</b>「–expect」</td>
+        <td align="left">wx, my</td>
+        <td align="left">输出目录的小程序类型「目前只支持 wx, my」</td>
+    </tr>
+    <tr>
+        <td align="left"><b>-5</b>「–es5」</td>
+        <td align="left">true, false</td>
+        <td align="left">遇到一些 es6 语法时，是否转为 es5？</td>
+    </tr>
+    <tr>
+        <td align="left"><b>-f</b>「–filter」</td>
+        <td align="left">string</td>
+        <td align="left">过滤关键字，过滤存在对应关键字在文件路径，默认过滤「node_modules, .tea, .idea」</td>
+    </tr>
+    </tbody>
+</table>
 
 <br>
 
