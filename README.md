@@ -1,4 +1,4 @@
-# applets-conversion-tool
+# applets-conversion-cli
 
 <br>
 
@@ -92,9 +92,9 @@ applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/
 
 <br>
 
-- - [ ] PluginClassProperties
-- - [ ] Json
+- - [ ] json
 - - [ ] wxs, sjs
+- - [ ] class properties「plugin」
 
 <br>
 <br>
