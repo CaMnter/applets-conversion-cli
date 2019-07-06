@@ -1,0 +1,12 @@
+<view>
+  <view>
+    <button a:if="{{!hasUserInfo &amp;&amp; canIUse}}"> &#x83B7;&#x53D6;&#x5934;&#x50CF;&#x6635;&#x79F0; </button>
+    <block a:else="">
+      <img onTap="bindViewTap"/>
+      <text>{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view>
+    <text>{{motto}}</text>
+  </view>
+</view>
