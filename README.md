@@ -4,12 +4,16 @@
 
 # 简介
 
+<br>
+
 小程序转换工具，支持了较为普遍的转换场景，比如：xml，js，css。目前，只支持「微信」和「支付宝」
 
 <br>
 <br>
 
 # 安装
+
+<br>
 
 ```powershell
 npm install applets-conversion-tool -g
@@ -20,47 +24,42 @@ npm install applets-conversion-tool -g
 
 # 使用
 
+<br>
 
 **参数**
-参数 | 值 | 描述
--|-|-
--s「--src」 | path | 转换前的输入目录路径 |
--o「--out」 | path | 转换后的输出目录路径 |
--t「--target」| wx, my | 输入目录的小程序类型「目前只支持 wx, my」 |
--e「--expect」| wx, my | 输出目录的小程序类型「目前只支持 wx, my」 |
--5「--es5」| true, false | 遇到一些 es6 语法时，是否转为 es5？ |
--f「--filter」| string | 过滤关键字，过滤存在对应关键字在文件路径，默认过滤「node_modules, .tea, .idea」 |
+| 参数 | 值 | 描述
+|:-|:-|:-|
+| -s「--src」 | path | 转换前的输入目录路径 |
+| -o「--out」 | path | 转换后的输出目录路径 |
+| -t「--target」| wx, my | 输入目录的小程序类型「目前只支持 wx, my」 |
+| -e「--expect」| wx, my | 输出目录的小程序类型「目前只支持 wx, my」 |
+| -5「--es5」| true, false | 遇到一些 es6 语法时，是否转为 es5？ |
+| -f「--filter」| string | 过滤关键字，过滤存在对应关键字在文件路径，默认过滤「node_modules, .tea, .idea」 |
 
 <br>
 
-**示例**
+**Demo**
 
-**-s**
-```powershell
+```shell
+# -s
 applets-conversion-tool -t wx -e my -s test/applets/wechat-demo
-```
 
-**-o**
-```powershell
+# -o
 applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay
-```
 
-**-f**
-```powershell
+# -f
 applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter -f expect-filter-dir
-```
 
-**-5**
-```powershell
+# -5
 applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter-es5 -f expect-filter-dir -5 true
 ```
-
-
 
 <br>
 <br>
 
 # TODO
+
+<br>
 
 - - [ ] PluginClassProperties
 - - [ ] Json
