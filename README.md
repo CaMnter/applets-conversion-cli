@@ -73,16 +73,16 @@ npm install applets-conversion-tool -g
 
 ```shell
 # -s
-applets-conversion-tool -t wx -e my -s test/applets/wechat-demo
+applets-cli -t wx -e my -s test/applets/wechat-demo
 
 # -o
-applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay
+applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay
 
 # -f
-applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter -f expect-filter-dir
+applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter -f expect-filter-dir
 
 # -5
-applets-conversion-tool -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter-es5 -f expect-filter-dir -5 true
+applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter-es5 -f expect-filter-dir -5 true
 ```
 
 <br>
