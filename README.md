@@ -15,8 +15,12 @@
 
 <br>
 
-```powershell
+```shell
+# npm
 npm install applets-conversion-tool -g
+
+# yarn
+yarn add applets-conversion-tool global
 ```
 
 <br>
@@ -83,6 +87,36 @@ applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-
 
 # -5
 applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter-es5 -f expect-filter-dir -5 true
+```
+
+<br>
+<br>
+
+# Build
+
+<br>
+
+```bash
+# init
+yarn install
+
+# build
+./node_modules/gulp/bin/gulp.js
+```
+
+<br>
+<br>
+
+# Test
+
+<br>
+
+```bash
+# npm
+npm test
+
+# yarn
+yarn test
 ```
 
 <br>
