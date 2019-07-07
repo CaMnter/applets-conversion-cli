@@ -1,8 +1,11 @@
 {
   "name": "applets-conversion-cli",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "applets conversion cli <https://github.com/CaMnter/applets-conversion-cli>",
   "main": "es5/bin/index.js",
+  "bin": {
+    "applets-cli": "es5/bin/index.js"
+  },
   "scripts": {
     "test": "./node_modules/.bin/mocha --require ./node_modules/ts-node/register \"test/**/*.ts\"",
     "alipay-wechat": "./node_modules/.bin/ts-node src/bin/index.ts -t my -e wx ",

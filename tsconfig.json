@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "./",
+    "outDir": "es5",
     // ------「normal」------ //
     // 编译过程中需要引入的库文件的列表
     "lib": [

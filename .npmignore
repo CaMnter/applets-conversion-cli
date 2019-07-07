@@ -2,4 +2,3 @@ src
 test
 gulpfile.ts
 tsconfig.json
-yarn.lock
