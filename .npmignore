@@ -1,5 +1,6 @@
 src
 test
+.npmignore
 gulpfile.ts
-tsconfig.json
 screenshots
+tsconfig.json

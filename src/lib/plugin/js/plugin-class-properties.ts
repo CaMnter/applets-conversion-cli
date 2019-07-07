@@ -20,15 +20,15 @@ import BabelCodePlugin from "./babel-code-plugin";
  * @author CaMnter
  */
 
-const pluginProposalObjectRestSpread: any = require("@babel/plugin-proposal-object-rest-spread");
+const pluginClassProperties: any = require("@babel/plugin-proposal-class-properties");
 
-class PluginObjectRestSpread extends BabelCodePlugin {
+class PluginClassProperties extends BabelCodePlugin {
 
   setPlugin(): any {
-    return pluginProposalObjectRestSpread;
+    return pluginClassProperties;
   }
 
 }
 
-export default PluginObjectRestSpread;
+export default PluginClassProperties;
 
