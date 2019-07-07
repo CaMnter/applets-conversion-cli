@@ -15,7 +15,7 @@
 
 <br>
 
-```shell
+```bash
 # npm
 npm install applets-conversion-tool -g
 
@@ -75,7 +75,7 @@ yarn add applets-conversion-tool global
 
 **Demo**
 
-```shell
+```bash
 # -s
 applets-cli -t wx -e my -s test/applets/wechat-demo
 
@@ -151,7 +151,8 @@ yarn test
 
 - - [ ] json
 - - [ ] wxs, sjs
-- - [ ] class properties「plugin」
+- - [ ] tt applets
+- - [x] class properties「plugin」
 
 <br>
 <br>
