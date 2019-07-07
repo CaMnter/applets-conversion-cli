@@ -6,7 +6,7 @@
 
 <br>
 
-小程序转换工具，支持了较为普遍的转换场景，比如：xml，js，css。目前，只支持「微信」和「支付宝」
+小程序转换工具，支持了较为普遍的转换场景，比如：xml，js，css。目前，只支持<b>「微信」</b> 和<b>「支付宝」</b>
 
 <br>
 <br>
@@ -84,6 +84,29 @@ applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-
 # -5
 applets-cli -t wx -e my -s test/applets/wechat-demo -o test/applets/wechat-demo-to-alipay-filter-es5 -f expect-filter-dir -5 true
 ```
+
+<br>
+<br>
+
+# 截图
+
+<br>
+
+**Wechat**
+
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/wechat-demo-1.png" width="600x"/>
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/wechat-demo-2.jpg" width="1024x"/>
+
+**Alipay**
+
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/alipay-demo-1.jpg" width="600x"/>
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/alipay-demo-2.jpg" width="600x"/>
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/alipay-demo-3.jpg" width="1024x"/>
+
+**Test**
+
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/yarn-test-1.jpg" width="600x"/>
+<img src="https://github.com/CaMnter/applets-conversion-cli/blob/master/screenshots/yarn-test-2.jpg" width="600x"/>
 
 <br>
 <br>
