@@ -113,7 +113,7 @@ yarn install
 
 ```bash
 # npm
-npm test
+npm run test
 
 # yarn
 yarn test
