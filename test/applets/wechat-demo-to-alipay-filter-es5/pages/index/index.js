@@ -1,4 +1,4 @@
-function _objectSpread(target) {
+function _objectSpread2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
     var ownKeys = Object.keys(source);
@@ -86,6 +86,6 @@ Page({
     });
   },
   testObjectRestSpread: function () {
-    const data = _objectSpread({}, this.data);
+    const data = _objectSpread2({}, this.data);
   }
 });
