@@ -18,10 +18,10 @@ import * as path from 'path';
 import JsPlugin from "./lib/plugin/js-plugin";
 import XmlPlugin from "./lib/plugin/xml-plugin";
 import CssPlugin from "./lib/plugin/css-plugin";
+import PluginEs5 from "./lib/plugin/js/plugin-es5";
 import { AppletType } from "./lib/type/applet-type";
 import { overrideSync } from "./lib/utils/file-system/file-system";
-import { info, error, warn, warnAny, red, cyan, green, orange, yellow, magenta, errorAny, white } from "./lib/utils/log";
-import PluginObjectRestSpread from "./lib/plugin/js/plugin-object-rest-spread";
+import { info, error, warn, red, cyan, green, orange, yellow, magenta, white } from "./lib/utils/log";
 
 /**
  * @author CaMnter
@@ -336,7 +336,7 @@ export function getPlugins(plan: Plan, options?: { es5?: boolean, [option: strin
   const es5: boolean = options && options.es5 ? options.es5 : false;
   if (jsPlugin) {
     if (es5) {
-      jsPlugin.plugins = [new PluginObjectRestSpread];
+      jsPlugin.plugins = [new PluginEs5()];
     }
 
     // TODO more plugins

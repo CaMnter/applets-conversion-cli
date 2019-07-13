@@ -15,7 +15,7 @@
  */
 
 import { IPlugin } from "../i-plugin";
-import { isLegalString } from "../../utils/utils";
+import { isLegalArray, isLegalString } from "../../utils/utils";
 import { BabelFileResult, transform } from "@babel/core";
 
 /**
@@ -24,14 +24,15 @@ import { BabelFileResult, transform } from "@babel/core";
 
 abstract class BabelCodePlugin implements IPlugin {
 
-  private _plugin: any;
+  private _plugins: any;
   private _result: string | undefined;
 
   run(code: string | undefined | null): string {
+    this._plugins = this.setPlugins();
     let expectCode: string = '';
-    if (this._plugin && isLegalString(code)) {
+    if (this._plugins && isLegalArray(this._plugins) && isLegalString(code)) {
       const opts: { plugins?: Array<any> } = {};
-      opts.plugins = [this._plugin];
+      opts.plugins = [this._plugins];
       const result: BabelFileResult | null = transform(code as string, opts);
       if (result && result.code && 'string' == typeof result.code) {
         expectCode = result.code;
@@ -50,10 +51,10 @@ abstract class BabelCodePlugin implements IPlugin {
   /**
    * set plugin
    */
-  abstract setPlugin(): any;
+  abstract setPlugins(): Array<any>;
 
-  get plugin(): any {
-    return this._plugin;
+  get plugins(): any {
+    return this._plugins;
   }
 
 }

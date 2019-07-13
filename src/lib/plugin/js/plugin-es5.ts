@@ -21,14 +21,15 @@ import BabelCodePlugin from "./babel-code-plugin";
  */
 
 const pluginClassProperties: any = require("@babel/plugin-proposal-class-properties");
+const pluginProposalObjectRestSpread: any = require("@babel/plugin-proposal-object-rest-spread");
 
-class PluginClassProperties extends BabelCodePlugin {
+class PluginEs5 extends BabelCodePlugin {
 
-  setPlugin(): any {
-    return pluginClassProperties;
+  setPlugins(): Array<any> {
+    return [pluginProposalObjectRestSpread, pluginClassProperties];
   }
 
 }
 
-export default PluginClassProperties;
+export default PluginEs5;
 

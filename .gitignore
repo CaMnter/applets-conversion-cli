@@ -60,4 +60,3 @@ package.json
 
 # typescript output dir
 es5
-index.*
