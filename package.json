@@ -1,6 +1,6 @@
 {
   "name": "applets-conversion-cli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "applets conversion cli <https://github.com/CaMnter/applets-conversion-cli>",
   "main": "es5/bin/index.js",
   "bin": {
